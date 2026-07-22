@@ -1,0 +1,441 @@
+{
+  "Primary": {
+    "Normal": {
+      "$extensions": {
+        "com.figma.hiddenFromPublishing": true
+      },
+      "$type": "color",
+      "$value": "{Blue.50}"
+    },
+    "Strong": {
+      "$extensions": {
+        "com.figma.hiddenFromPublishing": true
+      },
+      "$type": "color",
+      "$value": "{Blue.45}"
+    },
+    "Heavy": {
+      "$extensions": {
+        "com.figma.hiddenFromPublishing": true
+      },
+      "$type": "color",
+      "$value": "{Blue.40}"
+    }
+  },
+  "Label": {
+    "Normal": {
+      "$extensions": {
+        "com.figma.hiddenFromPublishing": true
+      },
+      "$type": "color",
+      "$value": "{Cool Neutral.10}"
+    },
+    "Strong": {
+      "$extensions": {
+        "com.figma.hiddenFromPublishing": true
+      },
+      "$type": "color",
+      "$value": "{Common.0}"
+    },
+    "Neutral": {
+      "$extensions": {
+        "com.figma.hiddenFromPublishing": true
+      },
+      "$type": "color",
+      "$value": "#2e2f33e0",
+      "$description": "Light: Cool Neutral/22, Opacity/88\nDark: Cool Neutral/90, Opacity/88"
+    },
+    "Alternative": {
+      "$extensions": {
+        "com.figma.hiddenFromPublishing": true
+      },
+      "$type": "color",
+      "$value": "#37383c9c",
+      "$description": "Light: Cool Neutral/25, Opacity/61\nDark: Cool Neutral/80, Opacity/61"
+    },
+    "Assistive": {
+      "$extensions": {
+        "com.figma.hiddenFromPublishing": true
+      },
+      "$type": "color",
+      "$value": "#37383c47",
+      "$description": "Light: Cool Neutral/25, Opacity/28\nDark: Cool Neutral/80, Opacity/28"
+    },
+    "Disable": {
+      "$extensions": {
+        "com.figma.hiddenFromPublishing": true
+      },
+      "$type": "color",
+      "$value": "#37383c29",
+      "$description": "Light: Cool Neutral/25, Opacity/16\nDark: Cool Neutral/70, Opacity/16"
+    }
+  },
+  "Background": {
+    "Normal": {
+      "Normal": {
+        "$extensions": {
+          "com.figma.hiddenFromPublishing": true
+        },
+        "$type": "color",
+        "$value": "{Common.100}"
+      },
+      "Alternative": {
+        "$extensions": {
+          "com.figma.hiddenFromPublishing": true
+        },
+        "$type": "color",
+        "$value": "{Cool Neutral.99}"
+      }
+    },
+    "Elevated": {
+      "Normal": {
+        "$extensions": {
+          "com.figma.hiddenFromPublishing": true
+        },
+        "$type": "color",
+        "$value": "{Common.100}"
+      },
+      "Alternative": {
+        "$extensions": {
+          "com.figma.hiddenFromPublishing": true
+        },
+        "$type": "color",
+        "$value": "{Cool Neutral.99}"
+      }
+    },
+    "Transparent": {
+      "Normal": {
+        "$extensions": {
+          "com.figma.scopes": [
+            "ALL_SCOPES"
+          ],
+          "com.figma.hiddenFromPublishing": false
+        },
+        "$type": "color",
+        "$value": "#ffffff14"
+      },
+      "Alternative": {
+        "$extensions": {
+          "com.figma.scopes": [
+            "ALL_SCOPES"
+          ],
+          "com.figma.hiddenFromPublishing": false
+        },
+        "$type": "color",
+        "$value": "#ffffff47"
+      }
+    }
+  },
+  "Interaction": {
+    "Inactive": {
+      "$extensions": {
+        "com.figma.hiddenFromPublishing": true
+      },
+      "$type": "color",
+      "$value": "{Cool Neutral.70}"
+    },
+    "Disable": {
+      "$extensions": {
+        "com.figma.hiddenFromPublishing": true
+      },
+      "$type": "color",
+      "$value": "{Cool Neutral.98}"
+    }
+  },
+  "Line": {
+    "Normal": {
+      "Normal": {
+        "$extensions": {
+          "com.figma.hiddenFromPublishing": true
+        },
+        "$type": "color",
+        "$value": "#70737c38",
+        "$description": "Light: Cool Neutral/50, Opacity/22\nDark: Cool Neutral/50, Opacity/32"
+      },
+      "Neutral": {
+        "$extensions": {
+          "com.figma.hiddenFromPublishing": true
+        },
+        "$type": "color",
+        "$value": "#70737c29",
+        "$description": "Light: Cool Neutral/50, Opacity/16\nDark: Cool Neutral/50, Opacity/28"
+      },
+      "Alternative": {
+        "$extensions": {
+          "com.figma.hiddenFromPublishing": true
+        },
+        "$type": "color",
+        "$value": "#70737c14",
+        "$description": "Light: Cool Neutral/50, Opacity/8\nDark: Cool Neutral/50, Opacity/22"
+      },
+      "_Strong": {
+        "$extensions": {
+          "com.figma.hiddenFromPublishing": true
+        },
+        "$type": "color",
+        "$value": "#70737c85",
+        "$description": "Light: Cool Neutral/50, Opacity/52\nDark: Cool Neutral/90, Opacity/52"
+      }
+    },
+    "Solid": {
+      "Normal": {
+        "$extensions": {
+          "com.figma.hiddenFromPublishing": true
+        },
+        "$type": "color",
+        "$value": "{Cool Neutral.96}"
+      },
+      "Neutral": {
+        "$extensions": {
+          "com.figma.hiddenFromPublishing": true
+        },
+        "$type": "color",
+        "$value": "{Cool Neutral.97}"
+      },
+      "Alternative": {
+        "$extensions": {
+          "com.figma.hiddenFromPublishing": true
+        },
+        "$type": "color",
+        "$value": "{Cool Neutral.98}"
+      },
+      "_Strong": {
+        "$extensions": {
+          "com.figma.hiddenFromPublishing": true
+        },
+        "$type": "color",
+        "$value": "{Cool Neutral.80}"
+      }
+    }
+  },
+  "Fill": {
+    "Normal": {
+      "$extensions": {
+        "com.figma.hiddenFromPublishing": true
+      },
+      "$type": "color",
+      "$value": "#70737c14",
+      "$description": "Light: Cool Neutral/50, Opacity/8\nDark: Cool Neutral/50, Opacity/22"
+    },
+    "Strong": {
+      "$extensions": {
+        "com.figma.hiddenFromPublishing": true
+      },
+      "$type": "color",
+      "$value": "#70737c29",
+      "$description": "Light: Cool Neutral/50, Opacity/16\nDark: Cool Neutral/50, Opacity/28"
+    },
+    "Alternative": {
+      "$extensions": {
+        "com.figma.hiddenFromPublishing": true
+      },
+      "$type": "color",
+      "$value": "#70737c0d",
+      "$description": "Light: Cool Neutral/50, Opacity/5\nDark: Cool Neutral/50, Opacity/12"
+    }
+  },
+  "Status": {
+    "Positive": {
+      "$extensions": {
+        "com.figma.hiddenFromPublishing": true
+      },
+      "$type": "color",
+      "$value": "{Green.50}"
+    },
+    "Cautionary": {
+      "$extensions": {
+        "com.figma.hiddenFromPublishing": true
+      },
+      "$type": "color",
+      "$value": "{Orange.50}"
+    },
+    "Negative": {
+      "$extensions": {
+        "com.figma.hiddenFromPublishing": true
+      },
+      "$type": "color",
+      "$value": "{Red.50}"
+    }
+  },
+  "Static": {
+    "White": {
+      "$extensions": {
+        "com.figma.hiddenFromPublishing": true
+      },
+      "$type": "color",
+      "$value": "{Common.100}"
+    },
+    "Black": {
+      "$extensions": {
+        "com.figma.hiddenFromPublishing": true
+      },
+      "$type": "color",
+      "$value": "{Common.0}"
+    }
+  },
+  "Accent": {
+    "Background": {
+      "Lime": {
+        "$extensions": {
+          "com.figma.hiddenFromPublishing": true
+        },
+        "$type": "color",
+        "$value": "{Lime.50}"
+      },
+      "Cyan": {
+        "$extensions": {
+          "com.figma.hiddenFromPublishing": true
+        },
+        "$type": "color",
+        "$value": "{Cyan.50}"
+      },
+      "Light Blue": {
+        "$extensions": {
+          "com.figma.hiddenFromPublishing": true
+        },
+        "$type": "color",
+        "$value": "{Light Blue.50}"
+      },
+      "Violet": {
+        "$extensions": {
+          "com.figma.hiddenFromPublishing": true
+        },
+        "$type": "color",
+        "$value": "{Violet.50}"
+      },
+      "Pink": {
+        "$extensions": {
+          "com.figma.hiddenFromPublishing": true
+        },
+        "$type": "color",
+        "$value": "{Pink.50}"
+      },
+      "Red Orange": {
+        "$extensions": {
+          "com.figma.hiddenFromPublishing": true
+        },
+        "$type": "color",
+        "$value": "{Red Orange.50}"
+      },
+      "Purple": {
+        "$extensions": {
+          "com.figma.hiddenFromPublishing": true
+        },
+        "$type": "color",
+        "$value": "{Purple.50}"
+      }
+    },
+    "Foreground": {
+      "Lime": {
+        "$extensions": {
+          "com.figma.hiddenFromPublishing": true
+        },
+        "$type": "color",
+        "$value": "{Lime.37}"
+      },
+      "Cyan": {
+        "$extensions": {
+          "com.figma.hiddenFromPublishing": true
+        },
+        "$type": "color",
+        "$value": "{Cyan.40}"
+      },
+      "Light Blue": {
+        "$extensions": {
+          "com.figma.hiddenFromPublishing": true
+        },
+        "$type": "color",
+        "$value": "{Light Blue.40}"
+      },
+      "Violet": {
+        "$extensions": {
+          "com.figma.hiddenFromPublishing": true
+        },
+        "$type": "color",
+        "$value": "{Violet.45}"
+      },
+      "Purple": {
+        "$extensions": {
+          "com.figma.hiddenFromPublishing": true
+        },
+        "$type": "color",
+        "$value": "{Purple.40}"
+      },
+      "Pink": {
+        "$extensions": {
+          "com.figma.hiddenFromPublishing": true
+        },
+        "$type": "color",
+        "$value": "{Pink.46}"
+      },
+      "Red Orange": {
+        "$extensions": {
+          "com.figma.hiddenFromPublishing": true
+        },
+        "$type": "color",
+        "$value": "{Red Orange.48}"
+      },
+      "Red": {
+        "$extensions": {
+          "com.figma.hiddenFromPublishing": true
+        },
+        "$type": "color",
+        "$value": "{Red.40}"
+      },
+      "Orange": {
+        "$extensions": {
+          "com.figma.hiddenFromPublishing": true
+        },
+        "$type": "color",
+        "$value": "{Orange.39}"
+      },
+      "Green": {
+        "$extensions": {
+          "com.figma.hiddenFromPublishing": true
+        },
+        "$type": "color",
+        "$value": "{Green.40}"
+      },
+      "Blue": {
+        "$extensions": {
+          "com.figma.hiddenFromPublishing": true
+        },
+        "$type": "color",
+        "$value": "{Blue.45}"
+      }
+    }
+  },
+  "Material": {
+    "Dimmer": {
+      "$extensions": {
+        "com.figma.hiddenFromPublishing": true
+      },
+      "$type": "color",
+      "$value": "#17171985",
+      "$description": "Light: Cool Neutral/10, Opacity/52\nDark: Cool Neutral/50, Opacity/74"
+    }
+  },
+  "Inverse": {
+    "Primary": {
+      "$extensions": {
+        "com.figma.hiddenFromPublishing": true
+      },
+      "$type": "color",
+      "$value": "{Blue.60}"
+    },
+    "Background": {
+      "$extensions": {
+        "com.figma.hiddenFromPublishing": true
+      },
+      "$type": "color",
+      "$value": "{Cool Neutral.15}"
+    },
+    "Label": {
+      "$extensions": {
+        "com.figma.hiddenFromPublishing": true
+      },
+      "$type": "color",
+      "$value": "{Cool Neutral.99}"
+    }
+  }
+}
