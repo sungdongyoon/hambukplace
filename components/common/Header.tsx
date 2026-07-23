@@ -1,9 +1,16 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import Input from "./Input";
+import { useMobile } from "@/hooks/useMobile";
 
 const Header = () => {
+  const isMobile = useMobile();
+
+  console.log("test", isMobile);
+
   return (
     <header className="w-full h-20 flex bg-background-normal-normal border-b border-line-normal-normal px-20">
       <div className="w-full flex items-center justify-between">

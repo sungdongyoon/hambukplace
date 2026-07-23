@@ -2,26 +2,26 @@
 
 import { useEffect, useState } from "react";
 
+const MOBILE_BREAKPOINT = 768;
+
 export const useMobile = () => {
   const [isMobile, setIsMobile] = useState<boolean>(false);
 
   useEffect(() => {
-    const checkIsMobile = () => {
-      const userAgent =
-        typeof window.navigator === "undefined" ? "" : navigator.userAgent;
-      const mobile =
-        /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-          userAgent,
-        );
+    const mediaQuery = window.matchMedia(
+      `(max-width: ${MOBILE_BREAKPOINT - 1}px)`,
+    );
 
-      setIsMobile(
-        mobile || ("ontouchstart" in window && window.innerWidth <= 1024),
-      );
+    const handleChange = () => {
+      setIsMobile(mediaQuery.matches);
     };
 
-    checkIsMobile();
-    window.addEventListener("resize", checkIsMobile);
-    return () => window.removeEventListener("resize", checkIsMobile);
+    handleChange();
+
+    mediaQuery.addEventListener("change", handleChange);
+    return () => {
+      mediaQuery.removeEventListener("change", handleChange);
+    };
   }, []);
 
   return isMobile;
