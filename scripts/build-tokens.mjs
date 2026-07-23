@@ -52,7 +52,7 @@ const sd = new StyleDictionary({
     css: {
       transformGroup: "tokens-studio",
       transforms: ["name/kebab"],
-      buildPath: "app/styles/",
+      buildPath: "styles/",
       files: [
         {
           destination: "tokens.css",
