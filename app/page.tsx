@@ -1,4 +1,5 @@
 import Button from "@/components/common/Button";
+import Input from "@/components/common/Input";
 import Image from "next/image";
 
 export default function Home() {
@@ -9,6 +10,7 @@ export default function Home() {
         <Button size="md" type="outline">
           버튼
         </Button>
+        <Input />
       </div>
     </div>
   );
