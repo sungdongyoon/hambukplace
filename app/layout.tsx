@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import Header from "@/components/common/Header";
+import Script from "next/script";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -14,6 +15,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`h-full antialiased`}>
+      <Script
+        type="text/javascript"
+        strategy="afterInteractive"
+        src={`https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${process.env.NEXT_PUBLIC_NAVER_ID}&submodules=geocoder`}
+      />
       <body className="min-h-full flex flex-col">
         <Header />
         {children}
