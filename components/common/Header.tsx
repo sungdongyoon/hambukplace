@@ -2,11 +2,16 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import Input from "./Input";
 import { useMobile } from "@/hooks/useMobile";
+import { usePlaceStore } from "@/store/usePlaceStore";
 
 const Header = () => {
+  // 주소 입력 스토어
+  const { place, setPlace, resetPlace } = usePlaceStore();
+
+  // 모바일 구분 훅
   const isMobile = useMobile();
 
   return (
@@ -21,7 +26,12 @@ const Header = () => {
             className="shrink-0"
           />
           <div className="min-w-0 max-w-125 flex-1">
-            <Input placeholder="매장, 주소 검색" aria-label="매장, 주소 검색" />
+            <Input
+              placeholder="매장, 주소 검색"
+              aria-label="매장, 주소 검색"
+              value={place}
+              onChange={(e) => setPlace(e.target.value)}
+            />
           </div>
         </div>
         {isMobile ? null : (
