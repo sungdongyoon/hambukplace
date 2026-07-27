@@ -8,7 +8,7 @@ import { useMobile } from "@/hooks/useMobile";
 import { usePlaceStore } from "@/store/usePlaceStore";
 
 const Header = () => {
-  // 주소 입력 스토어
+  // 주소 스토어
   const { place, setPlace, resetPlace } = usePlaceStore();
 
   // 모바일 구분 훅
