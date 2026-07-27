@@ -1,6 +1,9 @@
 "use client";
 
+import { getPlaces } from "@/api/places";
 import { usePlaceStore } from "@/store/usePlaceStore";
+import { Place } from "@/types/place";
+import { useQuery } from "@tanstack/react-query";
 import Script from "next/script";
 import { useEffect, useRef, useState } from "react";
 
@@ -9,10 +12,17 @@ const DEFAULT_CENTER = {
   lng: 126.978,
 };
 
-const NaverMap = () => {
+const NaverMap = ({ initialData }: { initialData: Place[] }) => {
   const mapRef = useRef<HTMLDivElement | null>(null);
   const naverMapRef = useRef<any>(null);
   const markerRef = useRef<any>(null);
+
+  // 매장 데이터 로드
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ["getPlaces"],
+    queryFn: getPlaces,
+    initialData: initialData,
+  });
 
   // 지도 로드 상태
   const [isMapReady, setIsMapReady] = useState(false);
@@ -36,20 +46,26 @@ const NaverMap = () => {
       zoom: 15,
     });
 
-    const marker = new naver.maps.Marker({
-      position: center,
-      map,
+    const markers = initialData?.map((place) => {
+      return new naver.maps.Marker({
+        position: new naver.maps.LatLng(place.lat, place.lng),
+        map,
+        title: place.name,
+      });
     });
 
+    console.log("marakers", markers);
+
     naverMapRef.current = map;
-    markerRef.current = marker;
+    markerRef.current = markers;
 
     setIsMapReady(true);
   };
 
+  // 주소 검색 함수
   const searchAddress = (query: string) => {
     if (!window.naver?.maps?.Service) return;
-    if (!naverMapRef.current || !markerRef.current) return;
+    if (!naverMapRef.current) return;
     if (!query.trim()) return;
 
     const { naver } = window;
@@ -72,10 +88,11 @@ const NaverMap = () => {
       const position = new naver.maps.LatLng(lat, lng);
 
       naverMapRef.current.setCenter(position);
-      markerRef.current.setPosition(position);
+      // markerRef.current.setPosition(position);
     });
   };
 
+  // 검색 기능 활성화
   useEffect(() => {
     if (!isMapReady) return;
 

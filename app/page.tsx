@@ -1,18 +1,12 @@
-"use client";
-
-import Button from "@/components/common/Button";
-import Input from "@/components/common/Input";
+import { getPlaces } from "@/api/places";
 import NaverMap from "@/components/NaverMap";
-import { usePlaceStore } from "@/store/usePlaceStore";
 
-import Image from "next/image";
+export default async function Home() {
+  const getPlacesData = await getPlaces();
 
-export default function Home() {
-  const { place, setPlace } = usePlaceStore();
   return (
-    <div className="text-primary-strong">
-      장소 - {place}
-      <NaverMap />
+    <div>
+      <NaverMap initialData={getPlacesData} />
     </div>
   );
 }
