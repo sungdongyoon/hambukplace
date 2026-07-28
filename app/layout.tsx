@@ -15,10 +15,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`h-full antialiased`}>
-      <body className="min-h-full flex flex-col">
+      <body className="min-h-screen flex flex-col">
         <QueryProvider>
           <Header />
-          {children}
+          <main className="flex justify-center">{children}</main>
         </QueryProvider>
       </body>
     </html>

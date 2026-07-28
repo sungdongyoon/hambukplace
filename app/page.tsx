@@ -5,7 +5,7 @@ export default async function Home() {
   const getPlacesData = await getPlaces();
 
   return (
-    <div>
+    <div className="w-full">
       <NaverMap initialData={getPlacesData} />
     </div>
   );

@@ -261,11 +261,19 @@
   --color-label-assistive: var(--color-label-assistive);
   --color-label-disable: var(--color-label-disable);
   --color-background-normal-normal: var(--color-background-normal-normal);
-  --color-background-normal-alternative: var(--color-background-normal-alternative);
+  --color-background-normal-alternative: var(
+    --color-background-normal-alternative
+  );
   --color-background-elevated-normal: var(--color-background-elevated-normal);
-  --color-background-elevated-alternative: var(--color-background-elevated-alternative);
-  --color-background-transparent-normal: var(--color-background-transparent-normal);
-  --color-background-transparent-alternative: var(--color-background-transparent-alternative);
+  --color-background-elevated-alternative: var(
+    --color-background-elevated-alternative
+  );
+  --color-background-transparent-normal: var(
+    --color-background-transparent-normal
+  );
+  --color-background-transparent-alternative: var(
+    --color-background-transparent-alternative
+  );
   --color-interaction-inactive: var(--color-interaction-inactive);
   --color-interaction-disable: var(--color-interaction-disable);
   --color-line-normal-normal: var(--color-line-normal-normal);
@@ -286,18 +294,26 @@
   --color-static-black: var(--color-static-black);
   --color-accent-background-lime: var(--color-accent-background-lime);
   --color-accent-background-cyan: var(--color-accent-background-cyan);
-  --color-accent-background-light-blue: var(--color-accent-background-light-blue);
+  --color-accent-background-light-blue: var(
+    --color-accent-background-light-blue
+  );
   --color-accent-background-violet: var(--color-accent-background-violet);
   --color-accent-background-pink: var(--color-accent-background-pink);
-  --color-accent-background-red-orange: var(--color-accent-background-red-orange);
+  --color-accent-background-red-orange: var(
+    --color-accent-background-red-orange
+  );
   --color-accent-background-purple: var(--color-accent-background-purple);
   --color-accent-foreground-lime: var(--color-accent-foreground-lime);
   --color-accent-foreground-cyan: var(--color-accent-foreground-cyan);
-  --color-accent-foreground-light-blue: var(--color-accent-foreground-light-blue);
+  --color-accent-foreground-light-blue: var(
+    --color-accent-foreground-light-blue
+  );
   --color-accent-foreground-violet: var(--color-accent-foreground-violet);
   --color-accent-foreground-purple: var(--color-accent-foreground-purple);
   --color-accent-foreground-pink: var(--color-accent-foreground-pink);
-  --color-accent-foreground-red-orange: var(--color-accent-foreground-red-orange);
+  --color-accent-foreground-red-orange: var(
+    --color-accent-foreground-red-orange
+  );
   --color-accent-foreground-red: var(--color-accent-foreground-red);
   --color-accent-foreground-orange: var(--color-accent-foreground-orange);
   --color-accent-foreground-green: var(--color-accent-foreground-green);
@@ -498,4 +514,12 @@
   --color-purple-95: var(--color-purple-95);
   --color-purple-99: var(--color-purple-99);
   --color-purple-100: var(--color-purple-100);
+
+  --breakpoint-sm: 768px;
+  --breakpoint-md: 992px;
+  --breakpoint-lg: 1200px;
+  --breakpoint-xl: 1600px;
+
+  --container-screen-lg: 1100px;
+  --container-screen-xl: 1440px;
 }
