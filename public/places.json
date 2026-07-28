@@ -1,6 +1,6 @@
 [
   {
-    "id": "1",
+    "id": "9A03B068-7ACA-4834-BFFA-B033567DFB1D",
     "name": "원스타 올드패션드 햄버거 도곡점",
     "address": "서울 강남구 논현로 26길 23 1층",
     "road_address": null,
@@ -13,7 +13,7 @@
     "created_by": "admin"
   },
   {
-    "id": "2",
+    "id": "35870EE2-4445-45AA-810D-E3F3F07B3A32",
     "name": "임어전시수제버거 자양점",
     "address": "서울 광진구 능동로4길 17 1층",
     "road_address": null,
@@ -26,7 +26,7 @@
     "created_by": "admin"
   },
   {
-    "id": "3",
+    "id": "C447191E-BBDD-4E02-B162-94ADCD0FA2D3",
     "name": "레이지오프",
     "address": "서울 마포구 월드컵로17길 50 지하1층",
     "road_address": null,
