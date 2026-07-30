@@ -1,17 +1,38 @@
+"use client";
+
 import { getReviews } from "@/api/reviews";
+import { useMobile } from "@/hooks/useMobile";
+import { useQuery } from "@tanstack/react-query";
+import Image from "next/image";
 import React from "react";
 import { FaStar } from "react-icons/fa6";
 
-const TabReview = async () => {
-  // 리뷰 데이터
-  const reviewsData = await getReviews();
+const TabReview = () => {
+  // 리뷰 데이터 로드
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ["places"],
+    queryFn: getReviews,
+  });
+
+  // 모바일 구분
+  const isMobile = useMobile();
 
   return (
-    <div className="flex flex-col gap-3">
-      {reviewsData.map((review) => (
-        <div className="flex items-center gap-5" key={review.id}>
-          <div className="bg-neutral-90 aspect-3/2 w-35 shrink-0"></div>
-          <div className="flex flex-col gap-2">
+    <div className={`flex flex-col gap-3`}>
+      {data?.map((review) => (
+        <article
+          className={`flex ${isMobile ? "flex-col border-b border-line-normal-neutral py-3" : "items-center"} gap-5`}
+          key={review.id}
+        >
+          <div className="relative aspect-5/4 w-28 shrink-0 overflow-hidden rounded-lg sm:w-40">
+            <Image
+              src="/life.jpg"
+              alt="리뷰 이미지"
+              fill
+              className="object-cover"
+            />
+          </div>
+          <div className="min-w-0 flex flex-col gap-2">
             <p className="flex items-center gap-1 text-[0.7rem] font-semibold">
               <FaStar className="text-yellow-400" />
               {review.rate}
@@ -21,7 +42,7 @@ const TabReview = async () => {
               {review.visited_at} 방문
             </p>
           </div>
-        </div>
+        </article>
       ))}
     </div>
   );
