@@ -20,11 +20,10 @@ const TabReview = () => {
 
   return (
     <div className={`flex flex-col gap-3`}>
-      <div className="w-full h-50 flex justify-center items-center">
-        <Loading />
-      </div>
-      {/* {isLoading ? (
-        <Loading />
+      {isLoading ? (
+        <div className="w-full h-50 flex justify-center items-center">
+          <Loading />
+        </div>
       ) : (
         data?.map((review) => (
           <article
@@ -53,7 +52,7 @@ const TabReview = () => {
             </div>
           </article>
         ))
-      )} */}
+      )}
     </div>
   );
 };
