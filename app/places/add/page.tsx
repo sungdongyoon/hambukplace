@@ -4,6 +4,7 @@ import Button from "@/components/common/Button";
 import FileInput from "@/components/common/FileInput";
 import Input from "@/components/common/Input";
 import PageTitle from "@/components/common/PageTitle";
+import RadioGroup from "@/components/common/RadioGroup";
 import React, { useState } from "react";
 
 type AddPlaceType = {
@@ -22,6 +23,8 @@ const PlaceAddPage = () => {
     phone: "",
     image: [],
   });
+
+  console.log("place", addPlaceInfo);
 
   return (
     <section>
@@ -52,10 +55,30 @@ const PlaceAddPage = () => {
           />
         </div>
         <div className="flex flex-col gap-3">
-          <label htmlFor="openHour" className="font-semibold">
-            영업시간
-          </label>
-          <Input id="openHour" />
+          <p className="font-semibold">영업시간</p>
+          <RadioGroup
+            name="openHour"
+            value={addPlaceInfo.openHour}
+            onChange={(e) => setAddPlaceInfo({ ...addPlaceInfo, openHour: e })}
+            options={[
+              {
+                label: "매일",
+                value: "daily",
+              },
+              {
+                label: "주말/평일",
+                value: "weekday-weekend",
+              },
+              {
+                label: "요일별",
+                value: "by-day",
+              },
+              {
+                label: "정보없음",
+                value: "unknown",
+              },
+            ]}
+          />
         </div>
         <div className="flex flex-col gap-3">
           <label htmlFor="phone" className="font-semibold">
