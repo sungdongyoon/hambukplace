@@ -6,30 +6,34 @@ import Input from "@/components/common/Input";
 import PageTitle from "@/components/common/PageTitle";
 import RadioGroup from "@/components/common/RadioGroup";
 import React, { useState } from "react";
+import OpenHoursSection from "./components/OpenHoursSection";
+
+type OpenHourType = "daily" | "weekday-weekend" | "by-day" | "unknown";
 
 type AddPlaceType = {
   name: string;
   address: string;
-  openHour: string;
+  openHour: OpenHourType;
   phone: string;
   image: File[];
 };
 
 const PlaceAddPage = () => {
+  // 매장 등록 정보
   const [addPlaceInfo, setAddPlaceInfo] = useState<AddPlaceType>({
     name: "",
     address: "",
-    openHour: "",
+    openHour: "daily",
     phone: "",
     image: [],
   });
 
-  console.log("place", addPlaceInfo);
+  console.log("add", addPlaceInfo);
 
   return (
     <section>
       <PageTitle>매장 추가</PageTitle>
-      <div className="grid grid-cols-2 gap-5 mb-30">
+      <div className="grid grid-cols-2 gap-x-5 gap-y-20 mb-20">
         <div className="flex flex-col gap-3">
           <label htmlFor="name" className="font-semibold">
             매장 이름
@@ -37,6 +41,7 @@ const PlaceAddPage = () => {
           <Input
             id="name"
             value={addPlaceInfo.name}
+            placeholder="매장 이름을 입력해주세요"
             onChange={(e) =>
               setAddPlaceInfo({ ...addPlaceInfo, name: e.target.value })
             }
@@ -49,6 +54,7 @@ const PlaceAddPage = () => {
           <Input
             id="address"
             value={addPlaceInfo.address}
+            placeholder="매장 주소를 입력해주세요"
             onChange={(e) =>
               setAddPlaceInfo({ ...addPlaceInfo, address: e.target.value })
             }
@@ -60,6 +66,7 @@ const PlaceAddPage = () => {
             name="openHour"
             value={addPlaceInfo.openHour}
             onChange={(e) => setAddPlaceInfo({ ...addPlaceInfo, openHour: e })}
+            groupClassName="my-2"
             options={[
               {
                 label: "매일",
@@ -79,6 +86,7 @@ const PlaceAddPage = () => {
               },
             ]}
           />
+          <OpenHoursSection type={addPlaceInfo.openHour} />
         </div>
         <div className="flex flex-col gap-3">
           <label htmlFor="phone" className="font-semibold">
@@ -87,6 +95,7 @@ const PlaceAddPage = () => {
           <Input
             id="phone"
             value={addPlaceInfo.phone}
+            placeholder="매장 전화번호를 입력해주세요"
             onChange={(e) =>
               setAddPlaceInfo({ ...addPlaceInfo, phone: e.target.value })
             }

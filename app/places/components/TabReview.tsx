@@ -6,7 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import React from "react";
 import { FaStar } from "react-icons/fa6";
-import Loading from "../common/Loading";
+import Loading from "../../../components/common/Loading";
 
 const TabReview = () => {
   // 리뷰 데이터 로드
