@@ -6,6 +6,7 @@ import { Place } from "@/types/place";
 import { useQuery } from "@tanstack/react-query";
 import Script from "next/script";
 import { useEffect, useRef, useState } from "react";
+import NaverMapScript from "./common/NaverMapScript";
 
 const DEFAULT_CENTER = {
   lat: 37.5665,
@@ -101,11 +102,7 @@ const NaverMap = ({ initialData }: { initialData: Place[] }) => {
 
   return (
     <>
-      <Script
-        src={`https://oapi.map.naver.com/openapi/v3/maps.js?ncpKeyId=${process.env.NEXT_PUBLIC_NAVER_MAP_CLIENT_ID}&submodules=geocoder`}
-        strategy="afterInteractive"
-        onReady={handleReadyMap}
-      />
+      <NaverMapScript onReady={handleReadyMap} />
 
       <div ref={mapRef} className="h-screen w-full" />
     </>

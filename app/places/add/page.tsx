@@ -3,17 +3,16 @@
 import Button from "@/components/common/Button";
 import FileInput from "@/components/common/FileInput";
 import Input from "@/components/common/Input";
+import NaverMapScript from "@/components/common/NaverMapScript";
 import PageTitle from "@/components/common/PageTitle";
-import RadioGroup from "@/components/common/RadioGroup";
 import React, { useState } from "react";
-import OpenHoursSection from "./components/OpenHoursSection";
-
-type OpenHourType = "daily" | "weekday-weekend" | "by-day" | "unknown";
 
 type AddPlaceType = {
   name: string;
   address: string;
-  openHour: OpenHourType;
+  lat: number | null;
+  lng: number | null;
+  openHour: string;
   phone: string;
   image: File[];
 };
@@ -23,17 +22,56 @@ const PlaceAddPage = () => {
   const [addPlaceInfo, setAddPlaceInfo] = useState<AddPlaceType>({
     name: "",
     address: "",
-    openHour: "daily",
+    lat: null,
+    lng: null,
+    openHour: "",
     phone: "",
     image: [],
   });
+  // 주소 쿼리 상태값
+  const [addressQuery, setAddressQuery] = useState<string>("");
 
-  console.log("add", addPlaceInfo);
+  // 주소 검색 함수
+  const searchAddress = (query: string) => {
+    if (!query.trim()) {
+      alert("주소를 입력해주세요.");
+      return;
+    }
+
+    if (!window.naver?.maps?.Service) {
+      console.error("네이버 지도 API가 아직 로드되지 않았습니다.");
+      return;
+    }
+
+    const { naver } = window;
+
+    naver.maps.Service.geocode({ query }, (status: any, response: any) => {
+      if (status === naver.maps.Service.Status.ERROR) {
+        console.error("주소 검색 실패");
+        return;
+      }
+
+      const result = response.v2.addresses[0];
+
+      if (!result) {
+        console.log("검색 결과 없음");
+        return;
+      }
+
+      setAddPlaceInfo((prev) => ({
+        ...prev,
+        address: result.roadAddress || result.jibunAddress,
+        lat: Number(result.y),
+        lng: Number(result.x),
+      }));
+    });
+  };
 
   return (
     <section>
+      <NaverMapScript />
       <PageTitle>매장 추가</PageTitle>
-      <div className="grid grid-cols-2 gap-x-5 gap-y-20 mb-20">
+      <div className="grid grid-cols-2 gap-x-10 gap-y-20 mb-20">
         <div className="flex flex-col gap-3">
           <label htmlFor="name" className="font-semibold">
             매장 이름
@@ -53,40 +91,28 @@ const PlaceAddPage = () => {
           </label>
           <Input
             id="address"
-            value={addPlaceInfo.address}
+            value={addressQuery}
             placeholder="매장 주소를 입력해주세요"
-            onChange={(e) =>
-              setAddPlaceInfo({ ...addPlaceInfo, address: e.target.value })
-            }
+            onChange={(e) => setAddressQuery(e.target.value)}
           />
+          <Button type="button" onClick={() => searchAddress(addressQuery)}>
+            검색
+          </Button>
+          {addPlaceInfo.address && (
+            <p className="text-sm text-label-alternative">
+              선택된 주소: {addPlaceInfo.address}
+            </p>
+          )}
         </div>
         <div className="flex flex-col gap-3">
           <p className="font-semibold">영업시간</p>
-          <RadioGroup
-            name="openHour"
+          <Input
             value={addPlaceInfo.openHour}
-            onChange={(e) => setAddPlaceInfo({ ...addPlaceInfo, openHour: e })}
-            groupClassName="my-2"
-            options={[
-              {
-                label: "매일",
-                value: "daily",
-              },
-              {
-                label: "주말/평일",
-                value: "weekday-weekend",
-              },
-              {
-                label: "요일별",
-                value: "by-day",
-              },
-              {
-                label: "정보없음",
-                value: "unknown",
-              },
-            ]}
+            placeholder="영업시간을 입력해주세요"
+            onChange={(e) =>
+              setAddPlaceInfo({ ...addPlaceInfo, openHour: e.target.value })
+            }
           />
-          <OpenHoursSection type={addPlaceInfo.openHour} />
         </div>
         <div className="flex flex-col gap-3">
           <label htmlFor="phone" className="font-semibold">
@@ -96,8 +122,13 @@ const PlaceAddPage = () => {
             id="phone"
             value={addPlaceInfo.phone}
             placeholder="매장 전화번호를 입력해주세요"
+            inputMode="numeric"
+            maxLength={11}
             onChange={(e) =>
-              setAddPlaceInfo({ ...addPlaceInfo, phone: e.target.value })
+              setAddPlaceInfo({
+                ...addPlaceInfo,
+                phone: e.target.value.replace(/\D/g, ""),
+              })
             }
           />
         </div>
@@ -111,7 +142,7 @@ const PlaceAddPage = () => {
         </div>
       </div>
       <div className="flex gap-3 justify-end">
-        <Button className="w-25" size="lg" type="outline">
+        <Button className="w-25" size="lg" variant="outline">
           뒤로가기
         </Button>
         <Button className="w-25" size="lg">

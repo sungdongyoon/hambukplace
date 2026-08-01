@@ -1,20 +1,21 @@
 import React from "react";
 
 type ButtonSize = "sm" | "md" | "lg";
-type ButtonType = "normal" | "outline";
+type ButtonVariant = "normal" | "outline";
 
-type ButtonProps = {
+type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   children: React.ReactNode;
   size?: ButtonSize;
   className?: string;
-  type?: ButtonType;
+  variant?: ButtonVariant;
 };
 
 const Button = ({
   children,
   size = "md",
   className,
-  type = "normal",
+  variant = "normal",
+  ...props
 }: ButtonProps) => {
   // 버튼 사이즈
   const buttonSize: Record<ButtonSize, string> = {
@@ -24,14 +25,15 @@ const Button = ({
   };
 
   // 버튼 타입
-  const buttonType: Record<ButtonType, string> = {
+  const buttonType: Record<ButtonVariant, string> = {
     normal: "bg-primary-normal text-white",
     outline: "border border-line-normal-normal text-label-neutral",
   };
 
   return (
     <button
-      className={`inline-flex justify-center items-center leading-none rounded-md cursor-pointer ${buttonSize[size]} ${buttonType[type]} ${className}`}
+      {...props}
+      className={`inline-flex justify-center items-center leading-none rounded-md cursor-pointer ${buttonSize[size]} ${buttonType[variant]} ${className}`}
     >
       {children}
     </button>
