@@ -7,6 +7,7 @@ import TabReview from "@/app/places/components/TabReview";
 import Image from "next/image";
 import React from "react";
 import { FaMapLocation, FaPhone, FaRegClock } from "react-icons/fa6";
+import Button from "@/components/common/Button";
 
 const PlacePage = async ({ params }: { params: { placeId: string } }) => {
   const { placeId } = await params;
@@ -18,11 +19,18 @@ const PlacePage = async ({ params }: { params: { placeId: string } }) => {
   // 리뷰 데이터
   const reviewsData = await getReviews();
 
-  console.log("review", reviewsData);
-
   return (
     <section>
-      <PageTitle>{place?.name}</PageTitle>
+      <div className="flex justify-between items-center">
+        <PageTitle>{place?.name}</PageTitle>
+        <div className="flex items-center justify-end gap-1 mb-6">
+          <Button size="sm">수정</Button>
+          <Button size="sm" className="bg-status-negative">
+            삭제
+          </Button>
+        </div>
+      </div>
+
       <div className="bg-neutral-90 w-full h-87.5"></div>
       <div className="flex flex-col gap-3 mt-4">
         <address className="flex items-center gap-2 font-medium text-[0.8rem] not-italic">

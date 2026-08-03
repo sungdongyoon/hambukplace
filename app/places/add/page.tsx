@@ -95,9 +95,16 @@ const PlaceAddPage = () => {
             placeholder="매장 주소를 입력해주세요"
             onChange={(e) => setAddressQuery(e.target.value)}
           />
-          <Button type="button" onClick={() => searchAddress(addressQuery)}>
-            검색
-          </Button>
+          <div className="flex justify-end">
+            <Button
+              type="button"
+              className="inline"
+              size="lg"
+              onClick={() => searchAddress(addressQuery)}
+            >
+              검색
+            </Button>
+          </div>
           {addPlaceInfo.address && (
             <p className="text-sm text-label-alternative">
               선택된 주소: {addPlaceInfo.address}
