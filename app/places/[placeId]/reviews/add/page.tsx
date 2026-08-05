@@ -4,6 +4,7 @@ import Button from "@/components/common/Button";
 import FileInput from "@/components/common/FileInput";
 import Input from "@/components/common/Input";
 import PageTitle from "@/components/common/PageTitle";
+import Textarea from "@/components/common/Textarea";
 import React from "react";
 import { FaStar } from "react-icons/fa6";
 
@@ -32,6 +33,7 @@ const AddReviewPage = () => {
           <label htmlFor="address" className="font-semibold">
             내용
           </label>
+          <Textarea />
           <textarea id="content" placeholder="리뷰 내용을 입력해주세요" />
         </div>
         <div className="flex flex-col gap-3">
