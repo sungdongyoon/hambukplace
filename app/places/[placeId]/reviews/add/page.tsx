@@ -16,6 +16,13 @@ type ReviewInfoType = {
   image: File[];
 };
 
+export type VisitDateCalendarProps = {
+  className: string;
+  reviewInfo: ReviewInfoType;
+  setIsCalendarOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setReviewInfo: React.Dispatch<React.SetStateAction<ReviewInfoType>>;
+};
+
 const AddReviewPage = () => {
   // 리뷰 정보 상태값
   const [reviewInfo, setReviewInfo] = useState<ReviewInfoType>({
@@ -25,7 +32,10 @@ const AddReviewPage = () => {
     image: [],
   });
 
-  // console.log("리뷰", reviewInfo);
+  // 캘린더 오픈 유무 값
+  const [isCalendarOpen, setIsCalendarOpen] = useState<boolean>(false);
+
+  console.log("리뷰", reviewInfo);
 
   return (
     <section>
@@ -47,15 +57,24 @@ const AddReviewPage = () => {
           <label htmlFor="address" className="font-semibold">
             방문일
           </label>
-          <Input
-            id="address"
-            placeholder="방문일자를 입력해주세요"
-            value={reviewInfo.visited_at}
-            onChange={(e) =>
-              setReviewInfo({ ...reviewInfo, visited_at: e.target.value })
-            }
-          />
-          <VisitDateCalendar />
+          <div className="relative">
+            <Input
+              id="address"
+              placeholder="방문일자를 입력해주세요"
+              value={reviewInfo.visited_at}
+              readOnly
+              onClick={() => setIsCalendarOpen(true)}
+              className="cursor-pointer"
+            />
+            {isCalendarOpen && (
+              <VisitDateCalendar
+                className="absolute top-8 left-0 z-100"
+                setIsCalendarOpen={setIsCalendarOpen}
+                reviewInfo={reviewInfo}
+                setReviewInfo={setReviewInfo}
+              />
+            )}
+          </div>
         </div>
         <div className="flex flex-col gap-3 col-span-2">
           <label htmlFor="address" className="font-semibold">
