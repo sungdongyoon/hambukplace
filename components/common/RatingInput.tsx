@@ -20,8 +20,6 @@ const RatingInput = ({ value, onChange }: RatingInputProps) => {
     onChange(nextValue);
   };
 
-  console.log("test", (value / 5) * 100);
-
   return (
     <div className="flex items-center gap-3">
       <div className="relative inline-flex">

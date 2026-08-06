@@ -7,6 +7,7 @@ import PageTitle from "@/components/common/PageTitle";
 import RatingInput from "@/components/common/RatingInput";
 import Textarea from "@/components/common/Textarea";
 import React, { useState } from "react";
+import VisitDateCalendar from "./components/VisitDateCalendar";
 
 type ReviewInfoType = {
   rate: number;
@@ -54,6 +55,7 @@ const AddReviewPage = () => {
               setReviewInfo({ ...reviewInfo, visited_at: e.target.value })
             }
           />
+          <VisitDateCalendar />
         </div>
         <div className="flex flex-col gap-3 col-span-2">
           <label htmlFor="address" className="font-semibold">
