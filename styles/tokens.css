@@ -515,6 +515,7 @@
   --color-purple-99: var(--color-purple-99);
   --color-purple-100: var(--color-purple-100);
 
+  --breakpoint-xs: 520px;
   --breakpoint-sm: 768px;
   --breakpoint-md: 992px;
   --breakpoint-lg: 1200px;

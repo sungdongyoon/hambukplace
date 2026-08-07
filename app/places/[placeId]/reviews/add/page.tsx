@@ -40,7 +40,7 @@ const AddReviewPage = () => {
   return (
     <section>
       <PageTitle>리뷰 추가 페이지</PageTitle>
-      <div className="grid grid-cols-2 gap-x-10 gap-y-20 mb-20">
+      <div className="grid grid-cols-1 xs:grid-cols-2 gap-x-10 gap-y-20 mb-20">
         <div className="flex flex-col gap-3">
           <p className="font-semibold">별점</p>
           <RatingInput
@@ -76,7 +76,7 @@ const AddReviewPage = () => {
             )}
           </div>
         </div>
-        <div className="flex flex-col gap-3 col-span-2">
+        <div className="flex flex-col gap-3 xs:col-span-2">
           <label htmlFor="address" className="font-semibold">
             내용
           </label>

@@ -5,6 +5,7 @@ import FileInput from "@/components/common/FileInput";
 import Input from "@/components/common/Input";
 import NaverMapScript from "@/components/common/NaverMapScript";
 import PageTitle from "@/components/common/PageTitle";
+import { useMobile } from "@/hooks/useMobile";
 import React, { useState } from "react";
 
 type AddPlaceType = {
@@ -30,6 +31,9 @@ const PlaceAddPage = () => {
   });
   // 주소 쿼리 상태값
   const [addressQuery, setAddressQuery] = useState<string>("");
+
+  // 모바일 구분
+  const isMobile = useMobile();
 
   // 주소 검색 함수
   const searchAddress = (query: string) => {
@@ -67,11 +71,13 @@ const PlaceAddPage = () => {
     });
   };
 
+  // console.log("addPlaceInfo", addPlaceInfo);
+
   return (
     <section>
       <NaverMapScript />
       <PageTitle>매장 추가</PageTitle>
-      <div className="grid grid-cols-2 gap-x-10 gap-y-20 mb-20">
+      <div className="grid grid-cols-1 xs:grid-cols-2 gap-x-10 gap-y-20 mb-20">
         <div className="flex flex-col gap-3">
           <label htmlFor="name" className="font-semibold">
             매장 이름
