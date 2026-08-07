@@ -1,11 +1,11 @@
-import { getPlaces } from "@/api/places";
+import { getPlacesMock } from "@/api/places";
 import PageTitle from "@/components/common/PageTitle";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
 const PlacesPage = async () => {
-  const getPlacesData = await getPlaces();
+  const getPlacesData = await getPlacesMock();
 
   return (
     <section>

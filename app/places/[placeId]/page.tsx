@@ -1,4 +1,4 @@
-import { getPlaces } from "@/api/places";
+import { getPlacesMock } from "@/api/places";
 import { getReviews } from "@/api/reviews";
 import PageTitle from "@/components/common/PageTitle";
 import Tabs from "@/components/common/Tabs";
@@ -13,7 +13,7 @@ const PlacePage = async ({ params }: { params: { placeId: string } }) => {
   const { placeId } = await params;
 
   // 매장 리스트 데이터
-  const placesData = await getPlaces();
+  const placesData = await getPlacesMock();
   const place = placesData.find((el) => el.id === placeId);
 
   // 리뷰 데이터

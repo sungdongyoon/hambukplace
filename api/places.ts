@@ -1,6 +1,6 @@
 import type { Place } from "@/types/place";
 
-export const getPlaces = async (): Promise<Place[]> => {
+export const getPlacesMock = async (): Promise<Place[]> => {
   const response = await fetch(`http://localhost:3000/api/places`, {
     cache: "no-store",
   });

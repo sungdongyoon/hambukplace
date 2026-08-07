@@ -1,6 +1,6 @@
 "use client";
 
-import { getPlaces } from "@/api/places";
+import { getPlacesMock } from "@/api/places";
 import { usePlaceStore } from "@/store/usePlaceStore";
 import { Place } from "@/types/place";
 import { useQuery } from "@tanstack/react-query";
@@ -21,7 +21,7 @@ const NaverMap = ({ initialData }: { initialData: Place[] }) => {
   // 매장 데이터 로드
   const { data, isLoading, isError } = useQuery({
     queryKey: ["places"],
-    queryFn: getPlaces,
+    queryFn: getPlacesMock,
     initialData: initialData,
   });
 
