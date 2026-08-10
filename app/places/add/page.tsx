@@ -5,18 +5,11 @@ import FileInput from "@/components/common/FileInput";
 import Input from "@/components/common/Input";
 import NaverMapScript from "@/components/common/NaverMapScript";
 import PageTitle from "@/components/common/PageTitle";
+import { usePostPlaces } from "@/hooks/muataions/usePlacesMutation";
 import { useMobile } from "@/hooks/useMobile";
+import { AddPlaceType } from "@/types/place";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
-
-type AddPlaceType = {
-  name: string;
-  address: string;
-  lat: number | null;
-  lng: number | null;
-  openHour: string;
-  phone: string;
-  image: File[];
-};
 
 const PlaceAddPage = () => {
   // 매장 등록 정보
@@ -25,15 +18,21 @@ const PlaceAddPage = () => {
     address: "",
     lat: null,
     lng: null,
-    openHour: "",
+    open_hours: "",
     phone: "",
-    image: [],
+    images: [],
   });
   // 주소 쿼리 상태값
   const [addressQuery, setAddressQuery] = useState<string>("");
 
+  // router
+  const router = useRouter();
+
   // 모바일 구분
   const isMobile = useMobile();
+
+  // mutation
+  const postPlace = usePostPlaces();
 
   // 주소 검색 함수
   const searchAddress = (query: string) => {
@@ -68,6 +67,20 @@ const PlaceAddPage = () => {
         lat: Number(result.y),
         lng: Number(result.x),
       }));
+    });
+  };
+
+  // 매장 등록 함수
+  const handlePostPlace = () => {
+    postPlace.mutate(addPlaceInfo, {
+      onSuccess: () => {
+        alert("매장 정보가 등록되었습니다!");
+        router.replace("/places");
+      },
+      onError: (error) => {
+        console.error("매장 정보 추가 실패", error);
+        alert("매장 정보 추가 실패!");
+      },
     });
   };
 
@@ -120,10 +133,10 @@ const PlaceAddPage = () => {
         <div className="flex flex-col gap-3">
           <p className="font-semibold">영업시간</p>
           <Input
-            value={addPlaceInfo.openHour}
+            value={addPlaceInfo.open_hours}
             placeholder="영업시간을 입력해주세요"
             onChange={(e) =>
-              setAddPlaceInfo({ ...addPlaceInfo, openHour: e.target.value })
+              setAddPlaceInfo({ ...addPlaceInfo, open_hours: e.target.value })
             }
           />
         </div>
@@ -150,7 +163,7 @@ const PlaceAddPage = () => {
           <FileInput
             id="image"
             label="이미지 업로드"
-            onChange={(e) => setAddPlaceInfo({ ...addPlaceInfo, image: e })}
+            onChange={(e) => setAddPlaceInfo({ ...addPlaceInfo, images: e })}
           />
         </div>
       </div>
@@ -158,7 +171,7 @@ const PlaceAddPage = () => {
         <Button className="w-25" size="lg" variant="outline">
           뒤로가기
         </Button>
-        <Button className="w-25" size="lg">
+        <Button className="w-25" size="lg" onClick={handlePostPlace}>
           저장
         </Button>
       </div>

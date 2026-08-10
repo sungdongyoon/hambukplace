@@ -8,13 +8,15 @@ import Image from "next/image";
 import React from "react";
 import { FaMapLocation, FaPhone, FaRegClock } from "react-icons/fa6";
 import Button from "@/components/common/Button";
+import { apiGetPlacesData } from "@/api/places/place";
 
 const PlacePage = async ({ params }: { params: { placeId: string } }) => {
   const { placeId } = await params;
 
   // 매장 리스트 데이터
   const placesData = await getPlacesMock();
-  const place = placesData.find((el) => el.id === placeId);
+  const placesData2 = await apiGetPlacesData();
+  const place = placesData2.find((el) => el.id === placeId);
 
   // 리뷰 데이터
   const reviewsData = await getReviews();

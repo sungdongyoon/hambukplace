@@ -7,11 +7,10 @@ export default async function Home() {
   const getPlacesData = await getPlacesMock();
 
   const getPlacesData2 = await apiGetPlacesData();
-  console.log("데이터", getPlacesData2);
 
   return (
     <div className="w-full">
-      <NaverMap initialData={getPlacesData} />
+      <NaverMap initialData={getPlacesData2} />
     </div>
   );
 }

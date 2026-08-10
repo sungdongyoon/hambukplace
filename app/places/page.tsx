@@ -1,4 +1,5 @@
 import { getPlacesMock } from "@/api/places";
+import { apiGetPlacesData } from "@/api/places/place";
 import PageTitle from "@/components/common/PageTitle";
 import Image from "next/image";
 import Link from "next/link";
@@ -6,12 +7,15 @@ import React from "react";
 
 const PlacesPage = async () => {
   const getPlacesData = await getPlacesMock();
+  const getPlacesData2 = await apiGetPlacesData();
+
+  console.log("데이터", getPlacesData2);
 
   return (
     <section>
       <PageTitle>매장 목록</PageTitle>
       <div className="grid grid-cols-[repeat(auto-fill,minmax(240px,1fr))] gap-x-5 gap-y-10">
-        {getPlacesData.map((place) => (
+        {getPlacesData2.map((place) => (
           <article key={place.id}>
             <Link href={`/places/${place.id}`}>
               <div className="w-full relative aspect-3/2 rounded-lg mb-3 border border-line-normal-neutral">

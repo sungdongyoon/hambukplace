@@ -1,3 +1,4 @@
+// 매장 정보 타입
 export type Place = {
   id: string;
   name: string;
@@ -10,4 +11,15 @@ export type Place = {
   images: string[];
   created_at: string;
   created_by: string;
+};
+
+// 매장 추가 타입
+export type AddPlaceType = {
+  name: string;
+  address: string;
+  lat: number | null;
+  lng: number | null;
+  open_hours: string;
+  phone: string;
+  images: File[];
 };
