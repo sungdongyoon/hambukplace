@@ -10,20 +10,22 @@ import { useMobile } from "@/hooks/useMobile";
 import { AddPlaceType } from "@/types/place";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
+import SearchAddressModal from "./components/SearchAddressModal";
 
 const PlaceAddPage = () => {
   // 매장 등록 정보
   const [addPlaceInfo, setAddPlaceInfo] = useState<AddPlaceType>({
     name: "",
     address: "",
+    address_detail: "",
     lat: null,
     lng: null,
     open_hours: "",
     phone: "",
     images: [],
   });
-  // 주소 쿼리 상태값
-  const [addressQuery, setAddressQuery] = useState<string>("");
+  // 매장 검색 모달 상태값
+  const [isSearchModal, setIsSearchModal] = useState<boolean>(false);
 
   // router
   const router = useRouter();
@@ -84,7 +86,7 @@ const PlaceAddPage = () => {
     });
   };
 
-  // console.log("addPlaceInfo", addPlaceInfo);
+  console.log("addPlaceInfo", addPlaceInfo);
 
   return (
     <section>
@@ -108,27 +110,38 @@ const PlaceAddPage = () => {
           <label htmlFor="address" className="font-semibold">
             주소
           </label>
-          <Input
-            id="address"
-            value={addressQuery}
-            placeholder="매장 주소를 입력해주세요"
-            onChange={(e) => setAddressQuery(e.target.value)}
-          />
-          <div className="flex justify-end">
+          {isSearchModal && (
+            <SearchAddressModal
+              onClose={() => setIsSearchModal(false)}
+              searchAddress={searchAddress}
+            />
+          )}
+          <div className="flex gap-3">
+            <div className="w-full flex flex-col gap-1">
+              <Input id="address" value={addPlaceInfo.address} />
+              {addPlaceInfo.address && (
+                <Input
+                  id="addressDetail"
+                  placeholder="상세 주소를 입력해주세요"
+                  value={addPlaceInfo.address_detail}
+                  onChange={(e) =>
+                    setAddPlaceInfo({
+                      ...addPlaceInfo,
+                      address_detail: e.target.value,
+                    })
+                  }
+                />
+              )}
+            </div>
             <Button
               type="button"
-              className="inline"
-              size="lg"
-              onClick={() => searchAddress(addressQuery)}
+              className="shrink-0"
+              size="md"
+              onClick={() => setIsSearchModal(true)}
             >
-              검색
+              주소 검색
             </Button>
           </div>
-          {addPlaceInfo.address && (
-            <p className="text-sm text-label-alternative">
-              선택된 주소: {addPlaceInfo.address}
-            </p>
-          )}
         </div>
         <div className="flex flex-col gap-3">
           <p className="font-semibold">영업시간</p>
