@@ -22,9 +22,35 @@ export const apiGetPlaces = async (): Promise<Place[]> => {
 export const apiPostPlace = async (place: AddPlaceType) => {
   const supabase = createClient();
 
-  // await supabase.from("places").insert(place);
+  // 이미지 파일 storage로 별도 전송
+  const files = place.images ?? [];
+  const imageUrls: string[] = [];
 
-  const { data, error } = await supabase.from("places").insert(place);
+  for (const file of files) {
+    const filePath = `places/${crypto.randomUUID()}-${file.name.split(".").pop() || "jpg"}`;
+
+    const { error: uploadError } = await supabase.storage
+      .from("place-images")
+      .update(filePath, file);
+
+    if (uploadError) {
+      console.log("이미지 업로드 실패!", uploadError);
+      throw new Error(uploadError.message);
+    }
+
+    const { data } = supabase.storage
+      .from("place-images")
+      .getPublicUrl(filePath);
+
+    imageUrls.push(data.publicUrl);
+  }
+
+  const payload = {
+    ...place,
+    images: imageUrls,
+  };
+
+  const { data, error } = await supabase.from("places").insert(payload);
 
   if (error) {
     console.log("매장 추가 실패!", error);

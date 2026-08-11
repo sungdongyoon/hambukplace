@@ -1,14 +1,12 @@
 "use client";
 
-import { getReviews } from "@/api/reviews";
 import { useMobile } from "@/hooks/useMobile";
-import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import { FaStar } from "react-icons/fa6";
 import Loading from "../../../components/common/Loading";
 import Button from "@/components/common/Button";
 import Link from "next/link";
-import { useParams, useSearchParams } from "next/navigation";
+import { useParams } from "next/navigation";
 import { useReviewQuery } from "@/hooks/queries/useReviewQuery";
 
 const TabReview = () => {

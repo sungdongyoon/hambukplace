@@ -52,7 +52,7 @@ const AddReviewPage = () => {
     postReview.mutate(reviewInfo, {
       onSuccess: () => {
         alert("리뷰가 등록되었습니다!");
-        router.replace("/places");
+        router.replace(`/places/${params.placeId}`);
       },
       onError: (error) => {
         console.error("리뷰 등록 실패", error);
