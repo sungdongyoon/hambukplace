@@ -1,21 +1,17 @@
-import { getPlacesMock } from "@/api/places";
-import { apiGetPlacesData } from "@/api/places/place";
+import { apiGetPlaces } from "@/api/places/places";
 import PageTitle from "@/components/common/PageTitle";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
 const PlacesPage = async () => {
-  const getPlacesData = await getPlacesMock();
-  const getPlacesData2 = await apiGetPlacesData();
-
-  console.log("데이터", getPlacesData2);
+  const getPlacesData = await apiGetPlaces();
 
   return (
     <section>
       <PageTitle>매장 목록</PageTitle>
       <div className="grid grid-cols-[repeat(auto-fill,minmax(240px,1fr))] gap-x-5 gap-y-10">
-        {getPlacesData2.map((place) => (
+        {getPlacesData.map((place) => (
           <article key={place.id}>
             <Link href={`/places/${place.id}`}>
               <div className="w-full relative aspect-3/2 rounded-lg mb-3 border border-line-normal-neutral">
@@ -23,20 +19,11 @@ const PlacesPage = async () => {
               </div>
               <p className="font-semibold">{place.name}</p>
               <address className="text-[0.7rem] not-italic text-label-alternative">
-                {place.address}
+                {`${place.address} ${place.address_detail}`}
               </address>
             </Link>
           </article>
         ))}
-        {/* {Array.from({ length: 20 }).map((_, index) => (
-          <div key={index}>
-            <div className="bg-gray-300 w-full aspect-3/2 rounded-lg mb-3"></div>
-            <p className="font-semibold">원스타 올드패션드 햄버거 도곡점</p>
-            <address className="text-[0.7rem] not-italic text-label-alternative">
-              서울특별시 강남구 도곡동 424-11 1층
-            </address>
-          </div>
-        ))} */}
       </div>
     </section>
   );

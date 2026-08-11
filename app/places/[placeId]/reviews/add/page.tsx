@@ -8,6 +8,8 @@ import RatingInput from "@/components/common/RatingInput";
 import Textarea from "@/components/common/Textarea";
 import React, { useState } from "react";
 import VisitDateCalendar from "./components/VisitDateCalendar";
+import { useParams } from "next/navigation";
+import { usePlacesQuery } from "@/hooks/queries/usePlacesQuery";
 
 type ReviewInfoType = {
   rate: number;
@@ -32,14 +34,21 @@ const AddReviewPage = () => {
     image: [],
   });
 
-  // 캘린더 오픈 유무 값
+  // 캘린더 활성 유무 값
   const [isCalendarOpen, setIsCalendarOpen] = useState<boolean>(false);
 
-  console.log("리뷰", reviewInfo);
+  // params
+  const params = useParams();
+
+  // zustand 쿼리
+  const { data, isLoading } = usePlacesQuery();
+
+  // 매장 상세 정보
+  const placeData = data?.find((el) => el.id === params.placeId);
 
   return (
     <section>
-      <PageTitle>리뷰 추가 페이지</PageTitle>
+      <PageTitle>{placeData?.name} 리뷰 작성</PageTitle>
       <div className="grid grid-cols-1 xs:grid-cols-2 gap-x-10 gap-y-20 mb-20">
         <div className="flex flex-col gap-3">
           <p className="font-semibold">별점</p>

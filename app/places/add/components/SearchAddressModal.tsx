@@ -11,7 +11,6 @@ const SearchAddressModal = ({
 }) => {
   // 주소 검색 함수
   const handleCompleteAddress = (data: any) => {
-    console.log("data", data);
     onClose();
     searchAddress(data.address);
   };

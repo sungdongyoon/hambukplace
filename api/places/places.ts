@@ -2,7 +2,7 @@ import { createClient } from "@/lib/supabase/client";
 import { AddPlaceType, Place } from "@/types/place";
 
 // [GET] 매장 정보
-export const apiGetPlacesData = async (): Promise<Place[]> => {
+export const apiGetPlaces = async (): Promise<Place[]> => {
   const supabase = await createClient();
 
   const { data, error } = await supabase
@@ -19,7 +19,7 @@ export const apiGetPlacesData = async (): Promise<Place[]> => {
 };
 
 // [POST] 매장 추가
-export const createPlace = async (place: AddPlaceType) => {
+export const apiPostPlace = async (place: AddPlaceType) => {
   const supabase = createClient();
 
   // await supabase.from("places").insert(place);
@@ -30,6 +30,4 @@ export const createPlace = async (place: AddPlaceType) => {
     console.log("매장 추가 실패!", error);
     throw new Error(error.message);
   }
-
-  return data;
 };

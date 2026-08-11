@@ -1,3 +1,4 @@
+// 리뷰 타입
 export type Review = {
   id: string;
   place_id: string;

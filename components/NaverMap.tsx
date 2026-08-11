@@ -1,12 +1,12 @@
 "use client";
 
-import { getPlacesMock } from "@/api/places";
 import { usePlaceStore } from "@/store/usePlaceStore";
 import { Place } from "@/types/place";
 import { useQuery } from "@tanstack/react-query";
 import Script from "next/script";
 import { useEffect, useRef, useState } from "react";
 import NaverMapScript from "./common/NaverMapScript";
+import { apiGetPlaces } from "@/api/places/places";
 
 const DEFAULT_CENTER = {
   lat: 37.5665,
@@ -21,7 +21,7 @@ const NaverMap = ({ initialData }: { initialData: Place[] }) => {
   // 매장 데이터 로드
   const { data, isLoading, isError } = useQuery({
     queryKey: ["places"],
-    queryFn: getPlacesMock,
+    queryFn: apiGetPlaces,
     initialData: initialData,
   });
 
