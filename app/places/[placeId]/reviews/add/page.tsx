@@ -37,7 +37,7 @@ const AddReviewPage = () => {
 
   // 리뷰 정보 상태값
   const [reviewInfo, setReviewInfo] = useState<AddReviewType>({
-    place_id: placeData?.id ?? "",
+    place_id: params.placeId,
     rate: 0,
     visited_at: "",
     content: "",
@@ -60,6 +60,8 @@ const AddReviewPage = () => {
       },
     });
   };
+
+  console.log("reviewInfo", reviewInfo);
 
   return (
     <section>

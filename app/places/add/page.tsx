@@ -118,7 +118,7 @@ const PlaceAddPage = () => {
           )}
           <div className="flex gap-3">
             <div className="w-full flex flex-col gap-1">
-              <Input id="address" value={addPlaceInfo.address} />
+              <Input id="address" value={addPlaceInfo.address} readOnly />
               {addPlaceInfo.address && (
                 <Input
                   id="addressDetail"

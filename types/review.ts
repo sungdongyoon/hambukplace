@@ -1,3 +1,5 @@
+import { ParamValue } from "next/dist/server/request/params";
+
 // 리뷰 타입
 export type Review = {
   id: string;
@@ -12,7 +14,7 @@ export type Review = {
 
 // 리뷰 추가 타입
 export type AddReviewType = {
-  place_id: string;
+  place_id: string | ParamValue;
   rate: number;
   visited_at: string;
   content: string;
