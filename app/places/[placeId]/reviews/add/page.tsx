@@ -8,43 +8,58 @@ import RatingInput from "@/components/common/RatingInput";
 import Textarea from "@/components/common/Textarea";
 import React, { useState } from "react";
 import VisitDateCalendar from "./components/VisitDateCalendar";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { usePlacesQuery } from "@/hooks/queries/usePlacesQuery";
-
-type ReviewInfoType = {
-  rate: number;
-  visited_at: string;
-  content: string;
-  image: File[];
-};
+import { AddReviewType } from "@/types/review";
+import { usePostReview } from "@/hooks/muataions/useReviewMutation";
 
 export type VisitDateCalendarProps = {
   className: string;
-  reviewInfo: ReviewInfoType;
+  reviewInfo: AddReviewType;
   setIsCalendarOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  setReviewInfo: React.Dispatch<React.SetStateAction<ReviewInfoType>>;
+  setReviewInfo: React.Dispatch<React.SetStateAction<AddReviewType>>;
 };
 
 const AddReviewPage = () => {
-  // 리뷰 정보 상태값
-  const [reviewInfo, setReviewInfo] = useState<ReviewInfoType>({
-    rate: 0,
-    visited_at: "",
-    content: "",
-    image: [],
-  });
-
-  // 캘린더 활성 유무 값
-  const [isCalendarOpen, setIsCalendarOpen] = useState<boolean>(false);
-
   // params
   const params = useParams();
+  // router
+  const router = useRouter();
 
   // zustand 쿼리
   const { data, isLoading } = usePlacesQuery();
 
   // 매장 상세 정보
   const placeData = data?.find((el) => el.id === params.placeId);
+
+  // mutation
+  const postReview = usePostReview();
+
+  // 리뷰 정보 상태값
+  const [reviewInfo, setReviewInfo] = useState<AddReviewType>({
+    place_id: placeData?.id ?? "",
+    rate: 0,
+    visited_at: "",
+    content: "",
+    images: [],
+  });
+
+  // 캘린더 활성 유무 값
+  const [isCalendarOpen, setIsCalendarOpen] = useState<boolean>(false);
+
+  // 리뷰 등록 함수
+  const handlePostReview = () => {
+    postReview.mutate(reviewInfo, {
+      onSuccess: () => {
+        alert("리뷰가 등록되었습니다!");
+        router.replace("/places");
+      },
+      onError: (error) => {
+        console.error("리뷰 등록 실패", error);
+        alert("리뷰 등록 실패!");
+      },
+    });
+  };
 
   return (
     <section>
@@ -103,7 +118,7 @@ const AddReviewPage = () => {
           <FileInput
             id="image"
             label="이미지 업로드"
-            onChange={(e) => setReviewInfo({ ...reviewInfo, image: e })}
+            onChange={(e) => setReviewInfo({ ...reviewInfo, images: e })}
           />
         </div>
       </div>
@@ -111,7 +126,7 @@ const AddReviewPage = () => {
         <Button className="w-25" size="lg" variant="outline">
           뒤로가기
         </Button>
-        <Button className="w-25" size="lg">
+        <Button className="w-25" size="lg" onClick={handlePostReview}>
           저장
         </Button>
       </div>
