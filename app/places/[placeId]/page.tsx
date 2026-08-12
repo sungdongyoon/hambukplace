@@ -2,10 +2,9 @@ import PageTitle from "@/components/common/PageTitle";
 import Tabs from "@/components/common/Tabs";
 import TabPhoto from "@/app/places/components/TabPhoto";
 import TabReview from "@/app/places/components/TabReview";
-import Image from "next/image";
-import React from "react";
 import { FaMapLocation, FaPhone, FaRegClock } from "react-icons/fa6";
 import Button from "@/components/common/Button";
+import ImageSlideSection from "./components/ImageSlideSection";
 import { apiGetPlaces } from "@/api/places/places";
 
 const PlacePage = async ({ params }: { params: { placeId: string } }) => {
@@ -13,7 +12,7 @@ const PlacePage = async ({ params }: { params: { placeId: string } }) => {
 
   // 매장 리스트 데이터
   const placesData = await apiGetPlaces();
-  const place = placesData.find((el) => el.id === placeId);
+  const place = placesData?.find((el) => el.id === placeId);
 
   // 텍스트 예외처리 함수
   const displayText = (value?: string | null) => {
@@ -31,7 +30,8 @@ const PlacePage = async ({ params }: { params: { placeId: string } }) => {
           </Button>
         </div>
       </div>
-      <div className="bg-neutral-90 w-full h-87.5"></div>
+      {place && <ImageSlideSection place={place} />}
+
       <div className="flex flex-col gap-3 mt-4">
         <address className="flex items-center gap-2 font-medium text-[0.8rem] not-italic">
           <FaMapLocation />
