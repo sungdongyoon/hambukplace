@@ -26,7 +26,7 @@ const AddReviewPage = () => {
   // router
   const router = useRouter();
 
-  // zustand 쿼리
+  // tanstack query
   const { data, isLoading } = usePlacesQuery();
 
   // 매장 상세 정보

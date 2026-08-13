@@ -5,16 +5,20 @@ import FileInput from "@/components/common/FileInput";
 import Input from "@/components/common/Input";
 import NaverMapScript from "@/components/common/NaverMapScript";
 import PageTitle from "@/components/common/PageTitle";
-import { usePostPlace } from "@/hooks/muataions/usePlacesMutation";
+import {
+  usePostPlace,
+  useUpdatePlace,
+} from "@/hooks/muataions/usePlacesMutation";
 import { useMobile } from "@/hooks/useMobile";
 import { AddPlaceType } from "@/types/place";
-import { useRouter } from "next/navigation";
-import React, { useState } from "react";
-import SearchAddressModal from "./components/SearchAddressModal";
+import { useParams, useRouter } from "next/navigation";
+import React, { useEffect, useState } from "react";
+import SearchAddressModal from "../../add/components/SearchAddressModal";
+import { usePlacesQuery } from "@/hooks/queries/usePlacesQuery";
 
-const PlaceAddPage = () => {
+const PlaceUpdatePage = () => {
   // 매장 등록 정보
-  const [addPlaceInfo, setAddPlaceInfo] = useState<AddPlaceType>({
+  const [updatePlaceInfo, setUpdatePlaceInfo] = useState<AddPlaceType>({
     name: "",
     address: "",
     address_detail: "",
@@ -27,14 +31,22 @@ const PlaceAddPage = () => {
   // 매장 검색 모달 상태값
   const [isSearchModal, setIsSearchModal] = useState<boolean>(false);
 
+  // params
+  const params = useParams();
+  const placeId = params.placeId;
+
   // router
   const router = useRouter();
 
   // 모바일 구분
   const isMobile = useMobile();
 
-  // mutation
-  const postPlace = usePostPlace();
+  // tanstack query
+  const { data, isLoading } = usePlacesQuery();
+  const updatePlace = useUpdatePlace();
+
+  // 매장 상세 정보
+  const placeData = data?.find((el) => el.id === placeId);
 
   // 주소 검색 함수
   const searchAddress = (query: string) => {
@@ -63,7 +75,7 @@ const PlaceAddPage = () => {
         return;
       }
 
-      setAddPlaceInfo((prev) => ({
+      setUpdatePlaceInfo((prev) => ({
         ...prev,
         address: result.roadAddress || result.jibunAddress,
         lat: Number(result.y),
@@ -72,26 +84,43 @@ const PlaceAddPage = () => {
     });
   };
 
-  // 매장 등록 함수
-  const handlePostPlace = () => {
-    postPlace.mutate(addPlaceInfo, {
-      onSuccess: () => {
-        alert("매장 정보가 등록되었습니다!");
-        router.replace("/places");
+  // 매장 업데이트 함수
+  const handleUpdatePlace = () => {
+    updatePlace.mutate(
+      { id: placeId, place: updatePlaceInfo },
+      {
+        onSuccess: () => {
+          alert("매장 정보가 업데이트 되었습니다!");
+          router.replace("/places");
+        },
+        onError: (error) => {
+          console.error("매장 정보 업데이트 실패", error);
+          alert("매장 정보 업데이트 실패!");
+        },
       },
-      onError: (error) => {
-        console.error("매장 정보 추가 실패", error);
-        alert("매장 정보 추가 실패!");
-      },
-    });
+    );
   };
 
-  console.log("addPlaceInfo", addPlaceInfo);
+  // 초기 화면에 매장 정보 적용
+  useEffect(() => {
+    setUpdatePlaceInfo({
+      name: placeData?.name ?? "",
+      address: placeData?.address ?? "",
+      address_detail: placeData?.address_detail,
+      lat: placeData?.lat ?? null,
+      lng: placeData?.lng ?? null,
+      open_hours: placeData?.open_hours ?? "",
+      phone: placeData?.phone ?? "",
+      images: [],
+    });
+  }, [placeData]);
+
+  console.log("updatePlaceInfo", updatePlaceInfo);
 
   return (
     <section>
       <NaverMapScript />
-      <PageTitle>매장 추가</PageTitle>
+      <PageTitle>매장 정보 수정</PageTitle>
       <div className="grid grid-cols-1 xs:grid-cols-2 gap-x-10 gap-y-20 mb-20">
         <div className="flex flex-col gap-3">
           <label htmlFor="name" className="font-semibold">
@@ -99,10 +128,10 @@ const PlaceAddPage = () => {
           </label>
           <Input
             id="name"
-            value={addPlaceInfo.name}
+            value={updatePlaceInfo.name}
             placeholder="매장 이름을 입력해주세요"
             onChange={(e) =>
-              setAddPlaceInfo({ ...addPlaceInfo, name: e.target.value })
+              setUpdatePlaceInfo({ ...updatePlaceInfo, name: e.target.value })
             }
           />
         </div>
@@ -118,15 +147,15 @@ const PlaceAddPage = () => {
           )}
           <div className="flex gap-3">
             <div className="w-full flex flex-col gap-1">
-              <Input id="address" value={addPlaceInfo.address} readOnly />
-              {addPlaceInfo.address && (
+              <Input id="address" value={updatePlaceInfo.address} readOnly />
+              {updatePlaceInfo.address && (
                 <Input
                   id="addressDetail"
                   placeholder="상세 주소를 입력해주세요"
-                  value={addPlaceInfo.address_detail}
+                  value={updatePlaceInfo.address_detail}
                   onChange={(e) =>
-                    setAddPlaceInfo({
-                      ...addPlaceInfo,
+                    setUpdatePlaceInfo({
+                      ...updatePlaceInfo,
                       address_detail: e.target.value,
                     })
                   }
@@ -146,10 +175,13 @@ const PlaceAddPage = () => {
         <div className="flex flex-col gap-3">
           <p className="font-semibold">영업시간</p>
           <Input
-            value={addPlaceInfo.open_hours}
+            value={updatePlaceInfo.open_hours}
             placeholder="영업시간을 입력해주세요"
             onChange={(e) =>
-              setAddPlaceInfo({ ...addPlaceInfo, open_hours: e.target.value })
+              setUpdatePlaceInfo({
+                ...updatePlaceInfo,
+                open_hours: e.target.value,
+              })
             }
           />
         </div>
@@ -159,13 +191,13 @@ const PlaceAddPage = () => {
           </label>
           <Input
             id="phone"
-            value={addPlaceInfo.phone}
+            value={updatePlaceInfo.phone}
             placeholder="매장 전화번호를 입력해주세요"
             inputMode="numeric"
             maxLength={11}
             onChange={(e) =>
-              setAddPlaceInfo({
-                ...addPlaceInfo,
+              setUpdatePlaceInfo({
+                ...updatePlaceInfo,
                 phone: e.target.value.replace(/\D/g, ""),
               })
             }
@@ -176,7 +208,9 @@ const PlaceAddPage = () => {
           <FileInput
             id="image"
             label="이미지 업로드"
-            onChange={(e) => setAddPlaceInfo({ ...addPlaceInfo, images: e })}
+            onChange={(e) =>
+              setUpdatePlaceInfo({ ...updatePlaceInfo, images: e })
+            }
           />
         </div>
       </div>
@@ -184,7 +218,7 @@ const PlaceAddPage = () => {
         <Button className="w-25" size="lg" variant="outline">
           뒤로가기
         </Button>
-        <Button className="w-25" size="lg" onClick={handlePostPlace}>
+        <Button className="w-25" size="lg" onClick={handleUpdatePlace}>
           저장
         </Button>
       </div>
@@ -192,4 +226,4 @@ const PlaceAddPage = () => {
   );
 };
 
-export default PlaceAddPage;
+export default PlaceUpdatePage;

@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 
 export const useReviewQuery = () => {
   return useQuery({
-    queryKey: ["reviews"],
+    queryKey: ["postReview"],
     queryFn: () => apiGetReview(),
   });
 };

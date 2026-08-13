@@ -20,7 +20,7 @@ const NaverMap = ({ initialData }: { initialData: Place[] }) => {
 
   // 매장 데이터 로드
   const { data, isLoading, isError } = useQuery({
-    queryKey: ["places"],
+    queryKey: ["placeMap"],
     queryFn: apiGetPlaces,
     initialData: initialData,
   });

@@ -23,5 +23,5 @@ export type AddPlaceType = {
   lng: number | null;
   open_hours?: string;
   phone?: string;
-  images?: File[];
+  images?: File[] | null;
 };

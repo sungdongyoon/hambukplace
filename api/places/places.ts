@@ -1,5 +1,6 @@
 import { createClient } from "@/lib/supabase/client";
 import { AddPlaceType, Place } from "@/types/place";
+import { ParamValue } from "next/dist/server/request/params";
 
 // [GET] 매장 정보
 export const apiGetPlaces = async (): Promise<Place[]> => {
@@ -54,6 +55,27 @@ export const apiPostPlace = async (place: AddPlaceType) => {
 
   if (error) {
     console.log("매장 추가 실패!", error);
+    throw new Error(error.message);
+  }
+};
+
+// [UPDATE] 매장 정보 업데이트
+export const apiUpdatePlace = async ({
+  id,
+  place,
+}: {
+  id: string | ParamValue;
+  place: AddPlaceType;
+}) => {
+  const supabase = createClient();
+
+  const { data, error } = await supabase
+    .from("places")
+    .update(place)
+    .eq("id", id);
+
+  if (error) {
+    console.log("매장 업데이트 실패!", error);
     throw new Error(error.message);
   }
 };

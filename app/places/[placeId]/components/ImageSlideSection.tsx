@@ -23,39 +23,50 @@ const ImageSlideSection = ({ place }: { place: Place }) => {
       emblaApi.scrollNext();
     }
   }, [emblaApi]);
+  console.log("place", place);
 
   return (
     <div
       className="embla overflow-hidden w-full h-87.5 relative"
       ref={emblaRef}
     >
-      <div className="embla__container flex gap-3 h-full">
-        {place?.images?.map((image, index) => (
-          <div
-            className="embla__slide relative h-full min-w-0 flex-[0_0_40%]"
-            key={image}
-          >
-            <Image
-              src={image}
-              alt={`${place.name} 이미지 ${index + 1}`}
-              fill
-              className="object-cover rounded-lg"
-            />
+      {place?.images?.length ? (
+        <>
+          <div className="embla__container flex gap-3 h-full">
+            {place?.images?.map((image, index) => (
+              <div
+                className="embla__slide relative h-full min-w-0 flex-[0_0_40%]"
+                key={image}
+              >
+                <Image
+                  src={image}
+                  alt={`${place.name} 이미지 ${index + 1}`}
+                  fill
+                  className="object-cover rounded-lg"
+                />
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
-      <button
-        onClick={slidePrev}
-        className="absolute left-5 top-1/2 -translate-y-1/2 p-3 bg-white shadow rounded-[50%] cursor-pointer"
-      >
-        <FaChevronLeft />
-      </button>
-      <button
-        onClick={slideNext}
-        className="absolute right-5 top-1/2 -translate-y-1/2 p-3 bg-white shadow rounded-[50%] cursor-pointer"
-      >
-        <FaChevronRight />
-      </button>
+          <button
+            onClick={slidePrev}
+            className="absolute left-5 top-1/2 -translate-y-1/2 p-3 bg-white shadow rounded-[50%] cursor-pointer"
+          >
+            <FaChevronLeft />
+          </button>
+          <button
+            onClick={slideNext}
+            className="absolute right-5 top-1/2 -translate-y-1/2 p-3 bg-white shadow rounded-[50%] cursor-pointer"
+          >
+            <FaChevronRight />
+          </button>
+        </>
+      ) : (
+        <div className="w-full h-full flex justify-center items-center border border-line-normal-neutral rounded-lg">
+          <p className="font-medium text-[0.9rem]">
+            등록된 이미지가 없습니다❗️
+          </p>
+        </div>
+      )}
     </div>
   );
 };

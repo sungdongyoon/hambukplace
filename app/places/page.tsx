@@ -24,7 +24,7 @@ const PlacesPage = async () => {
                   />
                 ) : (
                   <div className="w-full h-full flex justify-center items-center border border-line-normal-neutral rounded-lg">
-                    <p className="text-[0.6rem] font-medium">
+                    <p className="font-medium text-[0.6rem]">
                       등록된 이미지가 없습니다❗️
                     </p>
                   </div>
