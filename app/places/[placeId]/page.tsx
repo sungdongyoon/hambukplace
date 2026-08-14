@@ -6,6 +6,7 @@ import { FaMapLocation, FaPhone, FaRegClock } from "react-icons/fa6";
 import Button from "@/components/common/Button";
 import ImageSlideSection from "./components/ImageSlideSection";
 import { apiGetPlaces } from "@/api/places/places";
+import Link from "next/link";
 
 const PlacePage = async ({ params }: { params: { placeId: string } }) => {
   const { placeId } = await params;
@@ -24,7 +25,9 @@ const PlacePage = async ({ params }: { params: { placeId: string } }) => {
       <div className="flex justify-between items-center">
         <PageTitle>{displayText(place?.name)}</PageTitle>
         <div className="flex items-center justify-end gap-1 mb-6">
-          <Button size="sm">수정</Button>
+          <Link href={`/places/${placeId}/update`}>
+            <Button size="sm">수정</Button>
+          </Link>
           <Button size="sm" className="bg-status-negative">
             삭제
           </Button>

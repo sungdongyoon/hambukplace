@@ -10,15 +10,16 @@ import {
   useUpdatePlace,
 } from "@/hooks/muataions/usePlacesMutation";
 import { useMobile } from "@/hooks/useMobile";
-import { AddPlaceType } from "@/types/place";
+import { UpdateImage, UpdatePlaceType } from "@/types/place";
 import { useParams, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import SearchAddressModal from "../../add/components/SearchAddressModal";
 import { usePlacesQuery } from "@/hooks/queries/usePlacesQuery";
+import Loading from "@/components/common/Loading";
 
 const PlaceUpdatePage = () => {
   // 매장 등록 정보
-  const [updatePlaceInfo, setUpdatePlaceInfo] = useState<AddPlaceType>({
+  const [updatePlaceInfo, setUpdatePlaceInfo] = useState<UpdatePlaceType>({
     name: "",
     address: "",
     address_detail: "",
@@ -103,6 +104,13 @@ const PlaceUpdatePage = () => {
 
   // 초기 화면에 매장 정보 적용
   useEffect(() => {
+    const initImages: UpdateImage[] =
+      placeData?.images.map((el) => ({
+        id: el,
+        type: "exist",
+        url: el,
+      })) ?? [];
+
     setUpdatePlaceInfo({
       name: placeData?.name ?? "",
       address: placeData?.address ?? "",
@@ -111,117 +119,136 @@ const PlaceUpdatePage = () => {
       lng: placeData?.lng ?? null,
       open_hours: placeData?.open_hours ?? "",
       phone: placeData?.phone ?? "",
-      images: [],
+      images: initImages,
     });
   }, [placeData]);
 
-  console.log("updatePlaceInfo", updatePlaceInfo);
-
   return (
     <section>
-      <NaverMapScript />
-      <PageTitle>매장 정보 수정</PageTitle>
-      <div className="grid grid-cols-1 xs:grid-cols-2 gap-x-10 gap-y-20 mb-20">
-        <div className="flex flex-col gap-3">
-          <label htmlFor="name" className="font-semibold">
-            매장 이름
-          </label>
-          <Input
-            id="name"
-            value={updatePlaceInfo.name}
-            placeholder="매장 이름을 입력해주세요"
-            onChange={(e) =>
-              setUpdatePlaceInfo({ ...updatePlaceInfo, name: e.target.value })
-            }
-          />
+      {isLoading ? (
+        <div className="w-full h-150 flex justify-center items-center">
+          <Loading />
         </div>
-        <div className="flex flex-col gap-3">
-          <label htmlFor="address" className="font-semibold">
-            주소
-          </label>
-          {isSearchModal && (
-            <SearchAddressModal
-              onClose={() => setIsSearchModal(false)}
-              searchAddress={searchAddress}
-            />
-          )}
-          <div className="flex gap-3">
-            <div className="w-full flex flex-col gap-1">
-              <Input id="address" value={updatePlaceInfo.address} readOnly />
-              {updatePlaceInfo.address && (
-                <Input
-                  id="addressDetail"
-                  placeholder="상세 주소를 입력해주세요"
-                  value={updatePlaceInfo.address_detail}
-                  onChange={(e) =>
-                    setUpdatePlaceInfo({
-                      ...updatePlaceInfo,
-                      address_detail: e.target.value,
-                    })
-                  }
+      ) : (
+        <>
+          <PageTitle>매장 정보 수정</PageTitle>
+          <div className="grid grid-cols-1 xs:grid-cols-2 gap-x-10 gap-y-20 mb-20">
+            <div className="flex flex-col gap-3">
+              <label htmlFor="name" className="font-semibold">
+                매장 이름
+              </label>
+              <Input
+                id="name"
+                value={updatePlaceInfo.name}
+                placeholder="매장 이름을 입력해주세요"
+                onChange={(e) =>
+                  setUpdatePlaceInfo({
+                    ...updatePlaceInfo,
+                    name: e.target.value,
+                  })
+                }
+              />
+            </div>
+            <div className="flex flex-col gap-3">
+              <label htmlFor="address" className="font-semibold">
+                주소
+              </label>
+              {isSearchModal && (
+                <SearchAddressModal
+                  onClose={() => setIsSearchModal(false)}
+                  searchAddress={searchAddress}
                 />
               )}
+              <div className="flex gap-3">
+                <div className="w-full flex flex-col gap-1">
+                  <Input
+                    id="address"
+                    value={updatePlaceInfo.address}
+                    readOnly
+                  />
+                  {updatePlaceInfo.address && (
+                    <Input
+                      id="addressDetail"
+                      placeholder="상세 주소를 입력해주세요"
+                      value={updatePlaceInfo.address_detail}
+                      onChange={(e) =>
+                        setUpdatePlaceInfo({
+                          ...updatePlaceInfo,
+                          address_detail: e.target.value,
+                        })
+                      }
+                    />
+                  )}
+                </div>
+                <Button
+                  type="button"
+                  className="shrink-0"
+                  size="md"
+                  onClick={() => setIsSearchModal(true)}
+                >
+                  주소 검색
+                </Button>
+              </div>
             </div>
-            <Button
-              type="button"
-              className="shrink-0"
-              size="md"
-              onClick={() => setIsSearchModal(true)}
-            >
-              주소 검색
+            <div className="flex flex-col gap-3">
+              <p className="font-semibold">영업시간</p>
+              <Input
+                value={updatePlaceInfo.open_hours}
+                placeholder="영업시간을 입력해주세요"
+                onChange={(e) =>
+                  setUpdatePlaceInfo({
+                    ...updatePlaceInfo,
+                    open_hours: e.target.value,
+                  })
+                }
+              />
+            </div>
+            <div className="flex flex-col gap-3">
+              <label htmlFor="phone" className="font-semibold">
+                전화번호
+              </label>
+              <Input
+                id="phone"
+                value={updatePlaceInfo.phone}
+                placeholder="매장 전화번호를 입력해주세요"
+                inputMode="numeric"
+                maxLength={11}
+                onChange={(e) =>
+                  setUpdatePlaceInfo({
+                    ...updatePlaceInfo,
+                    phone: e.target.value.replace(/\D/g, ""),
+                  })
+                }
+              />
+            </div>
+            <div className="flex flex-col gap-3">
+              <p className="font-semibold">이미지 추가</p>
+              <FileInput
+                id="image"
+                label="이미지 업로드"
+                onChange={(e) =>
+                  setUpdatePlaceInfo({
+                    ...updatePlaceInfo,
+                    images: [
+                      ...(updatePlaceInfo.images ?? []),
+                      { id: crypto.randomUUID(), type: "new", file: e },
+                    ],
+                  })
+                }
+              />
+            </div>
+          </div>
+          <div className="flex gap-3 justify-end">
+            <Button className="w-25" size="lg" variant="outline">
+              뒤로가기
+            </Button>
+            <Button className="w-25" size="lg" onClick={handleUpdatePlace}>
+              저장
             </Button>
           </div>
-        </div>
-        <div className="flex flex-col gap-3">
-          <p className="font-semibold">영업시간</p>
-          <Input
-            value={updatePlaceInfo.open_hours}
-            placeholder="영업시간을 입력해주세요"
-            onChange={(e) =>
-              setUpdatePlaceInfo({
-                ...updatePlaceInfo,
-                open_hours: e.target.value,
-              })
-            }
-          />
-        </div>
-        <div className="flex flex-col gap-3">
-          <label htmlFor="phone" className="font-semibold">
-            전화번호
-          </label>
-          <Input
-            id="phone"
-            value={updatePlaceInfo.phone}
-            placeholder="매장 전화번호를 입력해주세요"
-            inputMode="numeric"
-            maxLength={11}
-            onChange={(e) =>
-              setUpdatePlaceInfo({
-                ...updatePlaceInfo,
-                phone: e.target.value.replace(/\D/g, ""),
-              })
-            }
-          />
-        </div>
-        <div className="flex flex-col gap-3">
-          <p className="font-semibold">이미지 추가</p>
-          <FileInput
-            id="image"
-            label="이미지 업로드"
-            onChange={(e) =>
-              setUpdatePlaceInfo({ ...updatePlaceInfo, images: e })
-            }
-          />
-        </div>
-      </div>
-      <div className="flex gap-3 justify-end">
-        <Button className="w-25" size="lg" variant="outline">
-          뒤로가기
-        </Button>
-        <Button className="w-25" size="lg" onClick={handleUpdatePlace}>
-          저장
-        </Button>
-      </div>
+        </>
+      )}
+      <NaverMapScript />
     </section>
   );
 };

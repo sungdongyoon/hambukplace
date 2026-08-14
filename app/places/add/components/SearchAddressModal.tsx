@@ -16,7 +16,7 @@ const SearchAddressModal = ({
   };
 
   return (
-    <div className="w-screen h-screen fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex justify-center items-center bg-black/50">
+    <div className="w-screen h-screen fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex justify-center items-center bg-black/50 z-10">
       <div className="w-150 flex flex-col gap-1">
         <div className="border border-line-normal-neutral">
           <DaumPostcode onComplete={handleCompleteAddress} />

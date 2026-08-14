@@ -55,8 +55,6 @@ const NaverMap = ({ initialData }: { initialData: Place[] }) => {
       });
     });
 
-    console.log("marakers", markers);
-
     naverMapRef.current = map;
     markerRef.current = markers;
 

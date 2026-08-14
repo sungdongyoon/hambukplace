@@ -61,8 +61,6 @@ const AddReviewPage = () => {
     });
   };
 
-  console.log("reviewInfo", reviewInfo);
-
   return (
     <section>
       <PageTitle>{placeData?.name} 리뷰 작성</PageTitle>

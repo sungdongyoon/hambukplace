@@ -23,7 +23,6 @@ const ImageSlideSection = ({ place }: { place: Place }) => {
       emblaApi.scrollNext();
     }
   }, [emblaApi]);
-  console.log("place", place);
 
   return (
     <div

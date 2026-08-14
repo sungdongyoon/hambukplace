@@ -86,8 +86,6 @@ const PlaceAddPage = () => {
     });
   };
 
-  console.log("addPlaceInfo", addPlaceInfo);
-
   return (
     <section>
       <NaverMapScript />

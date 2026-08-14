@@ -22,8 +22,6 @@ const TabReview = () => {
   // 리뷰 목록 데이터
   const reviewList = data?.filter((el) => el.place_id === params.placeId);
 
-  console.log("data", reviewList);
-
   return (
     <div className={`flex flex-col gap-3`}>
       {isLoading ? (

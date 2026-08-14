@@ -49,8 +49,6 @@ const FileInput = ({
     };
   }, [previewFiles]);
 
-  console.log("preview", previewFiles);
-
   return (
     <div>
       <label
@@ -86,7 +84,7 @@ const FileInput = ({
           <ul className="grid grid-cols-2 gap-3 sm:grid-cols-3">
             {previewFiles.map((file) => (
               <li key={file.id} className="flex flex-col gap-2">
-                <div className="relative aspect-3/2 w-full overflow-hidden rounded-md bg-neutral-90 -z-10">
+                <div className="relative aspect-3/2 w-full overflow-hidden rounded-md bg-neutral-90">
                   <Image
                     src={file.url}
                     alt={file.name}
