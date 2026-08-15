@@ -19,8 +19,9 @@ export const useUpdatePlace = () => {
 
   return useMutation({
     mutationFn: apiUpdatePlace,
-    onSuccess: () => {
+    onSuccess: (_, variables) => {
       queryClient.invalidateQueries({ queryKey: ["updatePlace"] });
+      queryClient.invalidateQueries({ queryKey: ["place", variables.id] });
     },
   });
 };

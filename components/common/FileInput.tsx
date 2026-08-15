@@ -2,19 +2,20 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { FaXmark } from "react-icons/fa6";
 
+type FilePreview = {
+  id: string;
+  file?: File;
+  name: string;
+  url: string;
+};
+
 type FileInputProps = {
   id: string;
   label?: string;
   accept?: string;
-  onChange?: (files: File[]) => void;
+  existImages?: string[];
+  onChange?: (files: FilePreview[]) => void;
   className?: string;
-};
-
-type FilePreview = {
-  id: string;
-  file: File;
-  name: string;
-  url: string;
 };
 
 const FileInput = ({
@@ -22,25 +23,36 @@ const FileInput = ({
   id,
   label = "파일 선택",
   accept = "image/*",
+  existImages,
   onChange,
 }: FileInputProps) => {
-  const [previewFiles, setPreviewFiles] = useState<FilePreview[]>([]);
+  const [previewFiles, setPreviewFiles] = useState<FilePreview[]>(
+    () =>
+      existImages?.map((url) => ({
+        id: url,
+        name: url.split("/").pop() ?? "image",
+        url,
+      })) ?? [],
+  );
 
   // 파일 삭제 함수
   const handleRemoveFile = (targetId: string) => {
-    setPreviewFiles((prev) => {
-      const targetFile = prev.find((file) => file.id === targetId);
+    const targetFile = previewFiles.find((file) => file.id === targetId);
 
-      if (targetFile) {
-        URL.revokeObjectURL(targetFile.url);
-      }
+    if (targetFile) {
+      URL.revokeObjectURL(targetFile.url);
+    }
 
-      const nextFiles = prev.filter((file) => file.id !== targetId);
+    const nextFiles = previewFiles.filter((file) => file.id !== targetId);
 
-      onChange?.(nextFiles.map((file) => file.file));
+    setPreviewFiles(nextFiles);
 
-      return nextFiles;
-    });
+    // File 타입만 걸러내기
+    const files = nextFiles
+      .map((item) => item.file)
+      .filter((file): file is File => Boolean(file));
+
+    onChange?.(nextFiles);
   };
 
   useEffect(() => {
@@ -48,6 +60,17 @@ const FileInput = ({
       previewFiles.forEach((file) => URL.revokeObjectURL(file.url));
     };
   }, [previewFiles]);
+
+  // exist 이미지 동기화
+  useEffect(() => {
+    setPreviewFiles(
+      existImages?.map((url) => ({
+        id: url,
+        name: url.split("/").pop() ?? "image",
+        url,
+      })) ?? [],
+    );
+  }, [existImages]);
 
   return (
     <div>
@@ -73,8 +96,11 @@ const FileInput = ({
             url: URL.createObjectURL(file),
           }));
 
-          setPreviewFiles(nextPreviewFiles);
-          onChange?.(files);
+          const nextFiles = [...previewFiles, ...nextPreviewFiles];
+
+          setPreviewFiles(nextFiles);
+
+          onChange?.(nextFiles);
 
           e.target.value = "";
         }}
