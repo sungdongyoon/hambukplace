@@ -123,8 +123,6 @@ const PlaceUpdatePage = () => {
     });
   }, [placeData]);
 
-  console.log("place", placeData);
-
   return (
     <section>
       {isLoading ? (
@@ -229,7 +227,7 @@ const PlaceUpdatePage = () => {
                 id="image"
                 label="이미지 업로드"
                 existImages={placeData?.images}
-                onChange={(previews) =>
+                onPreviewsChange={(previews) =>
                   setUpdatePlaceInfo((prev) => ({
                     ...prev,
                     images: previews.map((preview) =>
@@ -247,15 +245,6 @@ const PlaceUpdatePage = () => {
                     ),
                   }))
                 }
-                // onChange={(e) =>
-                //   setUpdatePlaceInfo({
-                //     ...updatePlaceInfo,
-                //     images: [
-                //       ...(updatePlaceInfo.images ?? []),
-                //       { id: crypto.randomUUID(), type: "new", file: e },
-                //     ],
-                //   })
-                // }
               />
             </div>
           </div>

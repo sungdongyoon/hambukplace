@@ -174,7 +174,12 @@ const PlaceAddPage = () => {
           <FileInput
             id="image"
             label="이미지 업로드"
-            onChange={(e) => setAddPlaceInfo({ ...addPlaceInfo, images: e })}
+            onFilesChange={(e) =>
+              setAddPlaceInfo((prev) => ({
+                ...prev,
+                images: e,
+              }))
+            }
           />
         </div>
       </div>

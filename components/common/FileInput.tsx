@@ -14,7 +14,8 @@ type FileInputProps = {
   label?: string;
   accept?: string;
   existImages?: string[];
-  onChange?: (files: FilePreview[]) => void;
+  onFilesChange?: (files: File[]) => void;
+  onPreviewsChange?: (previews: FilePreview[]) => void;
   className?: string;
 };
 
@@ -24,7 +25,8 @@ const FileInput = ({
   label = "파일 선택",
   accept = "image/*",
   existImages,
-  onChange,
+  onFilesChange,
+  onPreviewsChange,
 }: FileInputProps) => {
   const [previewFiles, setPreviewFiles] = useState<FilePreview[]>(
     () =>
@@ -35,24 +37,26 @@ const FileInput = ({
       })) ?? [],
   );
 
+  // File 타입 구분 함수
+  const getFiles = (preview: FilePreview[]) => {
+    return preview
+      .map((el) => el.file)
+      .filter((file): file is File => Boolean(file));
+  };
+
   // 파일 삭제 함수
   const handleRemoveFile = (targetId: string) => {
     const targetFile = previewFiles.find((file) => file.id === targetId);
 
-    if (targetFile) {
+    if (targetFile?.file) {
       URL.revokeObjectURL(targetFile.url);
     }
 
     const nextFiles = previewFiles.filter((file) => file.id !== targetId);
 
     setPreviewFiles(nextFiles);
-
-    // File 타입만 걸러내기
-    const files = nextFiles
-      .map((item) => item.file)
-      .filter((file): file is File => Boolean(file));
-
-    onChange?.(nextFiles);
+    onFilesChange?.(getFiles(nextFiles));
+    onPreviewsChange?.(nextFiles);
   };
 
   useEffect(() => {
@@ -100,7 +104,8 @@ const FileInput = ({
 
           setPreviewFiles(nextFiles);
 
-          onChange?.(nextFiles);
+          onFilesChange?.(getFiles(nextFiles));
+          onPreviewsChange?.(nextFiles);
 
           e.target.value = "";
         }}
