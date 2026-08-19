@@ -1,3 +1,4 @@
+import { uploadPlaceImages } from "@/image";
 import { createClient } from "@/lib/supabase/client";
 import { Place } from "@/types/place";
 import { AddReviewType, Review } from "@/types/review";
@@ -23,7 +24,16 @@ export const apiGetReview = async (): Promise<Review[]> => {
 export const apiPostReview = async (review: AddReviewType) => {
   const supabase = createClient();
 
-  const { data, error } = await supabase.from("reviews").insert(review);
+  // 이미지 storage로 전송
+  const uploadUrls = await uploadPlaceImages(review.images);
+
+  // 최종 post 값
+  const payload = {
+    ...review,
+    images: uploadUrls,
+  };
+
+  const { data, error } = await supabase.from("reviews").insert(payload);
 
   if (error) {
     console.log("리뷰 등록 실패", error);

@@ -118,7 +118,12 @@ const AddReviewPage = () => {
           <FileInput
             id="image"
             label="이미지 업로드"
-            onChange={(e) => setReviewInfo({ ...reviewInfo, images: e })}
+            onFilesChange={(e) =>
+              setReviewInfo({
+                ...reviewInfo,
+                images: e,
+              })
+            }
           />
         </div>
       </div>
