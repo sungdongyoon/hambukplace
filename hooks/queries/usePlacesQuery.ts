@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 
 export const usePlacesQuery = () => {
   return useQuery({
-    queryKey: ["place"],
+    queryKey: ["places"],
     queryFn: () => apiGetPlaces(),
   });
 };

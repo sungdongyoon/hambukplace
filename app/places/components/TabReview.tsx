@@ -6,14 +6,14 @@ import Loading from "../../../components/common/Loading";
 import Button from "@/components/common/Button";
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import { useReviewQuery } from "@/hooks/queries/useReviewQuery";
+import { useReviewsQuery } from "@/hooks/queries/useReviewsQuery";
 import ReviewImageSection from "./ReviewImageSection";
 
 const TabReview = () => {
   // params 값 불러오기
   const params = useParams();
   // 리뷰 데이터 로드
-  const { data, isLoading, isError } = useReviewQuery();
+  const { data, isLoading, isError } = useReviewsQuery();
   // 리뷰 목록 데이터
   const reviewList = data?.filter((el) => el.place_id === params.placeId);
 

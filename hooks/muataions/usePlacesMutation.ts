@@ -8,7 +8,7 @@ export const usePostPlace = () => {
   return useMutation({
     mutationFn: apiPostPlace,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["postPlace"] });
+      queryClient.invalidateQueries({ queryKey: ["places"] });
     },
   });
 };
@@ -21,7 +21,7 @@ export const useUpdatePlace = () => {
     mutationFn: apiUpdatePlace,
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries({ queryKey: ["updatePlace"] });
-      queryClient.invalidateQueries({ queryKey: ["place", variables.id] });
+      queryClient.invalidateQueries({ queryKey: ["places", variables.id] });
     },
   });
 };

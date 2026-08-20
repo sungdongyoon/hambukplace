@@ -1,9 +1,9 @@
 import { apiGetReview } from "@/api/reviews/reviews";
 import { useQuery } from "@tanstack/react-query";
 
-export const useReviewQuery = () => {
+export const useReviewQuery = (placeId: string) => {
   return useQuery({
-    queryKey: ["postReview"],
-    queryFn: () => apiGetReview(),
+    queryKey: ["reviews", placeId],
+    queryFn: () => apiGetReview(placeId),
   });
 };

@@ -18,7 +18,7 @@ export default function RootLayout({
       <body className="min-h-screen flex flex-col">
         <QueryProvider>
           <Header />
-          <main className="flex justify-center">{children}</main>
+          <main className="flex justify-center flex-1">{children}</main>
         </QueryProvider>
       </body>
     </html>

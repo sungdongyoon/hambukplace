@@ -5,8 +5,9 @@ import { Place } from "@/types/place";
 import { useQuery } from "@tanstack/react-query";
 import Script from "next/script";
 import { useEffect, useRef, useState } from "react";
-import NaverMapScript from "./common/NaverMapScript";
+import NaverMapScript from "../../components/common/NaverMapScript";
 import { apiGetPlaces } from "@/api/places/places";
+import PlaceModal from "./PlaceModal";
 
 const DEFAULT_CENTER = {
   lat: 37.5665,
@@ -27,6 +28,8 @@ const NaverMap = ({ initialData }: { initialData: Place[] }) => {
 
   // 지도 로드 상태
   const [isMapReady, setIsMapReady] = useState(false);
+  // 매장 정보 모달
+  const [selectedPlace, setSelectedPlace] = useState<Place>();
 
   // 장소 검색 스토어
   const { place } = usePlaceStore();
@@ -47,12 +50,49 @@ const NaverMap = ({ initialData }: { initialData: Place[] }) => {
       zoom: 15,
     });
 
+    let activeInfoWindow: naver.maps.InfoWindow | null = null;
+
     const markers = initialData?.map((place) => {
-      return new naver.maps.Marker({
+      const marker = new naver.maps.Marker({
         position: new naver.maps.LatLng(place.lat, place.lng),
         map,
         title: place.name,
+        icon: {
+          url: "/images/marker.png",
+          size: new naver.maps.Size(50, 50),
+          scaledSize: new naver.maps.Size(50, 50),
+          origin: new naver.maps.Point(0, 0),
+          anchor: new naver.maps.Point(25, 50),
+        },
       });
+
+      const infoWindow = new naver.maps.InfoWindow({
+        content: `
+      <div style="min-width:180px;padding:12px;">
+        <strong style="display:block;font-size:14px;margin-bottom:6px;">
+          ${place.name}
+        </strong>
+        <p style="font-size:12px;margin:0;color:#666;">
+          ${place.address ?? "주소 정보 없음"}
+        </p>
+      </div>
+    `,
+        borderWidth: 0,
+        backgroundColor: "white",
+        anchorSize: new naver.maps.Size(10, 10),
+      });
+
+      naver.maps.Event.addListener(marker, "click", () => {
+        if (activeInfoWindow) {
+          activeInfoWindow.close();
+        }
+
+        setSelectedPlace(place);
+        infoWindow.open(map, marker);
+        activeInfoWindow = infoWindow;
+      });
+
+      return marker;
     });
 
     naverMapRef.current = map;
@@ -101,8 +141,8 @@ const NaverMap = ({ initialData }: { initialData: Place[] }) => {
   return (
     <>
       <NaverMapScript onReady={handleReadyMap} />
-
-      <div ref={mapRef} className="h-screen w-full" />
+      {selectedPlace && <PlaceModal place={selectedPlace} />}
+      <div ref={mapRef} className="w-full h-full" />
     </>
   );
 };

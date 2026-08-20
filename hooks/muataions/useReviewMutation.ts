@@ -9,7 +9,7 @@ export const usePostReview = () => {
   return useMutation({
     mutationFn: apiPostReview,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["postReview"] });
+      queryClient.invalidateQueries({ queryKey: ["reviews"] });
     },
   });
 };

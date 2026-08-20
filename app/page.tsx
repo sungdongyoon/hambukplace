@@ -1,6 +1,6 @@
 import { apiGetPlaces } from "@/api/places/places";
 
-import NaverMap from "@/components/NaverMap";
+import NaverMap from "@/app/components/NaverMap";
 
 export default async function Home() {
   const getPlacesData = await apiGetPlaces();
