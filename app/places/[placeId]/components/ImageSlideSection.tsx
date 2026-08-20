@@ -1,28 +1,12 @@
 "use client";
 
-import React, { useCallback } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import { Place } from "@/types/place";
 import Image from "next/image";
-import { FaChevronLeft, FaChevronRight } from "react-icons/fa6";
-import Button from "@/components/common/Button";
+import EmblaSlideButton from "@/components/common/EmblaSlideButton";
 
 const ImageSlideSection = ({ place }: { place: Place }) => {
   const [emblaRef, emblaApi] = useEmblaCarousel();
-
-  // 슬라이드 prev 버튼 함수
-  const slidePrev = useCallback(() => {
-    if (emblaApi) {
-      emblaApi.scrollPrev();
-    }
-  }, [emblaApi]);
-
-  // 슬라이드 next 버튼 함수
-  const slideNext = useCallback(() => {
-    if (emblaApi) {
-      emblaApi.scrollNext();
-    }
-  }, [emblaApi]);
 
   return (
     <div
@@ -46,18 +30,7 @@ const ImageSlideSection = ({ place }: { place: Place }) => {
               </div>
             ))}
           </div>
-          <button
-            onClick={slidePrev}
-            className="absolute left-5 top-1/2 -translate-y-1/2 p-3 bg-white shadow rounded-[50%] cursor-pointer"
-          >
-            <FaChevronLeft />
-          </button>
-          <button
-            onClick={slideNext}
-            className="absolute right-5 top-1/2 -translate-y-1/2 p-3 bg-white shadow rounded-[50%] cursor-pointer"
-          >
-            <FaChevronRight />
-          </button>
+          <EmblaSlideButton emblaApi={emblaApi} />
         </>
       ) : (
         <div className="w-full h-full flex justify-center items-center border border-line-normal-neutral rounded-lg">

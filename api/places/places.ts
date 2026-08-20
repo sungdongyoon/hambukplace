@@ -1,4 +1,4 @@
-import { uploadPlaceImages } from "@/image";
+import { uploadPlaceImages } from "@/utils/image";
 import { createClient } from "@/lib/supabase/client";
 import { AddPlaceType, Place, UpdatePlaceType } from "@/types/place";
 import { ParamValue } from "next/dist/server/request/params";

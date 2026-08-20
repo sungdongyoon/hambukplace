@@ -1,4 +1,4 @@
-import { uploadPlaceImages } from "@/image";
+import { uploadPlaceImages } from "@/utils/image";
 import { createClient } from "@/lib/supabase/client";
 import { Place } from "@/types/place";
 import { AddReviewType, Review } from "@/types/review";

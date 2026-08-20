@@ -1,7 +1,6 @@
+import { createClient } from "../lib/supabase/client";
+
 // 이미지 storage 전송 함수
-
-import { createClient } from "./lib/supabase/client";
-
 export const uploadPlaceImages = async (images: any) => {
   const supabase = await createClient();
 
