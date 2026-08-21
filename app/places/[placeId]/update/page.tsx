@@ -33,7 +33,7 @@ const PlaceUpdatePage = () => {
   const [isSearchModal, setIsSearchModal] = useState<boolean>(false);
 
   // params
-  const params = useParams();
+  const params = useParams<{ placeId: string }>();
   const placeId = params.placeId;
 
   // router

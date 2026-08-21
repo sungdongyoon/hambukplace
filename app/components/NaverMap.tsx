@@ -18,6 +18,7 @@ const NaverMap = ({ initialData }: { initialData: Place[] }) => {
   const mapRef = useRef<HTMLDivElement | null>(null);
   const naverMapRef = useRef<any>(null);
   const markerRef = useRef<any>(null);
+  const activeInfowindowRef = useRef<naver.maps.InfoWindow>(null);
 
   // 매장 데이터 로드
   const { data, isLoading, isError } = useQuery({
@@ -29,6 +30,7 @@ const NaverMap = ({ initialData }: { initialData: Place[] }) => {
   // 지도 로드 상태
   const [isMapReady, setIsMapReady] = useState(false);
   // 매장 정보 모달
+  const [isPlaecModal, setIsPlaceModal] = useState<boolean>(false);
   const [selectedPlace, setSelectedPlace] = useState<Place>();
 
   // 장소 검색 스토어
@@ -50,8 +52,6 @@ const NaverMap = ({ initialData }: { initialData: Place[] }) => {
       zoom: 15,
     });
 
-    let activeInfoWindow: naver.maps.InfoWindow | null = null;
-
     const markers = initialData?.map((place) => {
       const marker = new naver.maps.Marker({
         position: new naver.maps.LatLng(place.lat, place.lng),
@@ -68,28 +68,28 @@ const NaverMap = ({ initialData }: { initialData: Place[] }) => {
 
       const infoWindow = new naver.maps.InfoWindow({
         content: `
-      <div style="min-width:180px;padding:12px;">
-        <strong style="display:block;font-size:14px;margin-bottom:6px;">
+      <div style="padding:12px;border-radius:5px;box-shadow: 1px 1px 5px 1px #D3DAD9;background-color: #fff;">
+        <strong style="display:block;font-size:16px;font-weight:700;color: #0066FF;">
           ${place.name}
         </strong>
-        <p style="font-size:12px;margin:0;color:#666;">
-          ${place.address ?? "주소 정보 없음"}
+        <p style="font-size:10px;color: #999;font-weight:500;">
+          ${place ? place.address : "등록된 주소가 없습니다."} ${place && place.address_detail}
         </p>
       </div>
     `,
         borderWidth: 0,
-        backgroundColor: "white",
-        anchorSize: new naver.maps.Size(10, 10),
+        backgroundColor: "none",
+        anchorSize: new naver.maps.Size(5, 5),
       });
 
       naver.maps.Event.addListener(marker, "click", () => {
-        if (activeInfoWindow) {
-          activeInfoWindow.close();
-        }
+        activeInfowindowRef?.current?.close();
 
+        setIsPlaceModal(true);
         setSelectedPlace(place);
+
         infoWindow.open(map, marker);
-        activeInfoWindow = infoWindow;
+        activeInfowindowRef.current = infoWindow;
       });
 
       return marker;
@@ -141,7 +141,15 @@ const NaverMap = ({ initialData }: { initialData: Place[] }) => {
   return (
     <>
       <NaverMapScript onReady={handleReadyMap} />
-      {selectedPlace && <PlaceModal place={selectedPlace} />}
+      {isPlaecModal && selectedPlace && (
+        <PlaceModal
+          place={selectedPlace}
+          onClose={() => {
+            setIsPlaceModal(false);
+            activeInfowindowRef.current?.close();
+          }}
+        />
+      )}
       <div ref={mapRef} className="w-full h-full" />
     </>
   );

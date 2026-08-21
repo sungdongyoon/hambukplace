@@ -6,16 +6,14 @@ import Loading from "../../../components/common/Loading";
 import Button from "@/components/common/Button";
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import { useReviewsQuery } from "@/hooks/queries/useReviewsQuery";
+import { useReviewQuery } from "@/hooks/queries/useReviewQuery";
 import ReviewImageSection from "./ReviewImageSection";
 
 const TabReview = () => {
   // params 값 불러오기
-  const params = useParams();
+  const params = useParams<{ placeId: string }>();
   // 리뷰 데이터 로드
-  const { data, isLoading, isError } = useReviewsQuery();
-  // 리뷰 목록 데이터
-  const reviewList = data?.filter((el) => el.place_id === params.placeId);
+  const { data, isLoading, isError } = useReviewQuery(params.placeId);
 
   // 모바일 구분
   const isMobile = useMobile();
@@ -35,8 +33,8 @@ const TabReview = () => {
               </Link>
             </Button>
           </div>
-          {reviewList && reviewList?.length > 0 ? (
-            reviewList?.map((review) => (
+          {data && data?.length > 0 ? (
+            data?.map((review) => (
               <article
                 className={`flex ${isMobile ? "flex-col border-b border-line-normal-neutral py-3" : "items-center"} gap-5`}
                 key={review.id}

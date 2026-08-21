@@ -22,7 +22,7 @@ export type VisitDateCalendarProps = {
 
 const AddReviewPage = () => {
   // params
-  const params = useParams();
+  const params = useParams<{ placeId: string }>();
   // router
   const router = useRouter();
 

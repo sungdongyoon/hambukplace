@@ -1,6 +1,5 @@
 import { uploadPlaceImages } from "@/utils/image";
 import { createClient } from "@/lib/supabase/client";
-import { Place } from "@/types/place";
 import { AddReviewType, Review } from "@/types/review";
 
 // [GET] 리뷰 정보

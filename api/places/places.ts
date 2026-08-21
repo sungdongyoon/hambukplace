@@ -1,7 +1,6 @@
 import { uploadPlaceImages } from "@/utils/image";
 import { createClient } from "@/lib/supabase/client";
 import { AddPlaceType, Place, UpdatePlaceType } from "@/types/place";
-import { ParamValue } from "next/dist/server/request/params";
 
 // [GET] 매장 정보
 export const apiGetPlaces = async (): Promise<Place[]> => {
@@ -46,7 +45,7 @@ export const apiUpdatePlace = async ({
   id,
   place,
 }: {
-  id: string | ParamValue;
+  id: string;
   place: UpdatePlaceType;
 }) => {
   const supabase = createClient();
