@@ -8,6 +8,7 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useReviewQuery } from "@/hooks/queries/useReviewQuery";
 import ReviewImageSection from "./ReviewImageSection";
+import EmptyState from "@/components/common/EmptyState";
 
 const TabReview = () => {
   // params 값 불러오기
@@ -55,11 +56,7 @@ const TabReview = () => {
               </article>
             ))
           ) : (
-            <div className="w-full h-20 flex justify-center items-center border border-line-normal-neutral">
-              <p className="font-medium text-[0.9rem]">
-                😢 등록된 리뷰가 없습니다 😢
-              </p>
-            </div>
+            <EmptyState message="등록된 리뷰가 없습니다 😢" />
           )}
         </>
       )}

@@ -3,11 +3,21 @@
 import { useReviewQuery } from "@/hooks/queries/useReviewQuery";
 import { useMobile } from "@/hooks/useMobile";
 import { Place } from "@/types/place";
-import { FaClock, FaLocationDot, FaPhone, FaStar, FaX } from "react-icons/fa6";
-import ReviewImageSection from "../places/components/ReviewImageSection";
+import {
+  FaChevronRight,
+  FaClock,
+  FaHouseChimney,
+  FaICursor,
+  FaLocationDot,
+  FaPhone,
+  FaStar,
+  FaX,
+} from "react-icons/fa6";
 import Image from "next/image";
 import useEmblaCarousel from "embla-carousel-react";
 import EmblaSlideButton from "@/components/common/EmblaSlideButton";
+import Link from "next/link";
+import EmptyState from "@/components/common/EmptyState";
 
 const PlaceModal = ({
   place,
@@ -21,9 +31,6 @@ const PlaceModal = ({
   const [emblaRef, emblaApi] = useEmblaCarousel();
 
   const isMobile = useMobile();
-
-  console.log("review", reviewData);
-  console.log("place", place);
 
   return (
     <div className="w-100 h-[80%] fixed left-10 top-30 z-10 bg-white shadow-2xl rounded-lg p-7">
@@ -55,33 +62,58 @@ const PlaceModal = ({
           </div>
           <span>{place?.phone}</span>
         </div>
+        <div className="flex items-center gap-2 text-[0.7rem]">
+          <div className="text-label-alternative">
+            <FaHouseChimney />
+          </div>
+          <Link href={`/places/${place?.id}`}>매장 상세 페이지 이동</Link>
+        </div>
       </div>
       <div
-        ref={emblaRef}
+        ref={place?.images?.length ? emblaRef : undefined}
         className="embla w-full h-50 relative mb-3 overflow-hidden rounded-lg"
       >
-        <div className="embla__conatiner w-full h-full flex">
-          {place?.images.map((el) => (
-            <div
-              className="embla__slide relative h-full min-w-0 flex-[0_0_100%]"
-              key={el}
-            >
-              <Image src={el} alt="매장 이미지" fill className="rounded-lg" />
+        {place?.images?.length ? (
+          <>
+            <div className="embla__conatiner w-full h-full flex">
+              {place?.images.map((el) => (
+                <div
+                  className="embla__slide relative h-full min-w-0 flex-[0_0_100%]"
+                  key={el}
+                >
+                  <Image
+                    src={el}
+                    alt="매장 이미지"
+                    fill
+                    className="rounded-lg"
+                  />
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
-        <EmblaSlideButton
-          emblaApi={emblaApi}
-          className="p-2 bg-black/50 text-white"
-        />
+            <EmblaSlideButton
+              emblaApi={emblaApi}
+              className="p-2 bg-black/50 text-white"
+            />
+          </>
+        ) : (
+          <EmptyState message="등록된 이미지가 없습니다" />
+        )}
       </div>
-      <div>
-        <h4 className="text-[1.1rem] font-semibold mb-3">리뷰</h4>
+      <div className="bg-background-elevated-alternative border border-line-normal-alternative rounded-lg p-3">
+        <div className="flex items-center gap-1 mb-3">
+          <h4 className="text-[1.1rem] font-semibold">리뷰</h4>
+          <Link
+            href={`/places/${place.id}`}
+            className="text-label-alternative flex items-center font-semibold text-[1.1rem]"
+          >
+            {reviewData?.length} <FaChevronRight />
+          </Link>
+        </div>
         <div className="flex flex-col gap-2">
           {reviewData?.length ? (
             reviewData?.map((el) => (
               <article
-                className={`flex ${isMobile ? "flex-col border-b border-line-normal-neutral py-3" : "items-center"} gap-5`}
+                className={`flex ${isMobile ? "flex-col" : "items-center"} border-b border-line-normal-neutral py-3 gap-5`}
                 key={el.id}
               >
                 <div className="relative w-28 aspect-5/4">
@@ -110,9 +142,7 @@ const PlaceModal = ({
               </article>
             ))
           ) : (
-            <p className="text-[0.8rem] font-medium">
-              😢 등록된 리뷰가 없습니다 😢
-            </p>
+            <EmptyState message="등록된 리뷰가 없습니다 😢" />
           )}
         </div>
       </div>

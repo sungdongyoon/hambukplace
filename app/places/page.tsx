@@ -1,4 +1,5 @@
 import { apiGetPlaces } from "@/api/places/places";
+import EmptyState from "@/components/common/EmptyState";
 import PageTitle from "@/components/common/PageTitle";
 import Image from "next/image";
 import Link from "next/link";
@@ -23,11 +24,7 @@ const PlacesPage = async () => {
                     className="rounded-lg"
                   />
                 ) : (
-                  <div className="w-full h-full flex justify-center items-center border border-line-normal-neutral rounded-lg">
-                    <p className="font-medium text-[0.6rem]">
-                      등록된 이미지가 없습니다❗️
-                    </p>
-                  </div>
+                  <EmptyState message="등록된 이미지가 없습니다" />
                 )}
               </div>
               <p className="font-semibold">{place.name}</p>

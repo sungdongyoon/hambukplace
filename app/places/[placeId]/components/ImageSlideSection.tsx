@@ -4,6 +4,7 @@ import useEmblaCarousel from "embla-carousel-react";
 import { Place } from "@/types/place";
 import Image from "next/image";
 import EmblaSlideButton from "@/components/common/EmblaSlideButton";
+import EmptyState from "@/components/common/EmptyState";
 
 const ImageSlideSection = ({ place }: { place: Place }) => {
   const [emblaRef, emblaApi] = useEmblaCarousel();
@@ -11,7 +12,7 @@ const ImageSlideSection = ({ place }: { place: Place }) => {
   return (
     <div
       className="embla overflow-hidden w-full h-87.5 relative"
-      ref={emblaRef}
+      ref={place?.images?.length ? emblaRef : undefined}
     >
       {place?.images?.length ? (
         <>
@@ -33,11 +34,7 @@ const ImageSlideSection = ({ place }: { place: Place }) => {
           <EmblaSlideButton emblaApi={emblaApi} />
         </>
       ) : (
-        <div className="w-full h-full flex justify-center items-center border border-line-normal-neutral rounded-lg">
-          <p className="font-medium text-[0.9rem]">
-            등록된 이미지가 없습니다❗️
-          </p>
-        </div>
+        <EmptyState message="등록된 이미지가 없습니다" />
       )}
     </div>
   );
