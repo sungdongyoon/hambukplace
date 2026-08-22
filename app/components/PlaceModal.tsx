@@ -142,7 +142,10 @@ const PlaceModal = ({
               </article>
             ))
           ) : (
-            <EmptyState message="등록된 리뷰가 없습니다 😢" />
+            <EmptyState
+              message="등록된 리뷰가 없습니다 😢"
+              className="border-none"
+            />
           )}
         </div>
       </div>
