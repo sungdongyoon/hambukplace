@@ -40,6 +40,7 @@ const AddReviewPage = () => {
     place_id: params.placeId,
     rate: 0,
     visited_at: "",
+    menu: "",
     content: "",
     images: [],
   });
@@ -65,7 +66,7 @@ const AddReviewPage = () => {
     <section>
       <PageTitle>{placeData?.name} 리뷰 작성</PageTitle>
       <div className="grid grid-cols-1 xs:grid-cols-2 gap-x-10 gap-y-20 mb-20">
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-3 xs:col-span-2">
           <p className="font-semibold">별점</p>
           <RatingInput
             value={reviewInfo.rate}
@@ -78,12 +79,12 @@ const AddReviewPage = () => {
           />
         </div>
         <div className="flex flex-col gap-3">
-          <label htmlFor="address" className="font-semibold">
+          <label htmlFor="visitDate" className="font-semibold">
             방문일
           </label>
           <div className="relative">
             <Input
-              id="address"
+              id="visitDate"
               placeholder="방문일자를 입력해주세요"
               value={reviewInfo.visited_at}
               readOnly
@@ -98,6 +99,21 @@ const AddReviewPage = () => {
                 setReviewInfo={setReviewInfo}
               />
             )}
+          </div>
+        </div>
+        <div className="flex flex-col gap-3">
+          <label htmlFor="menu" className="font-semibold">
+            메뉴명
+          </label>
+          <div className="relative">
+            <Input
+              id="menu"
+              placeholder="메뉴명을 입력해주세요"
+              value={reviewInfo.menu}
+              onChange={(e) =>
+                setReviewInfo({ ...reviewInfo, menu: e.target.value })
+              }
+            />
           </div>
         </div>
         <div className="flex flex-col gap-3 xs:col-span-2">

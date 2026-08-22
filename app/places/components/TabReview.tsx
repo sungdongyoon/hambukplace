@@ -9,6 +9,7 @@ import { useParams } from "next/navigation";
 import { useReviewQuery } from "@/hooks/queries/useReviewQuery";
 import ReviewImageSection from "./ReviewImageSection";
 import EmptyState from "@/components/common/EmptyState";
+import { format } from "date-fns";
 
 const TabReview = () => {
   // params 값 불러오기
@@ -19,6 +20,7 @@ const TabReview = () => {
   // 모바일 구분
   const isMobile = useMobile();
 
+  console.log("data,", data);
   return (
     <div className={`flex flex-col gap-3`}>
       {isLoading ? (
@@ -37,20 +39,25 @@ const TabReview = () => {
           {data && data?.length > 0 ? (
             data?.map((review) => (
               <article
-                className={`flex ${isMobile ? "flex-col border-b border-line-normal-neutral py-3" : "items-center"} gap-5`}
+                className={`flex flex-col gap-5 border-b border-line-normal-neutral py-3`}
                 key={review.id}
               >
-                <ReviewImageSection data={review} />
                 <div className="min-w-0 flex flex-col gap-2">
-                  <p className="flex items-center gap-1 text-[0.7rem] font-semibold">
-                    <FaStar className="text-yellow-400" />
-                    {review.rate}
-                  </p>
-                  <p className="text-label-strong text-[0.8rem]">
+                  <div className="flex items-center gap-2">
+                    <p className="flex items-center gap-1 text-[0.7rem] font-semibold">
+                      <FaStar className="text-yellow-400" />
+                      {review.rate}
+                    </p>
+                    <span className="text-[0.7rem] font-semibold text-primary-normal">
+                      {review.menu}
+                    </span>
+                  </div>
+                  <ReviewImageSection data={review} />
+                  <p className="py-3 text-label-neutral text-[0.8rem] leading-5 whitespace-pre-line">
                     {review.content}
                   </p>
                   <p className="text-label-assistive text-[0.6rem] font-semibold">
-                    {review.visited_at} 방문
+                    {format(review.visited_at, "yyyy.MM.dd")} 방문
                   </p>
                 </div>
               </article>

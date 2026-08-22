@@ -15,10 +15,10 @@ const ReviewImageSection = ({ data }: { data: Review }) => {
       ref={data?.images?.length ? emblaRef : undefined}
       className="embla w-28 relative aspect-5/4 shrink-0 overflow-hidden rounded-lg sm:w-40"
     >
-      <div className="embla__container flex h-full w-full">
-        {data?.images?.length ? (
-          data?.images.map((el, idx) => (
-            <>
+      {data?.images?.length ? (
+        <>
+          <div className="embla__container flex h-full w-full">
+            {data?.images.map((el, idx) => (
               <div
                 key={el}
                 className="embla__slide relative h-full min-w-0 flex-[0_0_100%]"
@@ -30,18 +30,18 @@ const ReviewImageSection = ({ data }: { data: Review }) => {
                   className="rounded-lg object-cover"
                 />
               </div>
-              <EmblaSlideButton
-                emblaApi={emblaApi}
-                className="text-[0.5rem] p-1.5 bg-white/30"
-                prevClassName="left-2"
-                nextClassName="right-2"
-              />
-            </>
-          ))
-        ) : (
-          <EmptyState message="등록된 이미지가 없습니다 😢" />
-        )}
-      </div>
+            ))}
+          </div>
+          <EmblaSlideButton
+            emblaApi={emblaApi}
+            className="text-[0.5rem] p-1.5 bg-white/30"
+            prevClassName="left-2"
+            nextClassName="right-2"
+          />
+        </>
+      ) : (
+        <EmptyState message="No Image" />
+      )}
     </div>
   );
 };

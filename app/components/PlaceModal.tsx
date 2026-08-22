@@ -40,7 +40,7 @@ const PlaceModal = ({
       >
         <FaX />
       </button>
-      <h3 className="mb-1 text-[1.6rem] font-semibold">{place?.name}</h3>
+      <h3 className="mb-2 text-[1.6rem] font-semibold">{place?.name}</h3>
       <div className="flex flex-col gap-1 mb-3">
         <div className="flex items-center gap-2 text-[0.7rem]">
           <div className="text-label-alternative">
@@ -66,7 +66,9 @@ const PlaceModal = ({
           <div className="text-label-alternative">
             <FaHouseChimney />
           </div>
-          <Link href={`/places/${place?.id}`}>매장 상세 페이지 이동</Link>
+          <Link href={`/places/${place?.id}`} className="font-semibold">
+            매장 상세 페이지 이동
+          </Link>
         </div>
       </div>
       <div
@@ -113,26 +115,39 @@ const PlaceModal = ({
           {reviewData?.length ? (
             reviewData?.map((el) => (
               <article
-                className={`flex ${isMobile ? "flex-col" : "items-center"} border-b border-line-normal-neutral py-3 gap-5`}
+                className={`flex ${isMobile ? "flex-col" : "items-stretch"} border-b border-line-normal-neutral py-3 gap-4 last:border-b-0`}
                 key={el.id}
               >
-                <div className="relative w-28 aspect-5/4">
-                  <Image src={el.images[0]} alt="리뷰 이미지" fill />
-                  <div className="px-1 flex justify-center items-center absolute right-1 bottom-1 bg-black/50 rounded-sm">
-                    <span className="text-[0.8rem] font-semibold text-white">
-                      {el.images.length}
+                <div className="relative w-28 aspect-5/4 shrink-0">
+                  {el.images.length ? (
+                    <>
+                      <Image
+                        src={el.images[0]}
+                        alt="리뷰 이미지"
+                        fill
+                        className="rounded-sm"
+                      />
+                      <div className="px-1 flex justify-center items-center absolute right-1 bottom-1 bg-black/50 rounded-sm">
+                        <span className="text-[0.8rem] font-semibold text-white">
+                          {el.images.length}
+                        </span>
+                      </div>
+                    </>
+                  ) : (
+                    <EmptyState message="No Image" />
+                  )}
+                </div>
+                <div className="min-w-0 flex flex-col flex-1 justify-between gap-1">
+                  <div className="flex items-start gap-2">
+                    <p className="flex items-center gap-1 text-[0.6rem] font-semibold">
+                      <FaStar className="text-yellow-400" />
+                      {el.rate}
+                    </p>
+                    <span className="text-[0.6rem] text-primary-normal font-semibold">
+                      {el.menu}
                     </span>
                   </div>
-                </div>
-                <div className="min-w-0 flex flex-col gap-2">
-                  <p className="flex items-center gap-1 text-[0.7rem] font-semibold">
-                    <FaStar className="text-yellow-400" />
-                    {el.rate}
-                  </p>
-                  <p className="text-[0.6rem] text-label-assistive">
-                    메뉴 : {el.menu}
-                  </p>
-                  <p className="text-label-strong text-[0.8rem]">
+                  <p className="text-label-strong text-[0.7rem] line-clamp-2">
                     {el.content}
                   </p>
                   <p className="text-label-assistive text-[0.6rem] font-semibold">

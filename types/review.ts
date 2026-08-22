@@ -15,6 +15,7 @@ export type Review = {
 export type AddReviewType = {
   place_id: string;
   rate: number;
+  menu: string;
   visited_at: string;
   content: string;
   images: File[];
