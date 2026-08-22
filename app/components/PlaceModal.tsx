@@ -18,6 +18,7 @@ import useEmblaCarousel from "embla-carousel-react";
 import EmblaSlideButton from "@/components/common/EmblaSlideButton";
 import Link from "next/link";
 import EmptyState from "@/components/common/EmptyState";
+import { format } from "date-fns";
 
 const PlaceModal = ({
   place,
@@ -87,7 +88,7 @@ const PlaceModal = ({
                     src={el}
                     alt="매장 이미지"
                     fill
-                    className="rounded-lg"
+                    className="object-cover rounded-lg"
                   />
                 </div>
               ))}
@@ -125,7 +126,7 @@ const PlaceModal = ({
                         src={el.images[0]}
                         alt="리뷰 이미지"
                         fill
-                        className="rounded-sm"
+                        className="object-cover rounded-sm"
                       />
                       <div className="px-1 flex justify-center items-center absolute right-1 bottom-1 bg-black/50 rounded-sm">
                         <span className="text-[0.8rem] font-semibold text-white">
@@ -151,7 +152,7 @@ const PlaceModal = ({
                     {el.content}
                   </p>
                   <p className="text-label-assistive text-[0.6rem] font-semibold">
-                    {el.visited_at} 방문
+                    {format(el.visited_at, "yyyy.MM.dd")} 방문
                   </p>
                 </div>
               </article>

@@ -5,15 +5,14 @@ import TabReview from "@/app/places/components/TabReview";
 import { FaMapLocation, FaPhone, FaRegClock } from "react-icons/fa6";
 import Button from "@/components/common/Button";
 import ImageSlideSection from "./components/ImageSlideSection";
-import { apiGetPlaces } from "@/api/places/places";
+import { apiGetPlace } from "@/api/places/places";
 import Link from "next/link";
 
 const PlacePage = async ({ params }: { params: { placeId: string } }) => {
   const { placeId } = await params;
 
   // 매장 리스트 데이터
-  const placesData = await apiGetPlaces();
-  const place = placesData?.find((el) => el.id === placeId);
+  const placeData = await apiGetPlace(placeId);
 
   // 텍스트 예외처리 함수
   const displayText = (value?: string | null) => {
@@ -23,7 +22,7 @@ const PlacePage = async ({ params }: { params: { placeId: string } }) => {
   return (
     <section>
       <div className="flex justify-between items-center">
-        <PageTitle>{displayText(place?.name)}</PageTitle>
+        <PageTitle>{displayText(placeData?.name)}</PageTitle>
         <div className="flex items-center justify-end gap-1 mb-6">
           <Link href={`/places/${placeId}/update`}>
             <Button size="sm">수정</Button>
@@ -33,20 +32,20 @@ const PlacePage = async ({ params }: { params: { placeId: string } }) => {
           </Button>
         </div>
       </div>
-      {place && <ImageSlideSection place={place} />}
+      {placeData && <ImageSlideSection place={placeData} />}
 
       <div className="flex flex-col gap-3 mt-4">
         <address className="flex items-center gap-2 font-medium text-[0.8rem] not-italic">
           <FaMapLocation />
-          {displayText(place?.address)}
+          {displayText(placeData?.address)}
         </address>
         <p className="flex items-center gap-2 font-medium text-[0.8rem]">
           <FaRegClock />
-          {displayText(place?.open_hours)}
+          {displayText(placeData?.open_hours)}
         </p>
         <p className="flex items-center gap-2 font-medium text-[0.8rem]">
           <FaPhone />
-          {displayText(place?.phone)}
+          {displayText(placeData?.phone)}
         </p>
       </div>
       <div className="mt-15">

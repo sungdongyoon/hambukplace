@@ -19,6 +19,24 @@ export const apiGetPlaces = async (): Promise<Place[]> => {
   return data ?? [];
 };
 
+// [GET] 특정 매장 정보
+export const apiGetPlace = async (placeId: string): Promise<Place> => {
+  const supabase = await createClient();
+
+  const { data, error } = await supabase
+    .from("places")
+    .select("*")
+    .eq("id", placeId)
+    .single();
+
+  if (error) {
+    console.log("매장 정보 불러오기 실패", error);
+    throw new Error(error.message);
+  }
+
+  return data;
+};
+
 // [POST] 매장 추가
 export const apiPostPlace = async (place: AddPlaceType) => {
   const supabase = createClient();
