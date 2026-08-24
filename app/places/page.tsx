@@ -21,7 +21,7 @@ const PlacesPage = async () => {
                     alt="매장 이미지"
                     src={place.images[0]}
                     fill
-                    className="rounded-lg"
+                    className="rounded-lg object-cover"
                   />
                 ) : (
                   <EmptyState message="등록된 이미지가 없습니다" />

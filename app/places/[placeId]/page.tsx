@@ -7,6 +7,7 @@ import Button from "@/components/common/Button";
 import ImageSlideSection from "./components/ImageSlideSection";
 import { apiGetPlace } from "@/api/places/places";
 import Link from "next/link";
+import PlaceAction from "./components/PlaceAction";
 
 const PlacePage = async ({ params }: { params: { placeId: string } }) => {
   const { placeId } = await params;
@@ -23,14 +24,7 @@ const PlacePage = async ({ params }: { params: { placeId: string } }) => {
     <section>
       <div className="flex justify-between items-center">
         <PageTitle>{displayText(placeData?.name)}</PageTitle>
-        <div className="flex items-center justify-end gap-1 mb-6">
-          <Link href={`/places/${placeId}/update`}>
-            <Button size="sm">수정</Button>
-          </Link>
-          <Button size="sm" className="bg-status-negative">
-            삭제
-          </Button>
-        </div>
+        <PlaceAction placeId={placeId} />
       </div>
       {placeData && <ImageSlideSection place={placeData} />}
 

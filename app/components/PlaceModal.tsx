@@ -34,7 +34,7 @@ const PlaceModal = ({
   const isMobile = useMobile();
 
   return (
-    <div className="w-100 h-[80%] fixed left-10 top-30 z-10 bg-white shadow-2xl rounded-lg p-7">
+    <div className="w-100 h-[80%] fixed left-10 top-30 z-10 bg-white shadow-2xl rounded-lg p-7 overflow-scroll">
       <button
         className="absolute top-3 right-3 cursor-pointer"
         onClick={onClose}
@@ -140,18 +140,18 @@ const PlaceModal = ({
                 </div>
                 <div className="min-w-0 flex flex-col flex-1 justify-between gap-1">
                   <div className="flex items-start gap-2">
-                    <p className="flex items-center gap-1 text-[0.6rem] font-semibold">
+                    <p className="flex items-center gap-1 text-[0.7rem] font-semibold">
                       <FaStar className="text-yellow-400" />
                       {el.rate}
                     </p>
-                    <span className="text-[0.6rem] text-primary-normal font-semibold">
+                    <span className="text-[0.7rem] text-primary-normal font-semibold">
                       {el.menu}
                     </span>
                   </div>
                   <p className="text-label-strong text-[0.7rem] line-clamp-2">
                     {el.content}
                   </p>
-                  <p className="text-label-assistive text-[0.6rem] font-semibold">
+                  <p className="text-label-assistive text-[0.7rem] font-semibold">
                     {format(el.visited_at, "yyyy.MM.dd")} 방문
                   </p>
                 </div>

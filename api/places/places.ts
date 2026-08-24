@@ -4,7 +4,7 @@ import { AddPlaceType, Place, UpdatePlaceType } from "@/types/place";
 
 // [GET] 매장 정보
 export const apiGetPlaces = async (): Promise<Place[]> => {
-  const supabase = await createClient();
+  const supabase = createClient();
 
   const { data, error } = await supabase
     .from("places")
@@ -21,7 +21,7 @@ export const apiGetPlaces = async (): Promise<Place[]> => {
 
 // [GET] 특정 매장 정보
 export const apiGetPlace = async (placeId: string): Promise<Place> => {
-  const supabase = await createClient();
+  const supabase = createClient();
 
   const { data, error } = await supabase
     .from("places")
@@ -38,15 +38,15 @@ export const apiGetPlace = async (placeId: string): Promise<Place> => {
 };
 
 // [POST] 매장 추가
-export const apiPostPlace = async (place: AddPlaceType) => {
+export const apiPostPlace = async (placeData: AddPlaceType) => {
   const supabase = createClient();
 
   // 이미지 storage로 전송
-  const uploadUrls = await uploadPlaceImages(place.images);
+  const uploadUrls = await uploadPlaceImages(placeData.images);
 
   // 최종 post 값
   const payload = {
-    ...place,
+    ...placeData,
     images: uploadUrls,
   };
 
@@ -60,21 +60,21 @@ export const apiPostPlace = async (place: AddPlaceType) => {
 
 // [UPDATE] 매장 정보 업데이트
 export const apiUpdatePlace = async ({
-  id,
-  place,
+  placeId,
+  placeData,
 }: {
-  id: string;
-  place: UpdatePlaceType;
+  placeId: string;
+  placeData: UpdatePlaceType;
 }) => {
   const supabase = createClient();
 
   // 기존, 새로운 이미지 구분
   const existImages =
-    place.images
+    placeData.images
       ?.filter((image) => image.type === "exist")
       .map((image) => image.url) ?? [];
   const newImages =
-    place.images
+    placeData.images
       ?.filter((image) => image.type === "new")
       .flatMap((image) => image.file) ?? [];
 
@@ -86,17 +86,32 @@ export const apiUpdatePlace = async ({
 
   // 최종 전송 값
   const payload = {
-    ...place,
+    ...placeData,
     images: nextImages,
   };
 
   const { data, error } = await supabase
     .from("places")
     .update(payload)
-    .eq("id", id);
+    .eq("id", placeId);
 
   if (error) {
     console.log("매장 업데이트 실패!", error);
+    throw new Error(error.message);
+  }
+};
+
+// [DELETE] 매장 정보 삭제
+export const apiDeletePlace = async (placeId: string) => {
+  const supabase = createClient();
+
+  const { data, error } = await supabase
+    .from("places")
+    .delete()
+    .eq("id", placeId);
+
+  if (error) {
+    console.log("매장 정보 삭제 실패!", error);
     throw new Error(error.message);
   }
 };

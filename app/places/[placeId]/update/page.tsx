@@ -88,7 +88,7 @@ const PlaceUpdatePage = () => {
   // 매장 업데이트 함수
   const handleUpdatePlace = () => {
     updatePlace.mutate(
-      { id: placeId, place: updatePlaceInfo },
+      { placeId: placeId, placeData: updatePlaceInfo },
       {
         onSuccess: () => {
           alert("매장 정보가 업데이트 되었습니다!");
