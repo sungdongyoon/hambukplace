@@ -38,7 +38,7 @@ export const apiGetReview = async (placeId: string): Promise<Review[]> => {
 };
 
 // [POST] 리뷰 추가
-export const apiPostReview = async (reviewData: AddReviewType) => {
+export const apiCreateReview = async (reviewData: AddReviewType) => {
   const supabase = createClient();
 
   // 이미지 storage로 전송

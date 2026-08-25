@@ -1,6 +1,7 @@
 import React from "react";
+import { twMerge } from "tailwind-merge";
 
-type ButtonSize = "sm" | "md" | "lg";
+type ButtonSize = "xs" | "sm" | "md" | "lg";
 type ButtonVariant = "normal" | "outline";
 
 type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
@@ -19,6 +20,7 @@ const Button = ({
 }: ButtonProps) => {
   // 버튼 사이즈
   const buttonSize: Record<ButtonSize, string> = {
+    xs: "h-5 px-2.5 text-[0.6rem]",
     sm: "h-7 px-3.5 text-[0.8rem]",
     md: "h-8 px-4 text-[14px]",
     lg: "h-9 px-5 text-[14px]",
@@ -33,7 +35,9 @@ const Button = ({
   return (
     <button
       {...props}
-      className={`inline-flex justify-center items-center leading-none rounded-md cursor-pointer ${buttonSize[size]} ${buttonType[variant]} ${className}`}
+      className={twMerge(
+        `inline-flex justify-center items-center leading-none rounded-md cursor-pointer ${buttonSize[size]} ${buttonType[variant]} ${className}`,
+      )}
     >
       {children}
     </button>

@@ -11,7 +11,7 @@ import VisitDateCalendar from "./components/VisitDateCalendar";
 import { useParams, useRouter } from "next/navigation";
 import { usePlacesQuery } from "@/hooks/queries/usePlacesQuery";
 import { AddReviewType } from "@/types/review";
-import { usePostReview } from "@/hooks/muataions/useReviewMutation";
+import { useCreateReview } from "@/hooks/muataions/useReviewMutation";
 
 export type VisitDateCalendarProps = {
   className: string;
@@ -33,7 +33,7 @@ const AddReviewPage = () => {
   const placeData = data?.find((el) => el.id === params.placeId);
 
   // mutation
-  const postReview = usePostReview();
+  const postReview = useCreateReview();
 
   // 리뷰 정보 상태값
   const [reviewInfo, setReviewInfo] = useState<AddReviewType>({

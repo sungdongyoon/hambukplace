@@ -29,7 +29,7 @@ const Tabs = ({ info }: TabProps) => {
             role="tab"
             aria-selected={activeItem === item.id}
             onClick={() => setActiveItem(item.id)}
-            className="text-[1.2rem] font-semibold py-2 px-5 cursor-pointer text-label-disable hover:text-label-strong aria-selected:text-label-strong aria-selected:border-b-2 aria-selected:border-primary-normal"
+            className="text-[0.9rem] xs:text-[1rem] sm:text-[1.2rem] font-semibold py-1.5 px-4 sm:py-2 sm:px-5 cursor-pointer text-label-disable hover:text-label-strong aria-selected:text-label-strong aria-selected:border-b-2 aria-selected:border-primary-normal"
           >
             {item.title}
           </button>

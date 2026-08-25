@@ -1,4 +1,4 @@
-import { apiGetPlace, apiGetPlaces } from "@/api/places/places";
+import { apiGetPlace } from "@/api/places/places";
 import { useQuery } from "@tanstack/react-query";
 
 export const usePlaceQuery = (placeId: string) => {

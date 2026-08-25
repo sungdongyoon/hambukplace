@@ -5,12 +5,13 @@ import FileInput from "@/components/common/FileInput";
 import Input from "@/components/common/Input";
 import NaverMapScript from "@/components/common/NaverMapScript";
 import PageTitle from "@/components/common/PageTitle";
-import { usePostPlace } from "@/hooks/muataions/usePlacesMutation";
-import { useMobile } from "@/hooks/useMobile";
+import { useCreatePlace } from "@/hooks/muataions/usePlacesMutation";
+import { useBreakPoint } from "@/hooks/useBreakPoint";
 import { AddPlaceType } from "@/types/place";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import SearchAddressModal from "./components/SearchAddressModal";
+import Link from "next/link";
 
 const PlaceAddPage = () => {
   // 매장 등록 정보
@@ -31,10 +32,10 @@ const PlaceAddPage = () => {
   const router = useRouter();
 
   // 모바일 구분
-  const isMobile = useMobile();
+  const isMobile = useBreakPoint("sm");
 
   // mutation
-  const postPlace = usePostPlace();
+  const postPlace = useCreatePlace();
 
   // 주소 검색 함수
   const searchAddress = (query: string) => {
@@ -92,20 +93,27 @@ const PlaceAddPage = () => {
       <PageTitle>매장 추가</PageTitle>
       <div className="grid grid-cols-1 xs:grid-cols-2 gap-x-10 gap-y-20 mb-20">
         <div className="flex flex-col gap-3">
-          <label htmlFor="name" className="font-semibold">
+          <label
+            htmlFor="name"
+            className="font-semibold text-[0.8rem] xs:text-[1rem]"
+          >
             매장 이름
           </label>
           <Input
             id="name"
             value={addPlaceInfo.name}
             placeholder="매장 이름을 입력해주세요"
+            className="text-[0.8rem] sm:text-[0.9rem]"
             onChange={(e) =>
               setAddPlaceInfo({ ...addPlaceInfo, name: e.target.value })
             }
           />
         </div>
         <div className="flex flex-col gap-3">
-          <label htmlFor="address" className="font-semibold">
+          <label
+            htmlFor="address"
+            className="font-semibold text-[0.8rem] xs:text-[1rem]"
+          >
             주소
           </label>
           {isSearchModal && (
@@ -114,14 +122,20 @@ const PlaceAddPage = () => {
               searchAddress={searchAddress}
             />
           )}
-          <div className="flex gap-3">
+          <div className="flex gap-3 flex-col sm:flex-row">
             <div className="w-full flex flex-col gap-1">
-              <Input id="address" value={addPlaceInfo.address} readOnly />
+              <Input
+                id="address"
+                value={addPlaceInfo.address}
+                className="text-[0.8rem] sm:text-[0.9rem]"
+                readOnly
+              />
               {addPlaceInfo.address && (
                 <Input
                   id="addressDetail"
                   placeholder="상세 주소를 입력해주세요"
                   value={addPlaceInfo.address_detail}
+                  className="text-[0.8rem] sm:text-[0.9rem]"
                   onChange={(e) =>
                     setAddPlaceInfo({
                       ...addPlaceInfo,
@@ -142,17 +156,21 @@ const PlaceAddPage = () => {
           </div>
         </div>
         <div className="flex flex-col gap-3">
-          <p className="font-semibold">영업시간</p>
+          <p className="font-semibold text-[0.8rem] xs:text-[1rem]">영업시간</p>
           <Input
             value={addPlaceInfo.open_hours}
             placeholder="영업시간을 입력해주세요"
+            className="text-[0.8rem] sm:text-[0.9rem]"
             onChange={(e) =>
               setAddPlaceInfo({ ...addPlaceInfo, open_hours: e.target.value })
             }
           />
         </div>
         <div className="flex flex-col gap-3">
-          <label htmlFor="phone" className="font-semibold">
+          <label
+            htmlFor="phone"
+            className="font-semibold text-[0.8rem] xs:text-[1rem]"
+          >
             전화번호
           </label>
           <Input
@@ -161,6 +179,7 @@ const PlaceAddPage = () => {
             placeholder="매장 전화번호를 입력해주세요"
             inputMode="numeric"
             maxLength={11}
+            className="text-[0.8rem] sm:text-[0.9rem]"
             onChange={(e) =>
               setAddPlaceInfo({
                 ...addPlaceInfo,
@@ -170,10 +189,13 @@ const PlaceAddPage = () => {
           />
         </div>
         <div className="flex flex-col gap-3">
-          <p className="font-semibold">이미지 추가</p>
+          <p className="font-semibold text-[0.8rem] xs:text-[1rem]">
+            이미지 추가
+          </p>
           <FileInput
             id="image"
             label="이미지 업로드"
+            className="text-[0.7rem] sm:text-[0.8rem]"
             onFilesChange={(e) =>
               setAddPlaceInfo((prev) => ({
                 ...prev,
@@ -184,10 +206,20 @@ const PlaceAddPage = () => {
         </div>
       </div>
       <div className="flex gap-3 justify-end">
-        <Button className="w-25" size="lg" variant="outline">
-          뒤로가기
-        </Button>
-        <Button className="w-25" size="lg" onClick={handlePostPlace}>
+        <Link href="/places">
+          <Button
+            className="w-25"
+            size={`${isMobile ? "sm" : "lg"}`}
+            variant="outline"
+          >
+            뒤로가기
+          </Button>
+        </Link>
+        <Button
+          className="w-25"
+          size={`${isMobile ? "sm" : "lg"}`}
+          onClick={handlePostPlace}
+        >
           저장
         </Button>
       </div>

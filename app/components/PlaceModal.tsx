@@ -1,7 +1,7 @@
 "use client";
 
 import { useReviewQuery } from "@/hooks/queries/useReviewQuery";
-import { useMobile } from "@/hooks/useMobile";
+import { useBreakPoint } from "@/hooks/useBreakPoint";
 import { Place } from "@/types/place";
 import {
   FaChevronRight,
@@ -31,19 +31,21 @@ const PlaceModal = ({
 
   const [emblaRef, emblaApi] = useEmblaCarousel();
 
-  const isMobile = useMobile();
+  const isMobile = useBreakPoint("sm");
 
   return (
-    <div className="w-100 h-[80%] fixed left-10 top-30 z-10 bg-white shadow-2xl rounded-lg p-7 overflow-scroll">
+    <div className="w-75 xs:w-100 h-[80%] fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-[calc(50%-40px)] sm:translate-0 sm:left-10 sm:top-30 z-10 bg-white shadow-2xl rounded-lg p-5 sm:p-7 overflow-scroll">
       <button
         className="absolute top-3 right-3 cursor-pointer"
         onClick={onClose}
       >
         <FaX />
       </button>
-      <h3 className="mb-2 text-[1.6rem] font-semibold">{place?.name}</h3>
+      <h3 className="mb-2 xs:text-[1.2rem] sm:text-[1.6rem] font-semibold">
+        {place?.name}
+      </h3>
       <div className="flex flex-col gap-1 mb-3">
-        <div className="flex items-center gap-2 text-[0.7rem]">
+        <div className="flex items-center gap-2 text-[0.6rem] sm:text-[0.7rem]">
           <div className="text-label-alternative">
             <FaLocationDot />
           </div>
@@ -51,19 +53,19 @@ const PlaceModal = ({
             {place?.address} {place?.address_detail}
           </address>
         </div>
-        <div className="flex items-center gap-2 text-[0.7rem]">
+        <div className="flex items-center gap-2 text-[0.6rem] sm:text-[0.7rem]">
           <div className="text-label-alternative">
             <FaClock />
           </div>
           <span>{place?.open_hours}</span>
         </div>
-        <div className="flex items-center gap-2 text-[0.7rem]">
+        <div className="flex items-center gap-2 text-[0.6rem] sm:text-[0.7rem]">
           <div className="text-label-alternative">
             <FaPhone />
           </div>
           <span>{place?.phone}</span>
         </div>
-        <div className="flex items-center gap-2 text-[0.7rem]">
+        <div className="flex items-center gap-2 text-[0.6rem] sm:text-[0.7rem]">
           <div className="text-label-alternative">
             <FaHouseChimney />
           </div>
@@ -104,10 +106,10 @@ const PlaceModal = ({
       </div>
       <div className="bg-background-elevated-alternative border border-line-normal-alternative rounded-lg p-3">
         <div className="flex items-center gap-1 mb-3">
-          <h4 className="text-[1.1rem] font-semibold">리뷰</h4>
+          <h4 className="text-[0.9rem] sm:text-[1.1rem] font-semibold">리뷰</h4>
           <Link
             href={`/places/${place.id}`}
-            className="text-label-alternative flex items-center font-semibold text-[1.1rem]"
+            className="text-label-alternative flex items-center font-semibold text-[0.9rem] sm:text-[1.1rem]"
           >
             {reviewData?.length} <FaChevronRight />
           </Link>
@@ -140,18 +142,18 @@ const PlaceModal = ({
                 </div>
                 <div className="min-w-0 flex flex-col flex-1 justify-between gap-1">
                   <div className="flex items-start gap-2">
-                    <p className="flex items-center gap-1 text-[0.7rem] font-semibold">
+                    <p className="flex items-center gap-1 text-[0.6rem] xs:text-[0.7rem] font-semibold">
                       <FaStar className="text-yellow-400" />
                       {el.rate}
                     </p>
-                    <span className="text-[0.7rem] text-primary-normal font-semibold">
+                    <span className="text-[0.6rem] xs:text-[0.7rem] text-primary-normal font-semibold">
                       {el.menu}
                     </span>
                   </div>
-                  <p className="text-label-strong text-[0.7rem] line-clamp-2">
+                  <p className="text-label-strong text-[0.6rem] xs:text-[0.7rem] line-clamp-2">
                     {el.content}
                   </p>
-                  <p className="text-label-assistive text-[0.7rem] font-semibold">
+                  <p className="text-label-assistive text-[0.6rem] xs:text-[0.7rem] font-semibold">
                     {format(el.visited_at, "yyyy.MM.dd")} 방문
                   </p>
                 </div>

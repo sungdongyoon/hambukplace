@@ -5,11 +5,7 @@ import FileInput from "@/components/common/FileInput";
 import Input from "@/components/common/Input";
 import NaverMapScript from "@/components/common/NaverMapScript";
 import PageTitle from "@/components/common/PageTitle";
-import {
-  usePostPlace,
-  useUpdatePlace,
-} from "@/hooks/muataions/usePlacesMutation";
-import { useMobile } from "@/hooks/useMobile";
+import { useUpdatePlace } from "@/hooks/muataions/usePlacesMutation";
 import { UpdateImage, UpdatePlaceType } from "@/types/place";
 import { useParams, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
@@ -38,9 +34,6 @@ const PlaceUpdatePage = () => {
 
   // router
   const router = useRouter();
-
-  // 모바일 구분
-  const isMobile = useMobile();
 
   // tanstack query
   const { data, isLoading } = usePlacesQuery();

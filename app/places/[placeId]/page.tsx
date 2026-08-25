@@ -22,22 +22,22 @@ const PlacePage = async ({ params }: { params: { placeId: string } }) => {
 
   return (
     <section>
-      <div className="flex justify-between items-center">
-        <PageTitle>{displayText(placeData?.name)}</PageTitle>
+      <div className="flex flex-col xs:flex-row justify-between items-start xs:items-center gap-1 xs:gap-0 mb-6">
+        <PageTitle className="mb-0">{displayText(placeData?.name)}</PageTitle>
         <PlaceAction placeId={placeId} />
       </div>
       {placeData && <ImageSlideSection place={placeData} />}
 
       <div className="flex flex-col gap-3 mt-4">
-        <address className="flex items-center gap-2 font-medium text-[0.8rem] not-italic">
+        <address className="flex items-center gap-2 font-medium text-[0.7rem] xs:text-[0.8rem] not-italic">
           <FaMapLocation />
           {displayText(placeData?.address)}
         </address>
-        <p className="flex items-center gap-2 font-medium text-[0.8rem]">
+        <p className="flex items-center gap-2 font-medium text-[0.7rem] xs:text-[0.8rem]">
           <FaRegClock />
           {displayText(placeData?.open_hours)}
         </p>
-        <p className="flex items-center gap-2 font-medium text-[0.8rem]">
+        <p className="flex items-center gap-2 font-medium text-[0.7rem] xs:text-[0.8rem]">
           <FaPhone />
           {displayText(placeData?.phone)}
         </p>

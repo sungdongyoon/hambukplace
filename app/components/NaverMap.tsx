@@ -3,7 +3,6 @@
 import { usePlaceStore } from "@/store/usePlaceStore";
 import { Place } from "@/types/place";
 import { useQuery } from "@tanstack/react-query";
-import Script from "next/script";
 import { useEffect, useRef, useState } from "react";
 import NaverMapScript from "../../components/common/NaverMapScript";
 import { apiGetPlaces } from "@/api/places/places";

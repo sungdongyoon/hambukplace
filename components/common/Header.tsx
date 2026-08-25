@@ -2,9 +2,8 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import React, { useState } from "react";
 import Input from "./Input";
-import { useMobile } from "@/hooks/useMobile";
+import { useBreakPoint } from "@/hooks/useBreakPoint";
 import { usePlaceStore } from "@/store/usePlaceStore";
 
 const Header = () => {
@@ -12,7 +11,7 @@ const Header = () => {
   const { place, setPlace, resetPlace } = usePlaceStore();
 
   // 모바일 구분 훅
-  const isMobile = useMobile();
+  const isMobile = useBreakPoint("sm");
 
   return (
     <header className="w-full h-20 flex bg-background-normal-normal border-b border-line-normal-normal px-20">

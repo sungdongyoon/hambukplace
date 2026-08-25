@@ -11,7 +11,7 @@ const ImageSlideSection = ({ place }: { place: Place }) => {
 
   return (
     <div
-      className="embla overflow-hidden w-full h-87.5 relative"
+      className="embla overflow-hidden w-full aspect-3/2 xs:aspect-6/3 sm:aspect-5/2 relative"
       ref={place?.images?.length ? emblaRef : undefined}
     >
       {place?.images?.length ? (
@@ -19,7 +19,7 @@ const ImageSlideSection = ({ place }: { place: Place }) => {
           <div className="embla__container flex gap-3 h-full">
             {place?.images?.map((image, index) => (
               <div
-                className="embla__slide relative h-full min-w-0 flex-[0_0_40%]"
+                className="embla__slide relative h-full min-w-0 flex-[0_0_100%] xs:flex-[0_0_80%] sm:flex-[0_0_40%]"
                 key={image}
               >
                 <Image

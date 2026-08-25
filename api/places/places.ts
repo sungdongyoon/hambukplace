@@ -38,7 +38,7 @@ export const apiGetPlace = async (placeId: string): Promise<Place> => {
 };
 
 // [POST] 매장 추가
-export const apiPostPlace = async (placeData: AddPlaceType) => {
+export const apiCreatePlace = async (placeData: AddPlaceType) => {
   const supabase = createClient();
 
   // 이미지 storage로 전송

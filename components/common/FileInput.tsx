@@ -1,6 +1,7 @@
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { FaXmark } from "react-icons/fa6";
+import { twMerge } from "tailwind-merge";
 
 type FilePreview = {
   id: string;
@@ -80,7 +81,9 @@ const FileInput = ({
     <div>
       <label
         htmlFor={id}
-        className={`inline-flex cursor-pointer bg-fill-normal rounded-sm py-2 px-4 mb-2 text-[0.8rem] font-semibold ${className}`}
+        className={twMerge(
+          `inline-flex cursor-pointer bg-fill-normal rounded-sm py-2 px-4 mb-2 text-[0.8rem] font-semibold ${className}`,
+        )}
       >
         {label}
       </label>
@@ -141,7 +144,7 @@ const FileInput = ({
             ))}
           </ul>
         ) : (
-          <p>선택된 파일 없음</p>
+          <p className="text-[0.7rem] sm:text-[0.8rem]">선택된 파일 없음</p>
         )}
       </div>
     </div>

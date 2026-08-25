@@ -1,16 +1,16 @@
 import {
   apiDeletePlace,
-  apiPostPlace,
+  apiCreatePlace,
   apiUpdatePlace,
 } from "@/api/places/places";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 // [POST] 매장 추가 뮤테이션
-export const usePostPlace = () => {
+export const useCreatePlace = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: apiPostPlace,
+    mutationFn: apiCreatePlace,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["places"] });
     },

@@ -2,13 +2,21 @@
 
 import Button from "@/components/common/Button";
 import { useDeletePlace } from "@/hooks/muataions/usePlacesMutation";
+import { useBreakPoint } from "@/hooks/useBreakPoint";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { twMerge } from "tailwind-merge";
 
-const PlaceAction = ({ placeId }: { placeId: string }) => {
-  const deletePlace = useDeletePlace();
-
+const PlaceAction = ({
+  placeId,
+  className,
+}: {
+  placeId: string;
+  className?: string;
+}) => {
   const router = useRouter();
+  const xsBreakPoint = useBreakPoint("xs");
+  const deletePlace = useDeletePlace();
 
   // 매장 정보 삭제 함수
   const handleDeletePlace = () => {
@@ -25,12 +33,14 @@ const PlaceAction = ({ placeId }: { placeId: string }) => {
   };
 
   return (
-    <div className="flex items-center justify-end gap-1 mb-6">
-      <Link href={`/places/${placeId}/update`}>
-        <Button size="sm">수정</Button>
+    <div
+      className={twMerge(`flex items-center justify-end gap-1 ${className}`)}
+    >
+      <Link href={`/places/${placeId}/update`} className="inline-flex">
+        <Button size={xsBreakPoint ? "xs" : "sm"}>수정</Button>
       </Link>
       <Button
-        size="sm"
+        size={xsBreakPoint ? "xs" : "sm"}
         className="bg-status-negative"
         onClick={handleDeletePlace}
       >

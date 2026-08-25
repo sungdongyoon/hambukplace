@@ -14,7 +14,7 @@ const EmptyState = ({
         `w-full h-full min-h-20 flex justify-center items-center border border-line-normal-neutral rounded-lg ${className}`,
       )}
     >
-      <p className="font-semibold text-[0.8rem]">{message}</p>
+      <p className="font-semibold text-[0.6rem] xs:text-[0.8rem]">{message}</p>
     </div>
   );
 };

@@ -1,6 +1,5 @@
 "use client";
 
-import { useMobile } from "@/hooks/useMobile";
 import { FaStar } from "react-icons/fa6";
 import Loading from "../../../components/common/Loading";
 import Button from "@/components/common/Button";
@@ -17,10 +16,6 @@ const TabReview = () => {
   // 리뷰 데이터 로드
   const { data, isLoading, isError } = useReviewQuery(params.placeId);
 
-  // 모바일 구분
-  const isMobile = useMobile();
-
-  console.log("data,", data);
   return (
     <div className={`flex flex-col gap-3`}>
       {isLoading ? (
