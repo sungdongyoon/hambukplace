@@ -57,7 +57,13 @@ const NaverMap = ({ initialData }: { initialData: Place[] }) => {
         map,
         title: place.name,
         icon: {
-          url: "/images/marker.png",
+          // url: "/images/marker.png",
+          content: `
+          <div style="display: flex;flex-direction: column; align-items: center; justify-content: center;">
+            <img src="/images/marker.png" alt="마커 이미지" style="width:50px;height:50px;object-fit:contain;" />
+            <span style="font-size: 12px;font-weight: 600">${place.name}</span>
+          </div>
+          `,
           size: new naver.maps.Size(50, 50),
           scaledSize: new naver.maps.Size(50, 50),
           origin: new naver.maps.Point(0, 0),
@@ -114,6 +120,9 @@ const NaverMap = ({ initialData }: { initialData: Place[] }) => {
         return;
       }
 
+      console.log("status", status);
+      console.log("response", response);
+
       const result = response.v2.addresses[0];
 
       if (!result) {
@@ -126,7 +135,8 @@ const NaverMap = ({ initialData }: { initialData: Place[] }) => {
       const position = new naver.maps.LatLng(lat, lng);
 
       naverMapRef.current.setCenter(position);
-      // markerRef.current.setPosition(position);
+
+      console.log("res", position);
     });
   };
 
