@@ -14,7 +14,7 @@ const BREAKPOINTS = {
 type BreakPointKey = keyof typeof BREAKPOINTS;
 
 export const useBreakPoint = (breakPoint: BreakPointKey) => {
-  const [isMobile, setIsMobile] = useState<boolean>(false);
+  const [isBreakPoint, setIsBreakPoint] = useState<boolean>(false);
 
   useEffect(() => {
     const mediaQuery = window.matchMedia(
@@ -22,7 +22,7 @@ export const useBreakPoint = (breakPoint: BreakPointKey) => {
     );
 
     const handleChange = () => {
-      setIsMobile(mediaQuery.matches);
+      setIsBreakPoint(mediaQuery.matches);
     };
 
     handleChange();
@@ -33,5 +33,5 @@ export const useBreakPoint = (breakPoint: BreakPointKey) => {
     };
   }, []);
 
-  return isMobile;
+  return isBreakPoint;
 };

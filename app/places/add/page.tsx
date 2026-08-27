@@ -32,7 +32,7 @@ const PlaceAddPage = () => {
   const router = useRouter();
 
   // 모바일 구분
-  const isMobile = useBreakPoint("sm");
+  const isBreakPoint = useBreakPoint("sm");
 
   // mutation
   const postPlace = useCreatePlace();
@@ -209,7 +209,7 @@ const PlaceAddPage = () => {
         <Link href="/places">
           <Button
             className="w-25"
-            size={`${isMobile ? "sm" : "lg"}`}
+            size={`${isBreakPoint ? "sm" : "lg"}`}
             variant="outline"
           >
             뒤로가기
@@ -217,7 +217,7 @@ const PlaceAddPage = () => {
         </Link>
         <Button
           className="w-25"
-          size={`${isMobile ? "sm" : "lg"}`}
+          size={`${isBreakPoint ? "sm" : "lg"}`}
           onClick={handlePostPlace}
         >
           저장

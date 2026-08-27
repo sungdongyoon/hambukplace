@@ -31,7 +31,7 @@ const PlaceModal = ({
 
   const [emblaRef, emblaApi] = useEmblaCarousel();
 
-  const isMobile = useBreakPoint("sm");
+  const isBreakPoint = useBreakPoint("sm");
 
   return (
     <div className="w-75 xs:w-100 h-[80%] fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-[calc(50%-40px)] sm:translate-0 sm:left-10 sm:top-30 z-10 bg-white shadow-2xl rounded-lg p-5 sm:p-7 overflow-scroll">
@@ -118,7 +118,7 @@ const PlaceModal = ({
           {reviewData?.length ? (
             reviewData?.map((el) => (
               <article
-                className={`flex ${isMobile ? "flex-col" : "items-stretch"} border-b border-line-normal-neutral py-3 gap-4 last:border-b-0`}
+                className={`flex ${isBreakPoint ? "flex-col" : "items-stretch"} border-b border-line-normal-neutral py-3 gap-4 last:border-b-0`}
                 key={el.id}
               >
                 <div className="relative w-28 aspect-5/4 shrink-0">

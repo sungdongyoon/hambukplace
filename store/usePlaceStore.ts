@@ -1,13 +1,17 @@
 import { create } from "zustand";
 
 type PlaceSearch = {
-  place: string;
-  setPlace: (place: string) => void;
+  placeName: string;
+  selectedPlaceId: string | null;
+  setPlaceName: (placeName: string) => void;
+  setSelectedPlaceId: (id: string | null) => void;
   resetPlace: () => void;
 };
 
 export const usePlaceStore = create<PlaceSearch>((set) => ({
-  place: "",
-  setPlace: (place) => set({ place }),
-  resetPlace: () => set({ place: "" }),
+  placeName: "",
+  selectedPlaceId: null,
+  setPlaceName: (placeName) => set({ placeName }),
+  setSelectedPlaceId: (id) => set({ selectedPlaceId: id }),
+  resetPlace: () => set({ placeName: "" }),
 }));

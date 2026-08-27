@@ -29,11 +29,11 @@ const NaverMap = ({ initialData }: { initialData: Place[] }) => {
   // 지도 로드 상태
   const [isMapReady, setIsMapReady] = useState(false);
   // 매장 정보 모달
-  const [isPlaecModal, setIsPlaceModal] = useState<boolean>(false);
+  const [isPlaceModal, setIsPlaceModal] = useState<boolean>(false);
   const [selectedPlace, setSelectedPlace] = useState<Place>();
 
   // 장소 검색 스토어
-  const { place } = usePlaceStore();
+  const { placeName, selectedPlaceId, resetPlace } = usePlaceStore();
 
   // 지도 로드 함수
   const handleReadyMap = () => {
@@ -120,9 +120,6 @@ const NaverMap = ({ initialData }: { initialData: Place[] }) => {
         return;
       }
 
-      console.log("status", status);
-      console.log("response", response);
-
       const result = response.v2.addresses[0];
 
       if (!result) {
@@ -135,22 +132,36 @@ const NaverMap = ({ initialData }: { initialData: Place[] }) => {
       const position = new naver.maps.LatLng(lat, lng);
 
       naverMapRef.current.setCenter(position);
-
-      console.log("res", position);
     });
   };
 
   // 검색 기능 활성화
-  useEffect(() => {
-    if (!isMapReady) return;
+  // useEffect(() => {
+  //   if (!isMapReady) return;
 
-    searchAddress(place);
-  }, [isMapReady, place]);
+  //   searchAddress(placeName);
+  // }, [isMapReady, placeName]);
+
+  // 검색 시 매장 모달 활성화 및 지도 이동
+  useEffect(() => {
+    const selected = data?.find((el) => el.id === selectedPlaceId);
+    if (!selected) return;
+
+    const { naver } = window;
+    const position = new naver.maps.LatLng(selected.lat, selected.lng);
+
+    naverMapRef.current.setCenter(position);
+    naverMapRef.current.setZoom(16);
+
+    setSelectedPlace(selected);
+    setIsPlaceModal(true);
+    resetPlace();
+  }, [isMapReady, selectedPlaceId]);
 
   return (
     <>
       <NaverMapScript onReady={handleReadyMap} />
-      {isPlaecModal && selectedPlace && (
+      {isPlaceModal && selectedPlace && (
         <PlaceModal
           place={selectedPlace}
           onClose={() => {
