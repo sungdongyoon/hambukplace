@@ -8,6 +8,7 @@ import { usePlaceStore } from "@/store/usePlaceStore";
 import { usePlacesQuery } from "@/hooks/queries/usePlacesQuery";
 import Loading from "./Loading";
 import { useEffect } from "react";
+import ViewBreakPoint from "./ViewBreakPoint";
 
 const Header = () => {
   // 주소 스토어
@@ -30,13 +31,10 @@ const Header = () => {
     ? placesData?.filter((el) => el.name.includes(placeName))
     : [];
 
-  useEffect(() => {
-    console.log("selectedplaceId", selectedPlaceId);
-  }, [selectedPlaceId]);
-
   return (
     <header className="w-full h-20 flex bg-background-normal-normal border-b border-line-normal-normal px-20">
-      <div className="w-full flex items-center justify-between">
+      <ViewBreakPoint className="top-10" />
+      <div className="w-full flex items-center justify-between gap-10">
         <div className="max-w-125 w-full flex items-center gap-10 flex-1 min-w-0">
           <Image
             alt="로고 이미지"
