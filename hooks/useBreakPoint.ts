@@ -31,7 +31,7 @@ export const useBreakPoint = (breakPoint: BreakPointKey) => {
     return () => {
       mediaQuery.removeEventListener("change", handleChange);
     };
-  }, []);
+  }, [breakPoint]);
 
   return isBreakPoint;
 };
