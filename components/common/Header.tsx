@@ -12,29 +12,19 @@ import { FaBars } from "react-icons/fa6";
 import Dropdown from "./Dropdown";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
+import PlaceSearchInput from "./PlaceSearchInput";
 
 const Header = () => {
   // 햄버거 메뉴 상태
   const [isHamburger, setIsHamburger] = useState<boolean>(false);
 
   // 주소 스토어
-  const {
-    placeName,
-    selectedPlaceId,
-    setPlaceName,
-    setSelectedPlaceId,
-    resetPlace,
-  } = usePlaceStore();
+  const { placeName } = usePlaceStore();
 
   // 매장 리스트 데이터
   const { data: placesData, isLoading } = usePlacesQuery();
 
   const pathname = usePathname();
-
-  // 검색어 필터
-  const filteredPlaces = placeName.trim()
-    ? placesData?.filter((el) => el.name.includes(placeName))
-    : [];
 
   useEffect(() => {
     setIsHamburger(false);
@@ -52,41 +42,7 @@ const Header = () => {
             src="/next.svg"
             className="shrink-0"
           />
-          <div className="hidden xs:block min-w-0 max-w-125 flex-1 relative">
-            <Input
-              placeholder="매장, 주소 검색"
-              aria-label="매장, 주소 검색"
-              value={placeName}
-              onChange={(e) => {
-                setPlaceName(e.target.value);
-                setSelectedPlaceId(null);
-              }}
-            />
-            {placeName && filteredPlaces?.length !== 0 && (
-              <div className="w-full absolute z-10 bg-white border border-line-normal-neutral rounded-sm">
-                {isLoading ? (
-                  <div className="w-full h-30 flex justify-center items-center">
-                    <Loading />
-                  </div>
-                ) : (
-                  <ul className="w-full flex flex-col">
-                    {filteredPlaces?.map((el) => (
-                      <li
-                        key={el.id}
-                        className="border-b border-line-normal-neutral px-4 py-2 font-medium text-[0.8rem] cursor-pointer hover:bg-background-elevated-alternative last:border-0 "
-                        onClick={() => {
-                          setPlaceName(el.name);
-                          setSelectedPlaceId(el.id);
-                        }}
-                      >
-                        {el.name}
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </div>
-            )}
-          </div>
+          <PlaceSearchInput />
         </div>
         <div className="relative">
           <button
