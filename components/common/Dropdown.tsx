@@ -12,7 +12,7 @@ type DropdownType = {
 
 const Dropdown = ({ className, list }: DropdownType) => {
   return (
-    <div className={twMerge(`w-40 absolute right-0 z-10 ${className}`)}>
+    <div className={twMerge(`w-40 absolute right-0 z-15 ${className}`)}>
       <ul className="bg-white rounded-lg shadow-2xl">
         {list.map((el, idx) => (
           <li

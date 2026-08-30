@@ -7,7 +7,6 @@ import { useEffect, useRef, useState } from "react";
 import NaverMapScript from "../../components/common/NaverMapScript";
 import { apiGetPlaces } from "@/api/places/places";
 import PlaceModal from "./PlaceModal";
-import ViewBreakPoint from "@/components/common/ViewBreakPoint";
 
 const DEFAULT_CENTER = {
   lat: 37.5665,

@@ -18,12 +18,6 @@ const Header = () => {
   // 햄버거 메뉴 상태
   const [isHamburger, setIsHamburger] = useState<boolean>(false);
 
-  // 주소 스토어
-  const { placeName } = usePlaceStore();
-
-  // 매장 리스트 데이터
-  const { data: placesData, isLoading } = usePlacesQuery();
-
   const pathname = usePathname();
 
   useEffect(() => {
@@ -32,7 +26,7 @@ const Header = () => {
 
   return (
     <header className="w-full h-20 flex bg-background-normal-normal border-b border-line-normal-normal px-10 sm:px-20">
-      <ViewBreakPoint className="top-10" />
+      {/* <ViewBreakPoint className="top-10" /> */}
       <div className="w-full flex items-center justify-between gap-10">
         <div className="max-w-125 w-full flex items-center gap-10 flex-1 min-w-0">
           <Image
@@ -42,7 +36,9 @@ const Header = () => {
             src="/next.svg"
             className="shrink-0"
           />
-          <PlaceSearchInput />
+          <div className="hidden xs:block w-full">
+            <PlaceSearchInput />
+          </div>
         </div>
         <div className="relative">
           <button

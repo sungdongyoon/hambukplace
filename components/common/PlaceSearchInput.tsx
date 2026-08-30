@@ -16,15 +16,12 @@ const PlaceSearchInput = ({ className }: { className?: string }) => {
     : [];
 
   return (
-    <div
-      className={twMerge(
-        `hidden xs:block min-w-0 max-w-125 flex-1 relative ${className}`,
-      )}
-    >
+    <div className={twMerge(`min-w-0 max-w-125 flex-1 relative ${className}`)}>
       <Input
-        placeholder="매장, 주소 검색"
-        aria-label="매장, 주소 검색"
+        placeholder="매장 이름을 검색해주세요"
+        aria-label="매장 이름을 검색해주세요"
         value={placeName}
+        className="bg-static-white rounded-4xl p-3"
         onChange={(e) => {
           setPlaceName(e.target.value);
           setSelectedPlaceId(null);
