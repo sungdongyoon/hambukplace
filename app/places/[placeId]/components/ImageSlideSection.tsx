@@ -5,26 +5,36 @@ import { Place } from "@/types/place";
 import Image from "next/image";
 import EmblaSlideButton from "@/components/common/EmblaSlideButton";
 import EmptyState from "@/components/common/EmptyState";
+import { usePlaceQuery } from "@/hooks/queries/usePlaceQuery";
+import { useParams } from "next/navigation";
+import Loading from "@/components/common/Loading";
 
-const ImageSlideSection = ({ place }: { place: Place }) => {
+const ImageSlideSection = () => {
   const [emblaRef, emblaApi] = useEmblaCarousel();
+
+  const params = useParams<{ placeId: string }>();
+  const { data: placeData, isLoading } = usePlaceQuery(params.placeId);
 
   return (
     <div
       className="embla overflow-hidden w-full aspect-3/2 xs:aspect-6/3 sm:aspect-5/2 relative"
-      ref={place?.images?.length ? emblaRef : undefined}
+      ref={placeData?.images?.length ? emblaRef : undefined}
     >
-      {place?.images?.length ? (
+      {isLoading ? (
+        <div className="w-full h-full flex justify-center items-center">
+          <Loading />
+        </div>
+      ) : placeData?.images?.length ? (
         <>
           <div className="embla__container flex gap-3 h-full">
-            {place?.images?.map((image, index) => (
+            {placeData?.images?.map((image, index) => (
               <div
                 className="embla__slide relative h-full min-w-0 flex-[0_0_100%] xs:flex-[0_0_80%] sm:flex-[0_0_40%]"
                 key={image}
               >
                 <Image
                   src={image}
-                  alt={`${place.name} 이미지 ${index + 1}`}
+                  alt={`${placeData.name} 이미지 ${index + 1}`}
                   fill
                   className="object-cover rounded-lg"
                 />

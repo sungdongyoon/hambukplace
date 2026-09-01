@@ -26,7 +26,7 @@ const PlacePage = async ({ params }: { params: { placeId: string } }) => {
         <PageTitle className="mb-0">{displayText(placeData?.name)}</PageTitle>
         <PlaceAction placeId={placeId} />
       </div>
-      {placeData && <ImageSlideSection place={placeData} />}
+      {placeData && <ImageSlideSection />}
 
       <div className="flex flex-col gap-3 mt-4">
         <address className="flex items-center gap-2 font-medium text-[0.7rem] xs:text-[0.8rem] not-italic">
