@@ -50,16 +50,33 @@ const AddReviewPage = () => {
 
   // 리뷰 등록 함수
   const handlePostReview = () => {
-    postReview.mutate(reviewInfo, {
-      onSuccess: () => {
-        alert("리뷰가 등록되었습니다!");
-        router.replace(`/places/${params.placeId}`);
-      },
-      onError: (error) => {
-        console.error("리뷰 등록 실패", error);
-        alert("리뷰 등록 실패!");
-      },
-    });
+    if (!reviewInfo.visited_at) {
+      alert("방문일을 선택해주세요");
+      return;
+    }
+
+    if (!reviewInfo.menu.trim()) {
+      alert("메뉴명을 입력해주세요");
+      return;
+    }
+
+    if (!reviewInfo.content.trim()) {
+      alert("리뷰 내용을 입력해주세요");
+      return;
+    }
+
+    if (confirm("리뷰를 등록하시겠습니까?")) {
+      postReview.mutate(reviewInfo, {
+        onSuccess: () => {
+          alert("리뷰가 등록되었습니다!");
+          router.replace(`/places/${params.placeId}`);
+        },
+        onError: (error) => {
+          console.error("리뷰 등록 실패", error);
+          alert("리뷰 등록 실패!");
+        },
+      });
+    }
   };
 
   return (

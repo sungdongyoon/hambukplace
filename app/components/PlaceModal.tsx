@@ -116,7 +116,7 @@ const PlaceModal = ({
         </div>
         <div className="flex flex-col gap-2">
           {reviewData?.length ? (
-            reviewData?.map((el) => (
+            reviewData?.slice(0, 3).map((el) => (
               <article
                 className={`flex ${isBreakPoint ? "flex-col" : "items-stretch"} border-b border-line-normal-neutral py-3 gap-4 last:border-b-0`}
                 key={el.id}
