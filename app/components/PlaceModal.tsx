@@ -20,6 +20,7 @@ import Link from "next/link";
 import EmptyState from "@/components/common/EmptyState";
 import { format } from "date-fns";
 import Loading from "@/components/common/Loading";
+import { displayText } from "@/utils/displayText";
 
 const PlaceModal = ({
   place,
@@ -64,13 +65,13 @@ const PlaceModal = ({
               <div className="text-label-alternative">
                 <FaClock />
               </div>
-              <span>{place?.open_hours}</span>
+              <span>{displayText(place?.open_hours)}</span>
             </div>
             <div className="flex items-center gap-2 text-[0.6rem] sm:text-[0.7rem]">
               <div className="text-label-alternative">
                 <FaPhone />
               </div>
-              <span>{place?.phone}</span>
+              <span>{displayText(place?.phone)}</span>
             </div>
             <div className="flex items-center gap-2 text-[0.6rem] sm:text-[0.7rem]">
               <div className="text-label-alternative">

@@ -8,17 +8,13 @@ import ImageSlideSection from "./components/ImageSlideSection";
 import { apiGetPlace } from "@/api/places/places";
 import Link from "next/link";
 import PlaceAction from "./components/PlaceAction";
+import { displayText } from "@/utils/displayText";
 
 const PlacePage = async ({ params }: { params: { placeId: string } }) => {
   const { placeId } = await params;
 
   // 매장 리스트 데이터
   const placeData = await apiGetPlace(placeId);
-
-  // 텍스트 예외처리 함수
-  const displayText = (value?: string | null) => {
-    return value?.trim() ? value : "정보 없음";
-  };
 
   return (
     <section>
