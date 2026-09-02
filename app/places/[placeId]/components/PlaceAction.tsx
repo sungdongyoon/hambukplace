@@ -20,16 +20,18 @@ const PlaceAction = ({
 
   // 매장 정보 삭제 함수
   const handleDeletePlace = () => {
-    deletePlace.mutate(placeId, {
-      onSuccess: () => {
-        alert("매장 정보가 삭제되었습니다!");
-        router.replace("/places");
-      },
-      onError: (error) => {
-        console.error("매장 정보 삭제 실패", error);
-        alert("매장 정보 삭제 실패!");
-      },
-    });
+    if (confirm("매장 정보를 삭제하시겠습니까?")) {
+      deletePlace.mutate(placeId, {
+        onSuccess: () => {
+          alert("매장 정보가 삭제되었습니다!");
+          router.replace("/places");
+        },
+        onError: (error) => {
+          console.error("매장 정보 삭제 실패", error);
+          alert("매장 정보 삭제 실패!");
+        },
+      });
+    }
   };
 
   return (

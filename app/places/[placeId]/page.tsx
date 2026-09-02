@@ -20,8 +20,6 @@ const PlacePage = async ({ params }: { params: { placeId: string } }) => {
     return value?.trim() ? value : "정보 없음";
   };
 
-  console.log("placeData", placeData.images);
-
   return (
     <section>
       <div className="flex flex-col xs:flex-row justify-between items-start xs:items-center gap-1 xs:gap-0 mb-6">

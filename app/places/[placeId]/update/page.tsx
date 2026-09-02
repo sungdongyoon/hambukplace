@@ -80,19 +80,30 @@ const PlaceUpdatePage = () => {
 
   // 매장 업데이트 함수
   const handleUpdatePlace = () => {
-    updatePlace.mutate(
-      { placeId: placeId, placeData: updatePlaceInfo },
-      {
-        onSuccess: () => {
-          alert("매장 정보가 업데이트 되었습니다!");
-          router.replace("/places");
+    if (!updatePlaceInfo.name.trim()) {
+      alert("매장 이름을 입력해주세요");
+      return;
+    }
+    if (!updatePlaceInfo.address.trim()) {
+      alert("매장 주소를 입력해주세요");
+      return;
+    }
+
+    if (confirm("매장 정보를 업데이트 하시겠습니까?")) {
+      updatePlace.mutate(
+        { placeId: placeId, placeData: updatePlaceInfo },
+        {
+          onSuccess: () => {
+            alert("매장 정보가 업데이트 되었습니다!");
+            router.replace("/places");
+          },
+          onError: (error) => {
+            console.error("매장 정보 업데이트 실패", error);
+            alert("매장 정보 업데이트 실패!");
+          },
         },
-        onError: (error) => {
-          console.error("매장 정보 업데이트 실패", error);
-          alert("매장 정보 업데이트 실패!");
-        },
-      },
-    );
+      );
+    }
   };
 
   // 초기 화면에 매장 정보 적용
