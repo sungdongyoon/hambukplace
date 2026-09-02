@@ -75,16 +75,27 @@ const PlaceAddPage = () => {
 
   // 매장 등록 함수
   const handlePostPlace = () => {
-    postPlace.mutate(addPlaceInfo, {
-      onSuccess: () => {
-        alert("매장 정보가 등록되었습니다!");
-        router.replace("/places");
-      },
-      onError: (error) => {
-        console.error("매장 정보 추가 실패", error);
-        alert("매장 정보 추가 실패!");
-      },
-    });
+    if (!addPlaceInfo.name) {
+      alert("매장 이름을 입력해주세요");
+      return;
+    }
+    if (!addPlaceInfo.address) {
+      alert("매장 주소를 입력해주세요");
+      return;
+    }
+
+    if (confirm("매장 정보를 등록하시겠습니까?")) {
+      postPlace.mutate(addPlaceInfo, {
+        onSuccess: () => {
+          alert("매장 정보가 등록되었습니다!");
+          router.replace("/places");
+        },
+        onError: (error) => {
+          console.error("매장 정보 추가 실패", error);
+          alert("매장 정보 추가 실패!");
+        },
+      });
+    }
   };
 
   return (
