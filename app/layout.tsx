@@ -1,3 +1,4 @@
+import { Analytics } from "@vercel/analytics/next";
 import type { Metadata } from "next";
 import "./globals.css";
 import Header from "@/components/common/Header";
@@ -18,7 +19,10 @@ export default function RootLayout({
       <body className="min-h-screen flex flex-col">
         <QueryProvider>
           <Header />
-          <main className="flex justify-center flex-1">{children}</main>
+          <main className="flex justify-center flex-1">
+            {children}
+            <Analytics />
+          </main>
         </QueryProvider>
       </body>
     </html>
