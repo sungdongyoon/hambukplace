@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import PageTitle from "@/components/common/PageTitle";
 import Tabs from "@/components/common/Tabs";
 import TabPhoto from "@/app/places/components/TabPhoto";

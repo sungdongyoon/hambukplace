@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import { apiGetPlaces } from "@/api/places/places";
 
 import NaverMap from "@/app/components/NaverMap";

@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import { apiGetPlaces } from "@/api/places/places";
 import EmptyState from "@/components/common/EmptyState";
 import PageTitle from "@/components/common/PageTitle";
