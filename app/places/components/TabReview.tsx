@@ -5,17 +5,17 @@ import Loading from "../../../components/common/Loading";
 import Button from "@/components/common/Button";
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import { useReviewQuery } from "@/hooks/queries/useReviewQuery";
 import ReviewImageSection from "./ReviewImageSection";
 import EmptyState from "@/components/common/EmptyState";
 import { format } from "date-fns";
 import { useInfiniteReviewQuery } from "@/hooks/queries/useInfiniteReviewQuery";
+import { useInView } from "react-intersection-observer";
+import { useEffect } from "react";
 
 const TabReview = () => {
   // params 값 불러오기
   const params = useParams<{ placeId: string }>();
   // 리뷰 데이터 로드
-  const { data, isLoading, isError } = useReviewQuery(params.placeId);
   const {
     data: reviewData,
     isLoading: reviewLoading,
@@ -24,7 +24,18 @@ const TabReview = () => {
     isFetchingNextPage,
   } = useInfiniteReviewQuery(params.placeId);
 
-  const reviewList = reviewData?.pages.flatMap((el) => el.reviews);
+  // intersection observer 훅
+  const { ref, inView } = useInView();
+
+  // 리뷰 리스트
+  const reviewList = reviewData?.pages.flatMap((el) => el.reviews) ?? [];
+
+  // 특정 요소가 페이지에 감지되면 next page 리뷰 데이터 호출
+  useEffect(() => {
+    if (inView && hasNextPage && !isFetchingNextPage) {
+      fetchNextPage();
+    }
+  }, [inView, hasNextPage, fetchNextPage, isFetchingNextPage]);
 
   return (
     <div className={`flex flex-col gap-3`}>
@@ -42,31 +53,36 @@ const TabReview = () => {
             </Button>
           </div>
           {reviewList && reviewList?.length > 0 ? (
-            reviewList?.map((review) => (
-              <article
-                className={`flex flex-col gap-5 border-b border-line-normal-neutral py-3`}
-                key={review.id}
-              >
-                <div className="min-w-0 flex flex-col gap-2">
-                  <div className="flex items-center gap-2">
-                    <p className="flex items-center gap-1 text-[0.7rem] font-semibold">
-                      <FaStar className="text-yellow-400" />
-                      {review.rate}
+            <>
+              {reviewList?.map((review) => (
+                <article
+                  className={`flex flex-col gap-5 border-b border-line-normal-neutral py-3`}
+                  key={review.id}
+                >
+                  <div className="min-w-0 flex flex-col gap-2">
+                    <div className="flex items-center gap-2">
+                      <p className="flex items-center gap-1 text-[0.7rem] font-semibold">
+                        <FaStar className="text-yellow-400" />
+                        {review.rate}
+                      </p>
+                      <span className="text-[0.7rem] font-semibold text-primary-normal">
+                        {review.menu}
+                      </span>
+                    </div>
+                    <ReviewImageSection data={review} />
+                    <p className="py-3 text-label-neutral text-[0.8rem] leading-5 whitespace-pre-line">
+                      {review.content}
                     </p>
-                    <span className="text-[0.7rem] font-semibold text-primary-normal">
-                      {review.menu}
-                    </span>
+                    <p className="text-label-assistive text-[0.6rem] font-semibold">
+                      {format(review.visited_at, "yyyy.MM.dd")} 방문
+                    </p>
                   </div>
-                  <ReviewImageSection data={review} />
-                  <p className="py-3 text-label-neutral text-[0.8rem] leading-5 whitespace-pre-line">
-                    {review.content}
-                  </p>
-                  <p className="text-label-assistive text-[0.6rem] font-semibold">
-                    {format(review.visited_at, "yyyy.MM.dd")} 방문
-                  </p>
-                </div>
-              </article>
-            ))
+                </article>
+              ))}
+              <div ref={ref} className="flex h-12 items-center justify-center">
+                {isFetchingNextPage && <Loading />}
+              </div>
+            </>
           ) : (
             <EmptyState message="등록된 리뷰가 없습니다 😢" />
           )}
