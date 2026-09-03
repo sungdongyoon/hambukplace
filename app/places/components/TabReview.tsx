@@ -9,16 +9,26 @@ import { useReviewQuery } from "@/hooks/queries/useReviewQuery";
 import ReviewImageSection from "./ReviewImageSection";
 import EmptyState from "@/components/common/EmptyState";
 import { format } from "date-fns";
+import { useInfiniteReviewQuery } from "@/hooks/queries/useInfiniteReviewQuery";
 
 const TabReview = () => {
   // params 값 불러오기
   const params = useParams<{ placeId: string }>();
   // 리뷰 데이터 로드
   const { data, isLoading, isError } = useReviewQuery(params.placeId);
+  const {
+    data: reviewData,
+    isLoading: reviewLoading,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+  } = useInfiniteReviewQuery(params.placeId);
+
+  const reviewList = reviewData?.pages.flatMap((el) => el.reviews);
 
   return (
     <div className={`flex flex-col gap-3`}>
-      {isLoading ? (
+      {reviewLoading ? (
         <div className="w-full h-50 flex justify-center items-center">
           <Loading />
         </div>
@@ -31,8 +41,8 @@ const TabReview = () => {
               </Link>
             </Button>
           </div>
-          {data && data?.length > 0 ? (
-            data?.map((review) => (
+          {reviewList && reviewList?.length > 0 ? (
+            reviewList?.map((review) => (
               <article
                 className={`flex flex-col gap-5 border-b border-line-normal-neutral py-3`}
                 key={review.id}
