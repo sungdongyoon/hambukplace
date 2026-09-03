@@ -21,6 +21,30 @@ export const apiGetPlaces = async (): Promise<Place[]> => {
   return data ?? [];
 };
 
+// [GET] 매장 정보 - 인피니티 스크롤
+export const apiGetPlacesInfinite = async (pageParam: number) => {
+  const supabase = createClient();
+
+  const from = pageParam * PAGE_SIZE;
+  const to = from + PAGE_SIZE - 1;
+
+  const { data, error } = await supabase
+    .from("places")
+    .select("*")
+    .range(from, to)
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    console.log("매장 정보 불러오기 실패", error);
+    throw new Error(error.message);
+  }
+
+  return {
+    places: data,
+    nextPage: (data?.length ?? 0) === PAGE_SIZE ? pageParam + 1 : undefined,
+  };
+};
+
 // [GET] 특정 매장 정보
 export const apiGetPlace = async (placeId: string): Promise<Place> => {
   const supabase = createClient();
@@ -37,37 +61,6 @@ export const apiGetPlace = async (placeId: string): Promise<Place> => {
   }
 
   return data;
-};
-
-// [GET] 특정 매장 정보 - 인피니티 스크롤
-export const apiGetPlaceInfinite = async ({
-  placeId,
-  pageParam,
-}: {
-  placeId: string;
-  pageParam: number;
-}) => {
-  const supabase = createClient();
-
-  const from = pageParam * PAGE_SIZE;
-  const to = from + PAGE_SIZE - 1;
-
-  const { data, error } = await supabase
-    .from("places")
-    .select("*")
-    .eq("id", placeId)
-    .range(from, to)
-    .single();
-
-  if (error) {
-    console.log("매장 정보 불러오기 실패", error);
-    throw new Error(error.message);
-  }
-
-  return {
-    reviews: data,
-    nextPage: (data?.length ?? 0) === PAGE_SIZE ? pageParam + 1 : undefined,
-  };
 };
 
 // [POST] 매장 추가
