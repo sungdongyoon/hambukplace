@@ -2,7 +2,7 @@ import { uploadPlaceImages } from "@/utils/image";
 import { createClient } from "@/lib/supabase/client";
 import { AddReviewType, Review } from "@/types/review";
 
-const PAGE_SIZE = 10;
+const PAGE_SIZE = 5;
 
 // [GET] 리뷰 정보
 export const apiGetReviews = async (): Promise<Review[]> => {
