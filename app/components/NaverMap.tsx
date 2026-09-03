@@ -48,7 +48,7 @@ const NaverMap = ({ initialData }: { initialData: Place[] }) => {
 
     const map = new naver.maps.Map(mapRef.current, {
       center,
-      zoom: 15,
+      zoom: 13,
     });
 
     const markers = initialData?.map((place) => {
@@ -105,42 +105,6 @@ const NaverMap = ({ initialData }: { initialData: Place[] }) => {
 
     setIsMapReady(true);
   };
-
-  // 주소 검색 함수
-  // const searchAddress = (query: string) => {
-  //   if (!window.naver?.maps?.Service) return;
-  //   if (!naverMapRef.current) return;
-  //   if (!query.trim()) return;
-
-  //   const { naver } = window;
-
-  //   naver.maps.Service.geocode({ query }, (status: any, response: any) => {
-  //     if (status === naver.maps.Service.Status.ERROR) {
-  //       console.error("주소 검색 실패");
-  //       return;
-  //     }
-
-  //     const result = response.v2.addresses[0];
-
-  //     if (!result) {
-  //       console.log("검색 결과 없음");
-  //       return;
-  //     }
-
-  //     const lat = Number(result.y);
-  //     const lng = Number(result.x);
-  //     const position = new naver.maps.LatLng(lat, lng);
-
-  //     naverMapRef.current.setCenter(position);
-  //   });
-  // };
-
-  // 검색 기능 활성화
-  // useEffect(() => {
-  //   if (!isMapReady) return;
-
-  //   searchAddress(placeName);
-  // }, [isMapReady, placeName]);
 
   // 검색 시 매장 모달 활성화 및 지도 이동
   useEffect(() => {
