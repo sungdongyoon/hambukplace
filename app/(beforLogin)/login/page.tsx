@@ -5,9 +5,11 @@ import Input from "@/components/common/Input";
 import PageTitle from "@/components/common/PageTitle";
 import { useLogin } from "@/hooks/muataions/useLoginMutation";
 import { LoginType } from "@/types/auth";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 const LoginPage = () => {
+  const router = useRouter();
   const [loginValue, setLoginValue] = useState<LoginType>({
     email: "",
     password: "",
@@ -32,6 +34,7 @@ const LoginPage = () => {
       loginMutation.mutate(loginValue, {
         onSuccess: () => {
           alert("로그인 완료");
+          router.replace("/");
         },
         onError: (error) => {
           console.error("로그인 실패", error);

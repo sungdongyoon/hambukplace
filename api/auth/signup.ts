@@ -1,7 +1,7 @@
 import { createClient } from "@/lib/supabase/client";
 import { SignupType } from "@/types/auth";
 
-// [POST] 회원가입
+// 회원가입
 export const apiSignup = async (signupData: SignupType) => {
   const supabase = createClient();
 

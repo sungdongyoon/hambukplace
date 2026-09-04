@@ -1,7 +1,7 @@
 import { createClient } from "@/lib/supabase/client";
 import { LoginType } from "@/types/auth";
 
-// [POST] 로그인
+// 로그인
 export const apiLogin = async (loginData: LoginType) => {
   const supabase = createClient();
 

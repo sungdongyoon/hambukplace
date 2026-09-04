@@ -1,15 +1,15 @@
-import { apiLogin } from "@/api/auth/login";
+import { apiLogout } from "@/api/auth/logout";
 import { useAuthStore } from "@/store/useAuthStore";
 import { useMutation } from "@tanstack/react-query";
 
-// 로그인 뮤테이션
-export const useLogin = () => {
+// 로그아웃 뮤테이션
+export const useLogout = () => {
   const setUser = useAuthStore((state) => state.setUser);
 
   return useMutation({
-    mutationFn: apiLogin,
-    onSuccess: (data) => {
-      setUser(data.user);
+    mutationFn: apiLogout,
+    onSuccess: () => {
+      setUser(null);
     },
   });
 };

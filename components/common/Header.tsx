@@ -5,19 +5,39 @@ import Link from "next/link";
 import { FaBars } from "react-icons/fa6";
 import Dropdown from "./Dropdown";
 import { useEffect, useState } from "react";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import PlaceSearchInput from "./PlaceSearchInput";
-import { User } from "@supabase/supabase-js";
 import { useAuthStore } from "@/store/useAuthStore";
+import { useLogout } from "@/hooks/muataions/useLogoutMutation";
 
 const Header = () => {
-  // 햄버거 메뉴 상태
-  const [isHamburger, setIsHamburger] = useState<boolean>(false);
+  const pathname = usePathname();
+  const router = useRouter();
 
   // 로그인 상태
   const { user, isAuthLoading } = useAuthStore();
 
-  const pathname = usePathname();
+  // 햄버거 메뉴 상태
+  const [isHamburger, setIsHamburger] = useState<boolean>(false);
+
+  // 로그아웃 뮤테이션
+  const logoutMutation = useLogout();
+
+  // 로그아웃 함수
+  const handleLogout = () => {
+    if (confirm("로그아웃 하시겠습니까?")) {
+      logoutMutation.mutate(undefined, {
+        onSuccess: () => {
+          alert("로그아웃 되었습니다");
+          router.replace("/");
+        },
+        onError: (error) => {
+          console.log("로그아웃 실패", error);
+          alert("로그아웃 실패");
+        },
+      });
+    }
+  };
 
   useEffect(() => {
     setIsHamburger(false);
@@ -76,11 +96,21 @@ const Header = () => {
             <Link href="/places">매장 목록</Link>
           </li>
           {user && (
-            <li>
-              <Link href="/places/add">매장 추가</Link>
-            </li>
+            <>
+              <li>
+                <Link href="/places/add">매장 추가</Link>
+              </li>
+              <li>
+                <button
+                  type="button"
+                  onClick={handleLogout}
+                  className="cursor-pointer"
+                >
+                  로그아웃
+                </button>
+              </li>
+            </>
           )}
-
           {/* <li>
             <Link href="/">리뷰 목록</Link>
           </li> */}
