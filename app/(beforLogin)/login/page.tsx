@@ -10,6 +10,7 @@ import { useState } from "react";
 
 const LoginPage = () => {
   const router = useRouter();
+
   const [loginValue, setLoginValue] = useState<LoginType>({
     email: "",
     password: "",

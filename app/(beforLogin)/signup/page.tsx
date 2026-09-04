@@ -5,9 +5,12 @@ import Input from "@/components/common/Input";
 import PageTitle from "@/components/common/PageTitle";
 import { useSignup } from "@/hooks/muataions/useSignupMutation";
 import { SignupType } from "@/types/auth";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 const SignupPage = () => {
+  const router = useRouter();
+
   const [signupValue, setSignupValue] = useState<SignupType>({
     email: "",
     name: "",
@@ -38,6 +41,7 @@ const SignupPage = () => {
       signupMutation.mutate(signupValue, {
         onSuccess: () => {
           alert("회원가입이 완료되었습니다");
+          router.replace("/");
         },
         onError: (error) => {
           console.error("회원가입 실패", error);
