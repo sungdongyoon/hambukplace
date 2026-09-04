@@ -3,6 +3,7 @@
 import Button from "@/components/common/Button";
 import { useDeletePlace } from "@/hooks/muataions/usePlacesMutation";
 import { useBreakPoint } from "@/hooks/useBreakPoint";
+import { useAuthStore } from "@/store/useAuthStore";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { twMerge } from "tailwind-merge";
@@ -14,8 +15,15 @@ const PlaceAction = ({
   placeId: string;
   className?: string;
 }) => {
+  // 로그인 상태
+  const { user, isAuthLoading } = useAuthStore();
+
   const router = useRouter();
+
+  // break point 커스텀 훅
   const xsBreakPoint = useBreakPoint("xs");
+
+  // 매장 정보 삭제 뮤테이션
   const deletePlace = useDeletePlace();
 
   // 매장 정보 삭제 함수
@@ -33,6 +41,10 @@ const PlaceAction = ({
       });
     }
   };
+
+  if (!user) {
+    return null;
+  }
 
   return (
     <div

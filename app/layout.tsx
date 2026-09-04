@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Header from "@/components/common/Header";
 import QueryProvider from "@/provider/QueryProvider";
+import AuthInitializer from "@/components/AuthInitializer";
 
 export const metadata: Metadata = {
   title: "Hambuk Place",
@@ -22,6 +23,7 @@ export default function RootLayout({
     <html lang="en" className={`h-full antialiased`}>
       <body className="min-h-screen flex flex-col">
         <QueryProvider>
+          <AuthInitializer />
           <Header />
           <main className="flex justify-center flex-1">
             {children}

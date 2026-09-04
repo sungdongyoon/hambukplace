@@ -7,10 +7,15 @@ import Dropdown from "./Dropdown";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import PlaceSearchInput from "./PlaceSearchInput";
+import { User } from "@supabase/supabase-js";
+import { useAuthStore } from "@/store/useAuthStore";
 
 const Header = () => {
   // 햄버거 메뉴 상태
   const [isHamburger, setIsHamburger] = useState<boolean>(false);
+
+  // 로그인 상태
+  const { user, isAuthLoading } = useAuthStore();
 
   const pathname = usePathname();
 
@@ -70,9 +75,12 @@ const Header = () => {
           <li>
             <Link href="/places">매장 목록</Link>
           </li>
-          <li>
-            <Link href="/places/add">매장 추가</Link>
-          </li>
+          {user && (
+            <li>
+              <Link href="/places/add">매장 추가</Link>
+            </li>
+          )}
+
           {/* <li>
             <Link href="/">리뷰 목록</Link>
           </li> */}

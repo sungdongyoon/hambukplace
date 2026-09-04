@@ -11,10 +11,15 @@ import { format } from "date-fns";
 import { useInfiniteReviewQuery } from "@/hooks/queries/useInfiniteReviewQuery";
 import { useInView } from "react-intersection-observer";
 import { useEffect } from "react";
+import { useAuthStore } from "@/store/useAuthStore";
 
 const TabReview = () => {
+  // 로그인 상태
+  const { user, isAuthLoading } = useAuthStore();
+
   // params 값 불러오기
   const params = useParams<{ placeId: string }>();
+
   // 리뷰 데이터 로드
   const {
     data: reviewData,
@@ -45,13 +50,16 @@ const TabReview = () => {
         </div>
       ) : (
         <>
-          <div>
-            <Button variant="outline" size="sm">
-              <Link href={`/places/${params.placeId}/reviews/add`}>
-                리뷰 작성
-              </Link>
-            </Button>
-          </div>
+          {user && (
+            <div>
+              <Button variant="outline" size="sm">
+                <Link href={`/places/${params.placeId}/reviews/add`}>
+                  리뷰 작성
+                </Link>
+              </Button>
+            </div>
+          )}
+
           {reviewList && reviewList?.length > 0 ? (
             <>
               {reviewList?.map((review) => (

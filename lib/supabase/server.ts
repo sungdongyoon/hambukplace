@@ -5,7 +5,7 @@ export const createClient = async () => {
   const cookieStore = await cookies();
 
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_KEY;
+  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
 
   if (!supabaseUrl) {
     throw new Error("Supabase URL이 설정되지 않았습니다.");
