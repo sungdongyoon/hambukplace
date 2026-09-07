@@ -50,9 +50,12 @@ const PlaceAction = ({
     <div
       className={twMerge(`flex items-center justify-end gap-1 ${className}`)}
     >
-      <Link href={`/places/${placeId}/update`} className="inline-flex">
-        <Button size={xsBreakPoint ? "xs" : "sm"}>수정</Button>
-      </Link>
+      <Button
+        href={`/places/${placeId}/update`}
+        size={xsBreakPoint ? "xs" : "sm"}
+      >
+        수정
+      </Button>
       <Button
         size={xsBreakPoint ? "xs" : "sm"}
         className="bg-status-negative"

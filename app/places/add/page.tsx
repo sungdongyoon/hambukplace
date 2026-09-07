@@ -217,15 +217,14 @@ const PlaceAddPage = () => {
         </div>
       </div>
       <div className="flex gap-3 justify-end">
-        <Link href="/places">
-          <Button
-            className="w-25"
-            size={`${isBreakPoint ? "sm" : "lg"}`}
-            variant="outline"
-          >
-            뒤로가기
-          </Button>
-        </Link>
+        <Button
+          href="/places"
+          className="w-25"
+          size={`${isBreakPoint ? "sm" : "lg"}`}
+          variant="outline"
+        >
+          뒤로가기
+        </Button>
         <Button
           className="w-25"
           size={`${isBreakPoint ? "sm" : "lg"}`}

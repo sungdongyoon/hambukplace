@@ -52,10 +52,12 @@ const TabReview = () => {
         <>
           {user && (
             <div>
-              <Button variant="outline" size="sm">
-                <Link href={`/places/${params.placeId}/reviews/add`}>
-                  리뷰 작성
-                </Link>
+              <Button
+                href={`/places/${params.placeId}/reviews/add`}
+                variant="outline"
+                size="sm"
+              >
+                리뷰 작성
               </Button>
             </div>
           )}
