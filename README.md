@@ -1,36 +1,63 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 햄벅한 플레이스
 
-## Getting Started
+## 🖥️ 프로젝트 소개
 
-First, run the development server:
+방문한 햄버거 맛집을 지도에 직접 추가하고, 먹은 메뉴에 대한 리뷰를 기록하는 개인 맛집 아카이브 서비스 입니다.
+햄버거를 좋아하는 사람으로서 많은 사람들에게 맛있는 햄버거 가게를 공유하고 싶어 제작하게 되었습니다.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 🔗 주소
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+https://hambukplace.vercel.app/
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🕰️ 개발 기간
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- 2026.08 ~ 2026.09
 
-## Learn More
+## ⚙️ 사용 기술
 
-To learn more about Next.js, take a look at the following resources:
+- Next.js
+- TypeScript
+- Tailwind CSS
+- Supabase
+- Tanstack Query
+- Zustand
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 관리자 모드
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- https://hambukplace.vercel.app/login
+- ID : admin1@test.com
+- PW : admin1@test
 
-## Deploy on Vercel
+## 페이지 구성 및 기능
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+✅ 메인 페이지
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- 지도 기반 매장 탐색
+- 네이버 지도 API를 활용해 등록된 매장을 마커로 표시
+- 마커 선택 시 해당 위치로 지도를 이동하고, 매장 정보와 리뷰를 확인할 수 있는 모달 제공
+
+✅ 매장 검색
+
+- 검색어에 맞는 매장 목록 제공
+- 지도 페이지에서 매장 검색 시 해당 마커로 이동하고 정보 모달 표시
+- 그 외 페이지에서 검색 시 매장 상세 페이지로 이동
+
+✅ 매장 상세 페이지
+
+- 주소, 영업시간, 전화번호 및 매장 이미지 제공
+- 리뷰와 매장·리뷰 이미지를 각각 탭에서 조회 가능
+- Embla Carousel을 활용한 이미지 슬라이드 구현
+  
+✅ 매장·리뷰 관리
+
+- 관리자에게 매장 등록·수정·삭제 및 리뷰 작성 기능 제공
+- 이미지 미리보기·추가·삭제 및 Supabase Storage에 업로드
+- 주소 검색 API를 활용하여 주소 입력 및 좌표 저장
+- Tanstack Query의 Mutation과 캐시 무효화를 활용해 변경된 데이터 반영
+
+
+✅ 인증 및 접근 권한
+
+- Supabase Auth를 활용한 이메일·비밀번호 회원가입 및 로그인 구현
+- 비회원은 지도, 매장 정보, 리뷰와 사진 열람 가능
+- 관리자 계정에 한해 데이터 작성·수정·삭제 가능
