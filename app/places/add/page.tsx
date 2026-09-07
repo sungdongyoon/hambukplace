@@ -189,7 +189,7 @@ const PlaceAddPage = () => {
             value={addPlaceInfo.phone}
             placeholder="매장 전화번호를 입력해주세요"
             inputMode="numeric"
-            maxLength={11}
+            maxLength={14}
             className="text-[0.8rem] sm:text-[0.9rem]"
             onChange={(e) =>
               setAddPlaceInfo({
