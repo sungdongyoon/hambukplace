@@ -95,12 +95,12 @@ const LoginPage = () => {
               }
             />
           </div>
-          <div className="flex flex-col gap-3">
+          <div className="flex flex-col gap-3 mt-10">
             <Button type="submit" size="lg" disabled={loginMutation.isPending}>
               {loginMutation.isPending ? "로그인중..." : "로그인"}
             </Button>
-            <Button type="button" size="lg" variant="outline">
-              <Link href="/signup">회원가입</Link>
+            <Button href="/signup" size="lg" variant="outline">
+              회원가입
             </Button>
           </div>
         </div>
