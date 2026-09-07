@@ -11,6 +11,7 @@ export const apiSignup = async (signupData: SignupType) => {
     options: {
       data: {
         name: signupData.name,
+        phone: signupData.phone,
       },
     },
   });
