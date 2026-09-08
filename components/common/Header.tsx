@@ -107,6 +107,11 @@ const Header = () => {
                 <Link href="/places/add">매장 추가</Link>
               </li>
             )}
+            {!user && (
+              <li>
+                <Link href="/login">로그인</Link>
+              </li>
+            )}
           </ul>
           {user && (
             <div className="flex items-center gap-3">
