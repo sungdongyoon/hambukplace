@@ -1,6 +1,6 @@
 import { ADMIN_USER_ID } from "@/constants/auth";
 import { createClient } from "@/lib/supabase/server";
-import { redirect } from "next/navigation";
+import { notFound } from "next/navigation";
 import React from "react";
 
 const PlaceUpdateLayout = async ({
@@ -18,7 +18,7 @@ const PlaceUpdateLayout = async ({
   const isAdmin = Boolean(user?.id && user?.id === ADMIN_USER_ID);
 
   if (!isAdmin) {
-    redirect("/");
+    notFound();
   }
 
   return <>{children}</>;
