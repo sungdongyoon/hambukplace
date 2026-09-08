@@ -1,9 +1,9 @@
-import { Analytics } from "@vercel/analytics/next";
 import type { Metadata } from "next";
 import "./globals.css";
 import Header from "@/components/common/Header";
 import QueryProvider from "@/provider/QueryProvider";
 import AuthInitializer from "@/components/AuthInitializer";
+import AppAnalytics from "./components/AppAnalytics";
 
 export const metadata: Metadata = {
   title: "Hambuk Place",
@@ -27,7 +27,7 @@ export default function RootLayout({
           <Header />
           <main className="flex justify-center flex-1">
             {children}
-            <Analytics />
+            <AppAnalytics />
           </main>
         </QueryProvider>
       </body>
