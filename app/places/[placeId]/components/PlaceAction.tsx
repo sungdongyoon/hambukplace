@@ -1,6 +1,7 @@
 "use client";
 
 import Button from "@/components/common/Button";
+import { ADMIN_USER_ID } from "@/constants/auth";
 import { useDeletePlace } from "@/hooks/muataions/usePlacesMutation";
 import { useBreakPoint } from "@/hooks/useBreakPoint";
 import { useAuthStore } from "@/store/useAuthStore";
@@ -17,6 +18,9 @@ const PlaceAction = ({
 }) => {
   // 로그인 상태
   const { user, isAuthLoading } = useAuthStore();
+
+  // 관리자 구분
+  const isAdmin = Boolean(user?.id && user?.id === ADMIN_USER_ID);
 
   const router = useRouter();
 
@@ -42,7 +46,7 @@ const PlaceAction = ({
     }
   };
 
-  if (!user) {
+  if (!isAdmin) {
     return null;
   }
 

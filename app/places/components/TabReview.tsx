@@ -12,10 +12,14 @@ import { useInfiniteReviewQuery } from "@/hooks/queries/useInfiniteReviewQuery";
 import { useInView } from "react-intersection-observer";
 import { useEffect } from "react";
 import { useAuthStore } from "@/store/useAuthStore";
+import { ADMIN_USER_ID } from "@/constants/auth";
 
 const TabReview = () => {
   // 로그인 상태
   const { user, isAuthLoading } = useAuthStore();
+
+  // 관리자 구분
+  const isAdmin = Boolean(user?.id && user?.id === ADMIN_USER_ID);
 
   // params 값 불러오기
   const params = useParams<{ placeId: string }>();
@@ -50,7 +54,7 @@ const TabReview = () => {
         </div>
       ) : (
         <>
-          {user && (
+          {isAdmin && (
             <div>
               <Button
                 href={`/places/${params.placeId}/reviews/add`}

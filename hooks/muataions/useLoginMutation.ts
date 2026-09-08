@@ -1,4 +1,4 @@
-import { apiLogin } from "@/api/signup/login";
+import { apiLogin } from "@/api/auth/login";
 import { useAuthStore } from "@/store/useAuthStore";
 import { useMutation } from "@tanstack/react-query";
 

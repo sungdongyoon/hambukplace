@@ -1,3 +1,4 @@
+import { ADMIN_USER_ID } from "@/constants/auth";
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import React from "react";
@@ -13,8 +14,11 @@ const PlaceUpdateLayout = async ({
     data: { user },
   } = await supabase.auth.getUser();
 
-  if (!user) {
-    redirect("/login");
+  // 관리자 구분
+  const isAdmin = Boolean(user?.id && user?.id === ADMIN_USER_ID);
+
+  if (!isAdmin) {
+    redirect("/");
   }
 
   return <>{children}</>;

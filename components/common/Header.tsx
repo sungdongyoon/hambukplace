@@ -9,6 +9,8 @@ import { usePathname, useRouter } from "next/navigation";
 import PlaceSearchInput from "./PlaceSearchInput";
 import { useAuthStore } from "@/store/useAuthStore";
 import { useLogout } from "@/hooks/muataions/useLogoutMutation";
+import Button from "./Button";
+import { ADMIN_USER_ID } from "@/constants/auth";
 
 const Header = () => {
   const pathname = usePathname();
@@ -16,6 +18,10 @@ const Header = () => {
 
   // 로그인 상태
   const { user, isAuthLoading } = useAuthStore();
+  const userInfo = user?.user_metadata;
+
+  // 관리자 구분
+  const isAdmin = Boolean(user?.id && user?.id === ADMIN_USER_ID);
 
   // 햄버거 메뉴 상태
   const [isHamburger, setIsHamburger] = useState<boolean>(false);
@@ -88,33 +94,36 @@ const Header = () => {
             />
           )}
         </div>
-        <ul className="hidden sm:flex items-center gap-5 md:gap-15 text-[0.9rem] md:text-[1rem] text-label-neutral font-semibold shrink-0">
-          <li>
-            <Link href="/">지도</Link>
-          </li>
-          <li>
-            <Link href="/places">매장 목록</Link>
-          </li>
-          {user && (
-            <>
+        <div className="flex items-center gap-12">
+          <ul className="hidden sm:flex items-center gap-5 md:gap-15 text-[0.9rem] md:text-[1rem] text-label-neutral font-semibold shrink-0">
+            <li>
+              <Link href="/">지도</Link>
+            </li>
+            <li>
+              <Link href="/places">매장 목록</Link>
+            </li>
+            {isAdmin && (
               <li>
                 <Link href="/places/add">매장 추가</Link>
               </li>
-              <li>
-                <button
-                  type="button"
-                  onClick={handleLogout}
-                  className="cursor-pointer"
-                >
-                  로그아웃
-                </button>
-              </li>
-            </>
+            )}
+          </ul>
+          {user && (
+            <div className="flex items-center gap-3">
+              <p className="text-[0.7rem] font-medium">
+                안녕하세요, {userInfo?.name}님
+              </p>
+              <Button
+                type="button"
+                size="xs"
+                onClick={handleLogout}
+                className="bg-status-negative"
+              >
+                로그아웃
+              </Button>
+            </div>
           )}
-          {/* <li>
-            <Link href="/">리뷰 목록</Link>
-          </li> */}
-        </ul>
+        </div>
       </div>
     </header>
   );
