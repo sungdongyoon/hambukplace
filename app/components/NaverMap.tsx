@@ -60,7 +60,7 @@ const NaverMap = ({ initialData }: { initialData: Place[] }) => {
           // url: "/images/marker.png",
           content: `
           <div style="display: flex;flex-direction: column; align-items: center; justify-content: center;">
-            <img src="/images/marker.png" alt="마커 이미지" style="width:50px;height:50px;object-fit:contain;" />
+            <img src="/images/marker2.png" alt="마커 이미지" style="width:50px;height:50px;object-fit:contain;" />
             <span style="font-size: 12px;font-weight: 600">${place.name}</span>
           </div>
           `,
