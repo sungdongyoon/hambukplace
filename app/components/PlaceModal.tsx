@@ -21,6 +21,8 @@ import EmptyState from "@/components/common/EmptyState";
 import { format } from "date-fns";
 import Loading from "@/components/common/Loading";
 import { displayText } from "@/utils/displayText";
+import { useState } from "react";
+import { useImageModalStore } from "@/store/useImageModalStore";
 
 const PlaceModal = ({
   place,
@@ -29,10 +31,16 @@ const PlaceModal = ({
   place: Place;
   onClose: () => void;
 }) => {
+  // 리뷰 데이터
   const { data: reviewData, isLoading } = useReviewQuery(place.id);
 
+  // store
+  const { isImageModal, images, openImageModal } = useImageModalStore();
+
+  // embla carousel 훅
   const [emblaRef, emblaApi] = useEmblaCarousel();
 
+  // break point 훅
   const isBreakPoint = useBreakPoint("sm");
 
   return (
@@ -89,10 +97,11 @@ const PlaceModal = ({
             {place?.images?.length ? (
               <>
                 <div className="embla__conatiner w-full h-full flex">
-                  {place?.images.map((el) => (
+                  {place?.images.map((el, idx) => (
                     <div
-                      className="embla__slide relative h-full min-w-0 flex-[0_0_100%]"
+                      className="embla__slide relative h-full min-w-0 flex-[0_0_100%] cursor-pointer"
                       key={el}
+                      onClick={() => openImageModal(place?.images, idx)}
                     >
                       <Image
                         src={el}

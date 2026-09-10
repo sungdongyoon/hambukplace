@@ -7,6 +7,8 @@ import { useEffect, useRef, useState } from "react";
 import NaverMapScript from "../../components/common/NaverMapScript";
 import { apiGetPlaces } from "@/api/places/places";
 import PlaceModal from "./PlaceModal";
+import ImageModal from "./ImageModal";
+import { useImageModalStore } from "@/store/useImageModalStore";
 
 const DEFAULT_CENTER = {
   lat: 37.5665,
@@ -32,8 +34,9 @@ const NaverMap = ({ initialData }: { initialData: Place[] }) => {
   const [isPlaceModal, setIsPlaceModal] = useState<boolean>(false);
   const [selectedPlace, setSelectedPlace] = useState<Place>();
 
-  // 장소 검색 스토어
+  // store
   const { placeName, selectedPlaceId, resetPlace } = usePlaceStore();
+  const { isImageModal } = useImageModalStore();
 
   // 지도 로드 함수
   const handleReadyMap = () => {
@@ -134,6 +137,8 @@ const NaverMap = ({ initialData }: { initialData: Place[] }) => {
           }}
         />
       )}
+
+      {isImageModal && <ImageModal />}
       <div ref={mapRef} className="w-full h-full" />
     </>
   );
