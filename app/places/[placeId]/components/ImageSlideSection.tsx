@@ -8,10 +8,15 @@ import EmptyState from "@/components/common/EmptyState";
 import { usePlaceQuery } from "@/hooks/queries/usePlaceQuery";
 import { useParams } from "next/navigation";
 import Loading from "@/components/common/Loading";
+import { useImageModalStore } from "@/store/useImageModalStore";
+import ImageModal from "@/app/components/ImageModal";
 
 const ImageSlideSection = () => {
   const params = useParams<{ placeId: string }>();
   const { data: placeData, isLoading } = usePlaceQuery(params.placeId);
+
+  // store
+  const { isImageModal, openImageModal } = useImageModalStore(); // 이미지 모달
 
   // 이미지가 2개 이상인 경우에만 캐러셀 활성화
   const activeCarousel = (placeData?.images?.length ?? 0) >= 2;
@@ -33,47 +38,51 @@ const ImageSlideSection = () => {
   };
 
   return (
-    <div
-      className="embla overflow-hidden w-full aspect-3/2 xs:aspect-6/3 sm:aspect-5/2 relative"
-      ref={placeData?.images?.length ? emblaRef : undefined}
-    >
-      {isLoading ? (
-        <div className="w-full h-full flex justify-center items-center">
-          <Loading />
-        </div>
-      ) : placeData?.images?.length ? (
-        <>
-          <div className="embla__container flex gap-3 h-full">
-            {placeData?.images?.map((image, index) => (
-              <div
-                className={`embla__slide relative h-full min-w-0 ${carouselImageLength(placeData?.images?.length)}`}
-                key={image}
-              >
-                {placeData?.images.length === 1 && (
+    <>
+      <div
+        className="embla overflow-hidden w-full aspect-3/2 xs:aspect-6/3 sm:aspect-5/2 relative"
+        ref={placeData?.images?.length ? emblaRef : undefined}
+      >
+        {isLoading ? (
+          <div className="w-full h-full flex justify-center items-center">
+            <Loading />
+          </div>
+        ) : placeData?.images?.length ? (
+          <>
+            <div className="embla__container flex gap-3 h-full">
+              {placeData?.images?.map((image, index) => (
+                <div
+                  className={`embla__slide relative h-full min-w-0 cursor-pointer ${carouselImageLength(placeData?.images?.length)}`}
+                  key={image}
+                  onClick={() => openImageModal(placeData?.images, index)}
+                >
+                  {placeData?.images.length === 1 && (
+                    <Image
+                      src={image}
+                      alt=""
+                      fill
+                      aria-hidden
+                      className="scale-110 object-cover opacity-30 blur-xl"
+                    />
+                  )}
+
                   <Image
                     src={image}
-                    alt=""
+                    alt={`${placeData.name} 이미지 ${index + 1}`}
                     fill
-                    aria-hidden
-                    className="scale-110 object-cover opacity-30 blur-xl"
+                    className={`${placeData?.images.length === 1 ? "object-contain" : "object-cover"} rounded-lg`}
                   />
-                )}
-
-                <Image
-                  src={image}
-                  alt={`${placeData.name} 이미지 ${index + 1}`}
-                  fill
-                  className={`${placeData?.images.length === 1 ? "object-contain" : "object-cover"} rounded-lg`}
-                />
-              </div>
-            ))}
-          </div>
-          {activeCarousel && <EmblaSlideButton emblaApi={emblaApi} />}
-        </>
-      ) : (
-        <EmptyState message="등록된 이미지가 없습니다" />
-      )}
-    </div>
+                </div>
+              ))}
+            </div>
+            {activeCarousel && <EmblaSlideButton emblaApi={emblaApi} />}
+          </>
+        ) : (
+          <EmptyState message="등록된 이미지가 없습니다" />
+        )}
+      </div>
+      {isImageModal && <ImageModal />}
+    </>
   );
 };
 

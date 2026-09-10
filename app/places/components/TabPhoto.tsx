@@ -4,6 +4,7 @@ import EmptyState from "@/components/common/EmptyState";
 import Loading from "@/components/common/Loading";
 import { useInfiniteReviewQuery } from "@/hooks/queries/useInfiniteReviewQuery";
 import { usePlaceQuery } from "@/hooks/queries/usePlaceQuery";
+import { useImageModalStore } from "@/store/useImageModalStore";
 import Image from "next/image";
 import { useParams } from "next/navigation";
 import { useEffect } from "react";
@@ -11,6 +12,7 @@ import { useInView } from "react-intersection-observer";
 
 const TabPhoto = () => {
   const params = useParams<{ placeId: string }>();
+
   // 매장 데이터
   const { data: placeData, isLoading: placeLoading } = usePlaceQuery(
     params.placeId,
@@ -24,6 +26,9 @@ const TabPhoto = () => {
     hasNextPage: reviewHasNextPage,
     isFetchingNextPage: reviewIsFetchingNextPage,
   } = useInfiniteReviewQuery(params.placeId);
+
+  // store
+  const { openImageModal } = useImageModalStore(); // 이미지 모달
 
   // intersection observer 훅
   const { ref, inView } = useInView();
@@ -65,12 +70,18 @@ const TabPhoto = () => {
   return (
     <>
       <div className="grid grid-cols-[repeat(auto-fill,minmax(240px,1fr))] gap-x-5 gap-y-10">
-        {totalImages?.map((el) => (
+        {totalImages?.map((el, idx) => (
           <div
-            className="relative aspect-5/4 w-full overflow-hidden rounded-lg"
+            className="relative aspect-5/4 w-full overflow-hidden rounded-lg cursor-pointer"
             key={el}
+            onClick={() => openImageModal(totalImages, idx)}
           >
-            <Image src={el} alt="매장 이미지" fill className="object-cover" />
+            <Image
+              src={el}
+              alt={`매장 사진 ${idx + 1}`}
+              fill
+              className="object-cover"
+            />
           </div>
         ))}
       </div>

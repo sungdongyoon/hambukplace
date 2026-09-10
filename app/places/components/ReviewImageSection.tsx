@@ -2,6 +2,7 @@
 
 import EmblaSlideButton from "@/components/common/EmblaSlideButton";
 import EmptyState from "@/components/common/EmptyState";
+import { useImageModalStore } from "@/store/useImageModalStore";
 import { Review } from "@/types/review";
 import useEmblaCarousel from "embla-carousel-react";
 import Image from "next/image";
@@ -9,6 +10,9 @@ import Image from "next/image";
 const ReviewImageSection = ({ data }: { data: Review }) => {
   // 이미지 슬라이드 상태
   const [emblaRef, emblaApi] = useEmblaCarousel();
+
+  // store
+  const { openImageModal } = useImageModalStore(); // 이미지 모달
 
   return (
     <div
@@ -22,6 +26,7 @@ const ReviewImageSection = ({ data }: { data: Review }) => {
               <div
                 key={el}
                 className="embla__slide relative h-full min-w-0 flex-[0_0_100%]"
+                onClick={() => openImageModal(data?.images, idx)}
               >
                 <Image
                   src={el}

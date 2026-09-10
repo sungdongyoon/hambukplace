@@ -3,7 +3,6 @@
 import { FaStar } from "react-icons/fa6";
 import Loading from "../../../components/common/Loading";
 import Button from "@/components/common/Button";
-import Link from "next/link";
 import { useParams } from "next/navigation";
 import ReviewImageSection from "./ReviewImageSection";
 import EmptyState from "@/components/common/EmptyState";
@@ -15,8 +14,8 @@ import { useAuthStore } from "@/store/useAuthStore";
 import { ADMIN_USER_ID } from "@/constants/auth";
 
 const TabReview = () => {
-  // 로그인 상태
-  const { user, isAuthLoading } = useAuthStore();
+  // store
+  const { user, isAuthLoading } = useAuthStore(); // 로그인 상태
 
   // 관리자 구분
   const isAdmin = Boolean(user?.id && user?.id === ADMIN_USER_ID);
