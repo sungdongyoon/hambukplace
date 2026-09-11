@@ -2,10 +2,9 @@ import React from "react";
 import { FaChevronDown } from "react-icons/fa6";
 import { twMerge } from "tailwind-merge";
 
-type SelectPropsType = {
+type SelectPropsType = React.SelectHTMLAttributes<HTMLSelectElement> & {
   className?: string;
   defaultLabel: string;
-  ariaLabel?: string;
   option: {
     label: string;
     value: string;
@@ -15,14 +14,14 @@ type SelectPropsType = {
 const Select = ({
   className,
   option,
-  ariaLabel,
   defaultLabel,
+  ...props
 }: SelectPropsType) => {
   return (
     <div className="relative inline-flex shrink-0">
       <select
-        aria-label={ariaLabel}
-        defaultValue=""
+        value=""
+        {...props}
         className={twMerge(
           `h-9 w-full rounded-md appearance-none border border-line-normal-alternative bg-background-normal-normal pl-3 pr-9 text-[0.8rem] text-label-normal cursor-pointer ${className}`,
         )}

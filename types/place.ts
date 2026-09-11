@@ -50,3 +50,6 @@ export type UpdatePlaceType = {
   phone?: string;
   images?: UpdateImage[];
 };
+
+// 매장 정렬 타입
+export type PlaceSortType = "latest" | "name";

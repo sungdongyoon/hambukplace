@@ -1,11 +1,18 @@
+"use client";
+
 import Select from "@/components/common/Select";
+import { usePlaceControlStore } from "@/store/usePlaceControlStore";
 
 const PlaceListControl = () => {
+  // 정렬 상태값
+  const sort = usePlaceControlStore((state) => state.sort);
+  const setSort = usePlaceControlStore((state) => state.setSort);
+
   return (
     <div className="flex items-center gap-3">
-      <Select
-        ariaLabel="매장 필터"
+      {/* <Select
         defaultLabel="필터"
+        aria-label="매장 필터"
         option={[
           {
             label: "치즈버거 맛집",
@@ -24,10 +31,18 @@ const PlaceListControl = () => {
             value: "hign-quality",
           },
         ]}
-      />
+      /> */}
       <Select
         defaultLabel="정렬"
-        ariaLabel="매장 정렬"
+        aria-label="매장 정렬"
+        value={sort}
+        onChange={(e) => {
+          const value = e.currentTarget.value;
+
+          if (value === "latest" || value === "name") {
+            setSort(value);
+          }
+        }}
         option={[
           {
             label: "이름순",
@@ -36,10 +51,6 @@ const PlaceListControl = () => {
           {
             label: "최신순",
             value: "latest",
-          },
-          {
-            label: "리뷰 많은 순",
-            value: "review-count",
           },
         ]}
       />

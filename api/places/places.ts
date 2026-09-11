@@ -1,17 +1,27 @@
 import { uploadPlaceImages } from "@/utils/image";
 import { createClient } from "@/lib/supabase/client";
-import { AddPlaceType, Place, UpdatePlaceType } from "@/types/place";
+import {
+  AddPlaceType,
+  Place,
+  PlaceSortType,
+  UpdatePlaceType,
+} from "@/types/place";
 
 const PAGE_SIZE = 5;
 
 // [GET] 매장 정보
-export const apiGetPlaces = async (): Promise<Place[]> => {
+export const apiGetPlaces = async (
+  sort: PlaceSortType = "latest",
+): Promise<Place[]> => {
   const supabase = createClient();
 
   const { data, error } = await supabase
     .from("places")
     .select("*")
-    .order("created_at", { ascending: false });
+    .order(sort === "name" ? "name" : "created_at", {
+      ascending: sort === "name",
+    }) // 이름은 오름차순, 생성일은 내림차순
+    .order("id", { ascending: true });
 
   if (error) {
     console.log("매장 정보 불러오기 실패", error);
@@ -22,7 +32,13 @@ export const apiGetPlaces = async (): Promise<Place[]> => {
 };
 
 // [GET] 매장 정보 - 인피니티 스크롤
-export const apiGetPlacesInfinite = async (pageParam: number) => {
+export const apiGetPlacesInfinite = async ({
+  pageParam,
+  sort,
+}: {
+  pageParam: number;
+  sort?: PlaceSortType;
+}) => {
   const supabase = createClient();
 
   const from = pageParam * PAGE_SIZE;
@@ -31,8 +47,11 @@ export const apiGetPlacesInfinite = async (pageParam: number) => {
   const { data, error } = await supabase
     .from("places")
     .select("*")
-    .range(from, to)
-    .order("created_at", { ascending: false });
+    .order(sort === "name" ? "name" : "created_at", {
+      ascending: sort === "name",
+    }) // 이름은 오름차순, 생성일은 내림차순
+    .order("id", { ascending: true })
+    .range(from, to);
 
   if (error) {
     console.log("매장 정보 불러오기 실패", error);

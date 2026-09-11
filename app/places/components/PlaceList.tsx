@@ -3,12 +3,15 @@
 import EmptyState from "@/components/common/EmptyState";
 import Loading from "@/components/common/Loading";
 import { useInfinitePlacesQuery } from "@/hooks/queries/useInfinitePlacesQuery";
+import { usePlaceControlStore } from "@/store/usePlaceControlStore";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 
 const PlaceList = () => {
+  const sort = usePlaceControlStore((state) => state.sort);
+
   // 매장 데이터 호출
   const {
     data: placeData,
@@ -16,7 +19,7 @@ const PlaceList = () => {
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
-  } = useInfinitePlacesQuery();
+  } = useInfinitePlacesQuery(sort);
 
   // 매장 리스트
   const placeList = placeData?.pages.flatMap((el) => el.places);
