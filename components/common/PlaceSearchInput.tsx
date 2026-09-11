@@ -7,13 +7,26 @@ import { usePlacesQuery } from "@/hooks/queries/usePlacesQuery";
 import { twMerge } from "tailwind-merge";
 import { usePathname, useRouter } from "next/navigation";
 import { Place } from "@/types/place";
+import { FaX } from "react-icons/fa6";
 
-const PlaceSearchInput = ({ className }: { className?: string }) => {
-  const { data: placesData, isLoading } = usePlacesQuery();
-  const { placeName, setPlaceName, setSelectedPlaceId } = usePlaceStore();
+type PlaceSearchInputType = {
+  className?: string;
+  inputClassName?: string;
+};
 
+const PlaceSearchInput = ({
+  className,
+  inputClassName,
+}: PlaceSearchInputType) => {
   const pathname = usePathname();
   const router = useRouter();
+
+  // 데이터
+  const { data: placesData, isLoading } = usePlacesQuery();
+
+  // store
+  const { placeName, setPlaceName, setSelectedPlaceId, resetPlace } =
+    usePlaceStore();
 
   // 검색어 필터
   const filteredPlaces = placeName.trim()
@@ -37,12 +50,20 @@ const PlaceSearchInput = ({ className }: { className?: string }) => {
         placeholder="매장 이름을 검색해주세요"
         aria-label="매장 이름을 검색해주세요"
         value={placeName}
-        className="bg-static-white rounded-4xl p-3"
+        className={twMerge(
+          `bg-static-white rounded-4xls p-3 ${inputClassName}`,
+        )}
         onChange={(e) => {
           setPlaceName(e.target.value);
           setSelectedPlaceId(null);
         }}
       />
+      <button
+        onClick={resetPlace}
+        className="absolute top-1/2 right-5 -translate-y-1/2 text-[0.8rem]"
+      >
+        <FaX />
+      </button>
       {placeName && filteredPlaces?.length !== 0 && (
         <div className="w-full absolute z-10 bg-white border border-line-normal-neutral rounded-sm">
           {isLoading ? (

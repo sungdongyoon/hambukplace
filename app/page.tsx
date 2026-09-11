@@ -10,8 +10,8 @@ export default async function Home() {
 
   return (
     <div className="w-full relative">
-      <div className="w-[80%] block xs:hidden absolute left-1/2 top-5 -translate-x-1/2 z-10">
-        <PlaceSearchInput />
+      <div className="w-[80%] block sm:hidden absolute left-1/2 top-5 -translate-x-1/2 z-10">
+        <PlaceSearchInput inputClassName="xs:h-10 xs:px-3.5 xs:text-[1rem]" />
       </div>
       <NaverMap initialData={getPlacesData} />
     </div>

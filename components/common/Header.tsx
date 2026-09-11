@@ -30,12 +30,41 @@ const Header = () => {
   // 로그아웃 뮤테이션
   const logoutMutation = useLogout();
 
+  // dropdown 메뉴 리스트
+  const menuItems = [
+    {
+      label: "지도",
+      href: "/",
+    },
+    {
+      label: "매장 목록",
+      href: "/places",
+    },
+    ...(isAdmin
+      ? [
+          {
+            label: "매장 추가",
+            href: "/places/add",
+          },
+        ]
+      : []),
+    ...(!user
+      ? [
+          {
+            label: "로그인",
+            href: "/login",
+          },
+        ]
+      : []),
+  ];
+
   // 로그아웃 함수
   const handleLogout = () => {
     if (confirm("로그아웃 하시겠습니까?")) {
       logoutMutation.mutate(undefined, {
         onSuccess: () => {
           alert("로그아웃 되었습니다");
+          setIsHamburger(false);
           router.replace("/");
         },
         onError: (error) => {
@@ -52,7 +81,7 @@ const Header = () => {
 
   return (
     <header className="w-full h-20 flex bg-background-normal-normal border-b border-line-normal-normal px-10 sm:px-20">
-      <ViewBreakPoint className="top-10" />
+      {/* <ViewBreakPoint className="top-10" /> */}
       <div className="w-full flex items-center justify-between gap-5">
         <div className="max-w-125 w-full flex items-center gap-10 flex-1 min-w-0">
           <Link href="/" className="inline-flex shrink-0">
@@ -68,50 +97,39 @@ const Header = () => {
             <PlaceSearchInput />
           </div>
         </div>
-        <div className="relative">
+        <div className="relative md:hidden">
           <button
             type="button"
-            className="inline-flex md:hidden text-[1.4rem]"
+            className="flex md:hidden text-[1.4rem]"
             onClick={() => setIsHamburger(!isHamburger)}
           >
             <FaBars />
           </button>
           {isHamburger && (
             <Dropdown
-              list={[
-                {
-                  label: "지도",
-                  href: "/",
-                },
-                {
-                  label: "매장 목록",
-                  href: "/places",
-                },
-                {
-                  label: "매장 추가",
-                  href: "/places/add",
-                },
-              ]}
+              list={menuItems}
               custom={
-                <div className="flex flex-col gap-3 p-2">
-                  <p className="text-[0.7rem] font-medium">
-                    안녕하세요, {userInfo?.name}님
-                  </p>
-                  <Button
-                    type="button"
-                    size="xs"
-                    onClick={handleLogout}
-                    className="bg-status-negative"
-                  >
-                    로그아웃
-                  </Button>
-                </div>
+                user && (
+                  <div className="flex flex-col gap-3 p-2">
+                    <p className="text-[0.7rem] font-medium">
+                      안녕하세요, {userInfo?.name}님
+                    </p>
+                    <Button
+                      type="button"
+                      size="xs"
+                      onClick={handleLogout}
+                      className="bg-status-negative"
+                    >
+                      로그아웃
+                    </Button>
+                  </div>
+                )
               }
             />
           )}
         </div>
-        <div className="flex items-center gap-7 lg:gap-10">
-          <ul className="hidden md:flex items-center gap-5 md:gap-7 lg:gap-15 text-[0.9rem] md:text-[1rem] text-label-neutral font-semibold shrink-0">
+        <div className="hidden md:flex items-center gap-7 lg:gap-10">
+          <ul className="flex items-center gap-5 md:gap-7 lg:gap-15 text-[0.9rem] md:text-[1rem] text-label-neutral font-semibold shrink-0">
             <li>
               <Link href="/">지도</Link>
             </li>
