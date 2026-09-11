@@ -1,24 +1,37 @@
+"use client";
+
 import React, { useEffect, useMemo, useState } from "react";
 import { twMerge } from "tailwind-merge";
 
 const BREAKPOINTS = [
-  { max: 360, name: "2xs" },
-  { max: 480, name: "xs" },
-  { max: 768, name: "sm" },
-  { max: 992, name: "md" },
-  { max: 1200, name: "lg" },
-  { max: 1600, name: "xl" },
+  { min: 360, name: "2xs" },
+  { min: 480, name: "xs" },
+  { min: 768, name: "sm" },
+  { min: 992, name: "md" },
+  { min: 1200, name: "lg" },
+  { min: 1600, name: "xl" },
 ] as const;
 
 const getBreakpoint = (width: number) => {
-  return BREAKPOINTS.find((breakpoint) => width <= breakpoint.max)?.name ?? "";
+  for (let i = BREAKPOINTS.length - 1; i >= 0; i--) {
+    const current = BREAKPOINTS[i];
+
+    if (width >= current.min) {
+      const next = BREAKPOINTS[i + 1];
+
+      return next
+        ? `${current.name} (${current.min}px ~ ${next.min}px 미만)`
+        : `${current.name} (${current.min}px 이상)`;
+    }
+  }
+
+  return `base (${BREAKPOINTS[0].min}px 미만)`;
 };
 
 const ViewBreakPoint = ({ className }: { className?: string }) => {
   const [width, setWidth] = useState<number>(0);
 
   useEffect(() => {
-    if (typeof window === "undefined") return;
     const update = () => setWidth(window.innerWidth);
 
     update();
@@ -28,14 +41,14 @@ const ViewBreakPoint = ({ className }: { className?: string }) => {
     return () => window.removeEventListener("resize", update);
   }, []);
 
-  const breakPoint = useMemo(() => getBreakpoint(width), [width]);
+  const breakPoint = getBreakpoint(width);
 
   if (width === 0) return null;
 
   return (
     <div
       className={twMerge(
-        `fixed top-3 left-3 bg-black text-white text-[0.8rem] w-42.5 px-6 py-3 rounded-lg z-10 ${className}`,
+        `fixed top-3 left-3 bg-black text-white text-[0.8rem] w-max max-w-[calc(100vw-24px)] px-6 py-3 rounded-lg z-10 ${className}`,
       )}
     >
       <p>너비 : {width}px</p>

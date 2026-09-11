@@ -11,6 +11,7 @@ import { useAuthStore } from "@/store/useAuthStore";
 import { useLogout } from "@/hooks/muataions/useLogoutMutation";
 import Button from "./Button";
 import { ADMIN_USER_ID } from "@/constants/auth";
+import ViewBreakPoint from "./ViewBreakPoint";
 
 const Header = () => {
   const pathname = usePathname();
@@ -51,7 +52,7 @@ const Header = () => {
 
   return (
     <header className="w-full h-20 flex bg-background-normal-normal border-b border-line-normal-normal px-10 sm:px-20">
-      {/* <ViewBreakPoint className="top-10" /> */}
+      <ViewBreakPoint className="top-10" />
       <div className="w-full flex items-center justify-between gap-10">
         <div className="max-w-125 w-full flex items-center gap-10 flex-1 min-w-0">
           <Link href="/" className="inline-flex shrink-0">
@@ -94,8 +95,8 @@ const Header = () => {
             />
           )}
         </div>
-        <div className="flex items-center gap-12">
-          <ul className="hidden sm:flex items-center gap-5 md:gap-15 text-[0.9rem] md:text-[1rem] text-label-neutral font-semibold shrink-0">
+        <div className="flex items-center gap-7 lg:gap-10 border md:border-blue-50 lg:border-red-50">
+          <ul className="hidden sm:flex items-center gap-5 md:gap-7 lg:gap-15 text-[0.9rem] md:text-[1rem] text-label-neutral font-semibold shrink-0">
             <li>
               <Link href="/">지도</Link>
             </li>
