@@ -60,7 +60,7 @@ const PlaceSearchInput = ({
       />
       <button
         onClick={resetPlace}
-        className="absolute top-1/2 right-5 -translate-y-1/2 text-[0.8rem]"
+        className="absolute top-1/2 right-5 -translate-y-1/2 text-[0.8rem] cursor-pointer"
       >
         <FaX />
       </button>
