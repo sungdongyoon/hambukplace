@@ -53,7 +53,7 @@ const Header = () => {
   return (
     <header className="w-full h-20 flex bg-background-normal-normal border-b border-line-normal-normal px-10 sm:px-20">
       <ViewBreakPoint className="top-10" />
-      <div className="w-full flex items-center justify-between gap-10">
+      <div className="w-full flex items-center justify-between gap-5">
         <div className="max-w-125 w-full flex items-center gap-10 flex-1 min-w-0">
           <Link href="/" className="inline-flex shrink-0">
             <Image
@@ -64,14 +64,14 @@ const Header = () => {
               className="h-5 w-auto"
             />
           </Link>
-          <div className="hidden xs:block w-full">
+          <div className="hidden sm:block w-full">
             <PlaceSearchInput />
           </div>
         </div>
         <div className="relative">
           <button
             type="button"
-            className="inline-flex sm:hidden text-[1.4rem]"
+            className="inline-flex md:hidden text-[1.4rem]"
             onClick={() => setIsHamburger(!isHamburger)}
           >
             <FaBars />
@@ -92,11 +92,26 @@ const Header = () => {
                   href: "/places/add",
                 },
               ]}
+              custom={
+                <div className="flex flex-col gap-3 p-2">
+                  <p className="text-[0.7rem] font-medium">
+                    안녕하세요, {userInfo?.name}님
+                  </p>
+                  <Button
+                    type="button"
+                    size="xs"
+                    onClick={handleLogout}
+                    className="bg-status-negative"
+                  >
+                    로그아웃
+                  </Button>
+                </div>
+              }
             />
           )}
         </div>
-        <div className="flex items-center gap-7 lg:gap-10 border md:border-blue-50 lg:border-red-50">
-          <ul className="hidden sm:flex items-center gap-5 md:gap-7 lg:gap-15 text-[0.9rem] md:text-[1rem] text-label-neutral font-semibold shrink-0">
+        <div className="flex items-center gap-7 lg:gap-10">
+          <ul className="hidden md:flex items-center gap-5 md:gap-7 lg:gap-15 text-[0.9rem] md:text-[1rem] text-label-neutral font-semibold shrink-0">
             <li>
               <Link href="/">지도</Link>
             </li>
@@ -115,7 +130,7 @@ const Header = () => {
             )}
           </ul>
           {user && (
-            <div className="flex items-center gap-3">
+            <div className="hidden md:flex items-center gap-3">
               <p className="text-[0.7rem] font-medium">
                 안녕하세요, {userInfo?.name}님
               </p>

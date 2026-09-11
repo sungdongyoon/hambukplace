@@ -8,9 +8,10 @@ type DropdownType = {
     label: string;
     href: string;
   }[];
+  custom?: React.ReactNode;
 };
 
-const Dropdown = ({ className, list }: DropdownType) => {
+const Dropdown = ({ className, list, custom }: DropdownType) => {
   return (
     <div className={twMerge(`w-40 absolute right-0 z-15 ${className}`)}>
       <ul className="bg-white rounded-lg shadow-2xl">
@@ -27,6 +28,7 @@ const Dropdown = ({ className, list }: DropdownType) => {
             </Link>
           </li>
         ))}
+        <li>{custom}</li>
       </ul>
     </div>
   );
