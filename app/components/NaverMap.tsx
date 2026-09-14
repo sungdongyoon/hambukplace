@@ -2,13 +2,12 @@
 
 import { usePlaceStore } from "@/store/usePlaceStore";
 import { Place } from "@/types/place";
-import { useQuery } from "@tanstack/react-query";
 import { useEffect, useRef, useState } from "react";
 import NaverMapScript from "../../components/common/NaverMapScript";
-import { apiGetPlaces } from "@/api/places/places";
 import PlaceModal from "./PlaceModal";
 import ImageModal from "./ImageModal";
 import { useImageModalStore } from "@/store/useImageModalStore";
+import { usePlacesQuery } from "@/hooks/queries/usePlacesQuery";
 
 const DEFAULT_CENTER = {
   lat: 37.5665,
@@ -22,11 +21,7 @@ const NaverMap = ({ initialData }: { initialData: Place[] }) => {
   const activeInfowindowRef = useRef<naver.maps.InfoWindow>(null);
 
   // 매장 데이터 로드
-  const { data, isLoading, isError } = useQuery({
-    queryKey: ["placeMap"],
-    queryFn: apiGetPlaces,
-    initialData: initialData,
-  });
+  const { data } = usePlacesQuery();
 
   // 지도 로드 상태
   const [isMapReady, setIsMapReady] = useState(false);

@@ -1,5 +1,5 @@
 import { apiGetPlaces } from "@/api/places/places";
-import { PlaceSortType } from "@/types/place";
+import { Place, PlaceSortType } from "@/types/place";
 import { useQuery } from "@tanstack/react-query";
 
 // 전체 매장 정보
