@@ -59,6 +59,7 @@ const PlaceSearchInput = ({
         }}
       />
       <button
+        aria-label="매장 검색 초기화 버튼"
         onClick={resetPlace}
         className="absolute top-1/2 right-5 -translate-y-1/2 text-[0.8rem] cursor-pointer"
       >

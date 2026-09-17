@@ -2,14 +2,17 @@
 
 import EmptyState from "@/components/common/EmptyState";
 import Loading from "@/components/common/Loading";
-import { useInfinitePlacesQuery } from "@/hooks/queries/useInfinitePlacesQuery";
+import {
+  InitialPlacesData,
+  useInfinitePlacesQuery,
+} from "@/hooks/queries/useInfinitePlacesQuery";
 import { usePlaceControlStore } from "@/store/usePlaceControlStore";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 
-const PlaceList = () => {
+const PlaceList = ({ initialData }: { initialData: InitialPlacesData }) => {
   const sort = usePlaceControlStore((state) => state.sort);
 
   // 매장 데이터 호출
@@ -19,7 +22,7 @@ const PlaceList = () => {
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
-  } = useInfinitePlacesQuery(sort);
+  } = useInfinitePlacesQuery(sort, initialData);
 
   // 매장 리스트
   const placeList = placeData?.pages.flatMap((el) => el.places);
@@ -55,7 +58,7 @@ const PlaceList = () => {
                     src={place.images[0]}
                     fill
                     loading="eager"
-                    sizes="auto, (max-width: 500px) 100vw, 500px"
+                    sizes="240px"
                     className="rounded-lg object-cover"
                     fetchPriority="high"
                   />

@@ -117,7 +117,6 @@ const Header = () => {
                     <Button
                       type="button"
                       size="xs"
-                      aria-label="매장 검색 초기화 버튼"
                       onClick={handleLogout}
                       className="bg-status-negative"
                     >

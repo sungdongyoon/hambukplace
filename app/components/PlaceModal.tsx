@@ -52,6 +52,7 @@ const PlaceModal = ({
       ) : (
         <>
           <button
+            aria-label="매장 모달 닫기 버튼"
             className="absolute top-3 right-3 cursor-pointer"
             onClick={onClose}
           >

@@ -39,6 +39,7 @@ const ImageModal = () => {
     >
       <button
         type="button"
+        aria-label="이미지 모달 닫기 버튼"
         className="absolute top-20 right-20 text-[1.6rem] text-static-white cursor-pointer"
         onClick={closeImageModal}
       >

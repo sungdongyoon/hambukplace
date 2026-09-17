@@ -7,7 +7,7 @@ import {
   UpdatePlaceType,
 } from "@/types/place";
 
-const PAGE_SIZE = 5;
+const PAGE_SIZE = 20;
 
 // [GET] 매장 정보
 export const apiGetPlaces = async (
