@@ -19,18 +19,19 @@ const PlaceList = ({ initialData }: { initialData: InitialPlacesData }) => {
   const {
     data: placeData,
     isLoading: placeLoading,
+    isError,
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
   } = useInfinitePlacesQuery(sort, initialData);
 
   // 매장 리스트
-  const placeList = placeData?.pages.flatMap((el) => el.places);
+  const placeList = placeData?.pages.flatMap((el) => el.places) ?? [];
 
   // intersection observer 훅
   const { ref, inView } = useInView();
 
-  // 특정 요소가 페이지에 감지되면 next page 리뷰 데이터 호출
+  // 특정 요소가 페이지에 감지되면 next page 매장 데이터 호출
   useEffect(() => {
     if (inView && hasNextPage && !isFetchingNextPage) {
       fetchNextPage();
@@ -45,10 +46,18 @@ const PlaceList = ({ initialData }: { initialData: InitialPlacesData }) => {
     );
   }
 
+  if (isError && !placeData) {
+    return <EmptyState message="매장 정보를 불러오지 못했습니다." />;
+  }
+
+  if (placeList.length === 0) {
+    return <EmptyState message="등록된 매장이 없습니다." />;
+  }
+
   return (
     <>
       <div className="grid grid-cols-[repeat(auto-fill,minmax(240px,1fr))] gap-x-5 gap-y-10">
-        {placeList?.map((place) => (
+        {placeList.map((place) => (
           <article key={place.id}>
             <Link href={`/places/${place.id}`}>
               <div className="w-full relative aspect-3/2 rounded-lg mb-3">
