@@ -51,17 +51,20 @@ const PlaceList = () => {
               <div className="w-full relative aspect-3/2 rounded-lg mb-3">
                 {place?.images?.length ? (
                   <Image
-                    alt="매장 이미지"
+                    alt={`${place.name} 매장 이미지`}
                     src={place.images[0]}
                     fill
+                    loading="eager"
+                    sizes="auto, (max-width: 500px) 100vw, 500px"
                     className="rounded-lg object-cover"
+                    fetchPriority="high"
                   />
                 ) : (
                   <EmptyState message="등록된 이미지가 없습니다" />
                 )}
               </div>
               <p className="font-semibold">{place.name}</p>
-              <address className="text-[0.7rem] not-italic text-label-alternative">
+              <address className="text-[0.7rem] not-italic text-label-neutral">
                 {`${place.address} ${place.address_detail}`}
               </address>
             </Link>
