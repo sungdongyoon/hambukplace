@@ -1,20 +1,15 @@
 "use client";
 
 import useEmblaCarousel from "embla-carousel-react";
-import { Place } from "@/types/place";
 import Image from "next/image";
 import EmblaSlideButton from "@/components/common/EmblaSlideButton";
 import EmptyState from "@/components/common/EmptyState";
-import { usePlaceQuery } from "@/hooks/queries/usePlaceQuery";
-import { useParams } from "next/navigation";
 import Loading from "@/components/common/Loading";
 import { useImageModalStore } from "@/store/useImageModalStore";
 import ImageModal from "@/app/components/ImageModal";
+import { Place } from "@/types/place";
 
-const ImageSlideSection = () => {
-  const params = useParams<{ placeId: string }>();
-  const { data: placeData, isLoading } = usePlaceQuery(params.placeId);
-
+const ImageSlideSection = ({ placeData }: { placeData: Place }) => {
   // store
   const { isImageModal, openImageModal } = useImageModalStore(); // 이미지 모달
 
@@ -43,7 +38,7 @@ const ImageSlideSection = () => {
         className="embla overflow-hidden w-full aspect-3/2 xs:aspect-6/3 sm:aspect-5/2 relative"
         ref={placeData?.images?.length ? emblaRef : undefined}
       >
-        {isLoading ? (
+        {!placeData ? (
           <div className="w-full h-full flex justify-center items-center">
             <Loading />
           </div>
@@ -59,7 +54,7 @@ const ImageSlideSection = () => {
                   {placeData?.images.length === 1 && (
                     <Image
                       src={image}
-                      alt=""
+                      alt="overlay 이미지"
                       fill
                       aria-hidden
                       className="scale-110 object-cover opacity-30 blur-xl"
@@ -70,6 +65,9 @@ const ImageSlideSection = () => {
                     src={image}
                     alt={`${placeData.name} 이미지 ${index + 1}`}
                     fill
+                    loading="eager"
+                    fetchPriority="high"
+                    sizes="400px"
                     className={`${placeData?.images.length === 1 ? "object-contain" : "object-cover"} rounded-lg`}
                   />
                 </div>

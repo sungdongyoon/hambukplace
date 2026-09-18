@@ -22,6 +22,8 @@ const EmblaSlideButton = ({
     <>
       <button
         onClick={slidePrev}
+        type="button"
+        aria-label="캐러셀 이전 이미지 버튼"
         className={twMerge(
           `absolute left-5 top-1/2 -translate-y-1/2 p-3 bg-white shadow rounded-[50%] cursor-pointer ${className ?? ""} ${prevClassName ?? ""}`,
         )}
@@ -30,6 +32,8 @@ const EmblaSlideButton = ({
       </button>
       <button
         onClick={slideNext}
+        type="button"
+        aria-label="캐러셀 다음 이미지 버튼"
         className={twMerge(
           `absolute right-5 top-1/2 -translate-y-1/2 p-3 bg-white shadow rounded-[50%] cursor-pointer ${className ?? ""} ${nextClassName ?? ""}`,
         )}

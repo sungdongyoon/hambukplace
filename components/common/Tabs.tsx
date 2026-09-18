@@ -35,7 +35,7 @@ const Tabs = ({ info }: TabProps) => {
           </button>
         ))}
       </div>
-      <div role="tabcontent">{activeTab?.content}</div>
+      <div role="tabpanel">{activeTab?.content}</div>
     </div>
   );
 };

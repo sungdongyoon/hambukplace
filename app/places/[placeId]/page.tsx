@@ -1,14 +1,10 @@
-export const dynamic = "force-dynamic";
-
 import PageTitle from "@/components/common/PageTitle";
 import Tabs from "@/components/common/Tabs";
 import TabPhoto from "@/app/places/components/TabPhoto";
 import TabReview from "@/app/places/components/TabReview";
 import { FaMapLocation, FaPhone, FaRegClock } from "react-icons/fa6";
-import Button from "@/components/common/Button";
 import ImageSlideSection from "./components/ImageSlideSection";
 import { apiGetPlace } from "@/api/places/places";
-import Link from "next/link";
 import PlaceAction from "./components/PlaceAction";
 import { displayText } from "@/utils/displayText";
 
@@ -24,7 +20,7 @@ const PlacePage = async ({ params }: { params: { placeId: string } }) => {
         <PageTitle className="mb-0">{displayText(placeData?.name)}</PageTitle>
         <PlaceAction placeId={placeId} />
       </div>
-      {placeData && <ImageSlideSection />}
+      {placeData && <ImageSlideSection placeData={placeData} />}
 
       <div className="flex flex-col gap-3 mt-4">
         <address className="flex items-center gap-2 font-medium text-[0.7rem] xs:text-[0.8rem] not-italic">
