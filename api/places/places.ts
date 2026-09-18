@@ -6,6 +6,7 @@ import {
   PlaceSortType,
   UpdatePlaceType,
 } from "@/types/place";
+import { revalidatePlaces } from "./revalidatePlaces";
 
 const PAGE_SIZE = 20;
 
@@ -101,6 +102,8 @@ export const apiCreatePlace = async (placeData: AddPlaceType) => {
     console.log("매장 추가 실패!", error);
     throw new Error(error.message);
   }
+
+  await revalidatePlaces();
 };
 
 // [UPDATE] 매장 정보 업데이트
@@ -144,6 +147,8 @@ export const apiUpdatePlace = async ({
     console.log("매장 업데이트 실패!", error);
     throw new Error(error.message);
   }
+
+  await revalidatePlaces(placeId);
 };
 
 // [DELETE] 매장 정보 삭제
@@ -159,4 +164,6 @@ export const apiDeletePlace = async (placeId: string) => {
     console.log("매장 정보 삭제 실패!", error);
     throw new Error(error.message);
   }
+
+  await revalidatePlaces(placeId);
 };
