@@ -120,6 +120,24 @@ const NaverMap = ({ initialData }: { initialData: Place[] }) => {
     resetPlace();
   }, [isMapReady, selectedPlaceId]);
 
+  // 매장 모달 닫기
+  useEffect(() => {
+    if (isImageModal) return;
+
+    const handleCloseModal = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setIsPlaceModal(false);
+        activeInfowindowRef.current?.close();
+      }
+    };
+
+    window.addEventListener("keydown", handleCloseModal);
+
+    return () => {
+      window.removeEventListener("keydown", handleCloseModal);
+    };
+  }, [setIsPlaceModal, isImageModal]);
+
   return (
     <>
       <NaverMapScript onReady={handleReadyMap} />
