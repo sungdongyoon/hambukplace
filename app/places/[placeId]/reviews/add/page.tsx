@@ -14,7 +14,7 @@ import { AddReviewType } from "@/types/review";
 import { useCreateReview } from "@/hooks/muataions/useReviewMutation";
 
 export type VisitDateCalendarProps = {
-  className: string;
+  className?: string;
   reviewInfo: AddReviewType;
   setIsCalendarOpen: React.Dispatch<React.SetStateAction<boolean>>;
   setReviewInfo: React.Dispatch<React.SetStateAction<AddReviewType>>;
