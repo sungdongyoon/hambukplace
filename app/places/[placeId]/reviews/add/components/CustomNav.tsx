@@ -3,7 +3,7 @@
 import { useDayPicker } from "react-day-picker";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa6";
 
-export const CustomCaption = () => {
+export const CustomNav = () => {
   const { previousMonth, nextMonth, goToMonth, months } = useDayPicker();
 
   const currentMonth = months[0].date;
@@ -14,7 +14,7 @@ export const CustomCaption = () => {
         type="button"
         disabled={!previousMonth}
         onClick={() => previousMonth && goToMonth(previousMonth)}
-        className="h-10 w-10 flex justify-center items-center text-primary-normal"
+        className="h-10 w-10 flex justify-center items-center text-primary-normal cursor-pointer"
       >
         <FaChevronLeft />
       </button>
@@ -27,7 +27,7 @@ export const CustomCaption = () => {
         type="button"
         disabled={!nextMonth}
         onClick={() => nextMonth && goToMonth(nextMonth)}
-        className="h-10 w-10 flex justify-center items-center text-primary-normal"
+        className="h-10 w-10 flex justify-center items-center text-primary-normal cursor-pointer"
       >
         <FaChevronRight />
       </button>
