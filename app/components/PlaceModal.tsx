@@ -122,63 +122,79 @@ const PlaceModal = ({
               <EmptyState message="등록된 이미지가 없습니다" />
             )}
           </div>
+          {/* <div className="bg-background-elevated-alternative border border-line-normal-alternative rounded-lg p-3 mb-3">
+            <h3 className="text-[0.9rem] sm:text-[1.1rem] font-semibold mb-2">
+              리뷰 요약
+            </h3>
+            <p className="text-[0.7rem] sm:text-[0.8rem] text-label-alternative font-medium">
+              여기는 맛집입니다. 여기는 맛집입니다.여기는 맛집입니다. 여기는
+              맛집입니다.여기는 맛집입니다. 여기는 맛집입니다.여기는 맛집입니다.
+              여기는 맛집입니다. 여기는 맛집입니다. 여기는 맛집입니다. 여기는
+              맛집입니다.
+            </p>
+          </div> */}
           <div className="bg-background-elevated-alternative border border-line-normal-alternative rounded-lg p-3">
             <div className="flex items-center gap-1 mb-3">
               <h4 className="text-[0.9rem] sm:text-[1.1rem] font-semibold">
                 리뷰
               </h4>
-              <Link
-                href={`/places/${place.id}`}
-                className="text-label-alternative flex items-center font-semibold text-[0.9rem] sm:text-[1.1rem]"
-              >
-                {reviewData?.length} <FaChevronRight />
-              </Link>
+              <p className="text-label-alternative flex items-center font-semibold text-[0.9rem] sm:text-[1.1rem]">
+                {reviewData?.length}
+              </p>
             </div>
             <div className="flex flex-col gap-2">
               {reviewData?.length ? (
-                reviewData?.slice(0, 3).map((el) => (
-                  <article
-                    className={`flex ${isBreakPoint ? "flex-col" : "items-stretch"} border-b border-line-normal-neutral py-3 gap-4 last:border-b-0`}
-                    key={el.id}
-                  >
-                    <div className="relative w-28 aspect-5/4 shrink-0">
-                      {el.images.length ? (
-                        <>
-                          <Image
-                            src={el.images[0]}
-                            alt="리뷰 이미지"
-                            fill
-                            className="object-cover rounded-sm"
-                          />
-                          <div className="px-1 flex justify-center items-center absolute right-1 bottom-1 bg-black/50 rounded-sm">
-                            <span className="text-[0.8rem] font-semibold text-white">
-                              {el.images.length}
-                            </span>
-                          </div>
-                        </>
-                      ) : (
-                        <EmptyState message="No Image" />
-                      )}
-                    </div>
-                    <div className="min-w-0 flex flex-col flex-1 justify-between gap-1">
-                      <div className="flex items-start gap-2">
-                        <p className="flex items-center gap-1 text-[0.6rem] xs:text-[0.7rem] font-semibold">
-                          <FaStar className="text-yellow-400" />
-                          {el.rate}
-                        </p>
-                        <span className="text-[0.6rem] xs:text-[0.7rem] text-primary-normal font-semibold">
-                          {el.menu}
-                        </span>
+                <>
+                  {reviewData?.slice(0, 3).map((el) => (
+                    <article
+                      className={`flex ${isBreakPoint ? "flex-col" : "items-stretch"} border-b border-line-normal-neutral py-3 gap-4 last:border-b-0`}
+                      key={el.id}
+                    >
+                      <div className="relative w-28 aspect-5/4 shrink-0">
+                        {el.images.length ? (
+                          <>
+                            <Image
+                              src={el.images[0]}
+                              alt="리뷰 이미지"
+                              fill
+                              className="object-cover rounded-sm"
+                            />
+                            <div className="px-1 flex justify-center items-center absolute right-1 bottom-1 bg-black/50 rounded-sm">
+                              <span className="text-[0.8rem] font-semibold text-white">
+                                {el.images.length}
+                              </span>
+                            </div>
+                          </>
+                        ) : (
+                          <EmptyState message="No Image" />
+                        )}
                       </div>
-                      <p className="text-label-strong text-[0.6rem] xs:text-[0.7rem] line-clamp-2">
-                        {el.content}
-                      </p>
-                      <p className="text-label-assistive text-[0.6rem] xs:text-[0.7rem] font-semibold">
-                        {format(el.visited_at, "yyyy.MM.dd")} 방문
-                      </p>
-                    </div>
-                  </article>
-                ))
+                      <div className="min-w-0 flex flex-col flex-1 justify-between gap-1">
+                        <div className="flex items-start gap-2">
+                          <p className="flex items-center gap-1 text-[0.6rem] xs:text-[0.7rem] font-semibold">
+                            <FaStar className="text-yellow-400" />
+                            {el.rate}
+                          </p>
+                          <span className="text-[0.6rem] xs:text-[0.7rem] text-primary-normal font-semibold">
+                            {el.menu}
+                          </span>
+                        </div>
+                        <p className="text-label-strong text-[0.6rem] xs:text-[0.7rem] line-clamp-2">
+                          {el.content}
+                        </p>
+                        <p className="text-label-assistive text-[0.6rem] xs:text-[0.7rem] font-semibold">
+                          {format(el.visited_at, "yyyy.MM.dd")} 방문
+                        </p>
+                      </div>
+                    </article>
+                  ))}
+                  <Link
+                    href={`/places/${place.id}`}
+                    className="text-label-alternative flex justify-center items-center font-semibold text-[0.7rem] sm:text-[0.9rem]"
+                  >
+                    리뷰 더 보기
+                  </Link>
+                </>
               ) : (
                 <EmptyState
                   message="등록된 리뷰가 없습니다 😢"
